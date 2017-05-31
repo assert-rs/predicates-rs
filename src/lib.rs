@@ -70,7 +70,7 @@
 //! }
 //!
 //! assert!(IsTheAnswer.eval(&42));
-//! let almost_the_answer = IsTheAnswer.or(predicate::in_set(vec![41, 43]));
+//! let almost_the_answer = IsTheAnswer.or(predicate::contains(vec![41, 43]));
 //! assert!(almost_the_answer.eval(&41));
 //! ```
 

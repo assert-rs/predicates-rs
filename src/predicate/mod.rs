@@ -17,7 +17,8 @@ pub mod ord;
 pub mod set;
 pub use self::constant::{always, never, BooleanPredicate};
 pub use self::ord::{eq, ne, lt, le, gt, ge, EqPredicate, OrdPredicate};
-pub use self::set::{in_set, SetPredicate};
+pub use self::set::{contains, ContainsPredicate, contains_ord, OrdContainsPredicate,
+                    contains_hashable, HashableContainsPredicate};
 
 // combinators
 pub mod boolean;
