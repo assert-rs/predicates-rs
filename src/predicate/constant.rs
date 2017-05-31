@@ -24,7 +24,7 @@ pub struct BooleanPredicate<T> {
 impl<T> Predicate for BooleanPredicate<T> {
     type Item = T;
 
-    fn test(&self, _variable: &T) -> bool {
+    fn eval(&self, _variable: &T) -> bool {
         self.retval
     }
 }
@@ -37,11 +37,11 @@ impl<T> Predicate for BooleanPredicate<T> {
 /// use predicates::predicate::*;
 ///
 /// let predicate_fn = always();
-/// assert!(predicate_fn.test(&5));
-/// assert!(predicate_fn.test(&10));
-/// assert!(predicate_fn.test(&15));
+/// assert!(predicate_fn.eval(&5));
+/// assert!(predicate_fn.eval(&10));
+/// assert!(predicate_fn.eval(&15));
 /// // Won't work - Predicates can only operate on a single type
-/// // assert!(predicate_fn.test("hello"))
+/// // assert!(predicate_fn.eval("hello"))
 /// ```
 pub fn always<T>() -> BooleanPredicate<T> {
     BooleanPredicate {
@@ -58,11 +58,11 @@ pub fn always<T>() -> BooleanPredicate<T> {
 /// use predicates::predicate::*;
 ///
 /// let predicate_fn = never();
-/// assert!(!predicate_fn.test(&5));
-/// assert!(!predicate_fn.test(&10));
-/// assert!(!predicate_fn.test(&15));
+/// assert!(!predicate_fn.eval(&5));
+/// assert!(!predicate_fn.eval(&10));
+/// assert!(!predicate_fn.eval(&15));
 /// // Won't work - Predicates can only operate on a single type
-/// // assert!(!predicate_fn.test("hello"))
+/// // assert!(!predicate_fn.eval("hello"))
 /// ```
 pub fn never<T>() -> BooleanPredicate<T> {
     BooleanPredicate {

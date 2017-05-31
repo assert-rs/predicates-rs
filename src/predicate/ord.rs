@@ -31,7 +31,7 @@ impl<T> Predicate for EqPredicate<T>
 {
     type Item = T;
 
-    fn test(&self, variable: &Self::Item) -> bool {
+    fn eval(&self, variable: &Self::Item) -> bool {
         match self.op {
             EqOps::Equal => variable.eq(&self.constant),
             EqOps::NotEqual => variable.ne(&self.constant),
@@ -48,8 +48,8 @@ impl<T> Predicate for EqPredicate<T>
 /// use predicates::predicate::*;
 ///
 /// let predicate_fn = eq(5);
-/// assert!(predicate_fn.test(&5));
-/// assert!(!predicate_fn.test(&10));
+/// assert!(predicate_fn.eval(&5));
+/// assert!(!predicate_fn.eval(&10));
 /// ```
 pub fn eq<T>(constant: T) -> EqPredicate<T>
     where T: PartialEq
@@ -69,8 +69,8 @@ pub fn eq<T>(constant: T) -> EqPredicate<T>
 /// use predicates::predicate::*;
 ///
 /// let predicate_fn = ne(5);
-/// assert!(!predicate_fn.test(&5));
-/// assert!(predicate_fn.test(&10));
+/// assert!(!predicate_fn.eval(&5));
+/// assert!(predicate_fn.eval(&10));
 /// ```
 pub fn ne<T>(constant: T) -> EqPredicate<T>
     where T: PartialEq
@@ -104,7 +104,7 @@ impl<T> Predicate for OrdPredicate<T>
 {
     type Item = T;
 
-    fn test(&self, variable: &Self::Item) -> bool {
+    fn eval(&self, variable: &Self::Item) -> bool {
         match self.op {
             OrdOps::LessThan => variable.lt(&self.constant),
             OrdOps::LessThanOrEqual => variable.le(&self.constant),
@@ -123,8 +123,8 @@ impl<T> Predicate for OrdPredicate<T>
 /// use predicates::predicate::*;
 ///
 /// let predicate_fn = lt(5);
-/// assert!(predicate_fn.test(&4));
-/// assert!(!predicate_fn.test(&6));
+/// assert!(predicate_fn.eval(&4));
+/// assert!(!predicate_fn.eval(&6));
 /// ```
 pub fn lt<T>(constant: T) -> OrdPredicate<T>
     where T: PartialOrd
@@ -144,9 +144,9 @@ pub fn lt<T>(constant: T) -> OrdPredicate<T>
 /// use predicates::predicate::*;
 ///
 /// let predicate_fn = le(5);
-/// assert!(predicate_fn.test(&4));
-/// assert!(predicate_fn.test(&5));
-/// assert!(!predicate_fn.test(&6));
+/// assert!(predicate_fn.eval(&4));
+/// assert!(predicate_fn.eval(&5));
+/// assert!(!predicate_fn.eval(&6));
 /// ```
 pub fn le<T>(constant: T) -> OrdPredicate<T>
     where T: PartialOrd
@@ -166,9 +166,9 @@ pub fn le<T>(constant: T) -> OrdPredicate<T>
 /// use predicates::predicate::*;
 ///
 /// let predicate = ge(5);
-/// assert!(!predicate.test(&4));
-/// assert!(predicate.test(&5));
-/// assert!(predicate.test(&6));
+/// assert!(!predicate.eval(&4));
+/// assert!(predicate.eval(&5));
+/// assert!(predicate.eval(&6));
 /// ```
 pub fn ge<T>(constant: T) -> OrdPredicate<T>
     where T: PartialOrd
@@ -188,9 +188,9 @@ pub fn ge<T>(constant: T) -> OrdPredicate<T>
 /// use predicates::predicate::*;
 ///
 /// let predicate_fn = gt(5);
-/// assert!(!predicate_fn.test(&4));
-/// assert!(!predicate_fn.test(&5));
-/// assert!(predicate_fn.test(&6));
+/// assert!(!predicate_fn.eval(&4));
+/// assert!(!predicate_fn.eval(&5));
+/// assert!(predicate_fn.eval(&6));
 /// ```
 pub fn gt<T>(constant: T) -> OrdPredicate<T>
     where T: PartialOrd

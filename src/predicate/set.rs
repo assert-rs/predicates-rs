@@ -30,7 +30,7 @@ impl<T> Predicate for SetPredicate<T>
 {
     type Item = T;
 
-    fn test(&self, variable: &Self::Item) -> bool {
+    fn eval(&self, variable: &Self::Item) -> bool {
         self.inner.contains(variable)
     }
 }
@@ -44,11 +44,11 @@ impl<T> Predicate for SetPredicate<T>
 /// use predicates::predicate::*;
 ///
 /// let predicate_fn = in_set(vec![1, 3, 5]);
-/// assert!(predicate_fn.test(&1));
-/// assert!(!predicate_fn.test(&2));
-/// assert!(predicate_fn.test(&3));
-/// assert!(!predicate_fn.test(&4));
-/// assert!(predicate_fn.test(&5));
+/// assert!(predicate_fn.eval(&1));
+/// assert!(!predicate_fn.eval(&2));
+/// assert!(predicate_fn.eval(&3));
+/// assert!(!predicate_fn.eval(&4));
+/// assert!(predicate_fn.eval(&5));
 /// ```
 pub fn in_set<I, T>(iter: I) -> SetPredicate<T>
     where T: Hash + Eq,

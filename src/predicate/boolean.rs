@@ -37,8 +37,8 @@ impl<M1, M2> Predicate for AndPredicate<M1, M2>
 {
     type Item = M1::Item;
 
-    fn test(&self, item: &Self::Item) -> bool {
-        self.a.test(item) && self.b.test(item)
+    fn eval(&self, item: &Self::Item) -> bool {
+        self.a.eval(item) && self.b.eval(item)
     }
 }
 
@@ -69,8 +69,8 @@ impl<M1, M2> Predicate for OrPredicate<M1, M2>
 {
     type Item = M1::Item;
 
-    fn test(&self, item: &Self::Item) -> bool {
-        self.a.test(item) || self.b.test(item)
+    fn eval(&self, item: &Self::Item) -> bool {
+        self.a.eval(item) || self.b.eval(item)
     }
 }
 
@@ -97,7 +97,7 @@ impl<M> Predicate for NotPredicate<M>
 {
     type Item = M::Item;
 
-    fn test(&self, item: &Self::Item) -> bool {
-        !self.inner.test(item)
+    fn eval(&self, item: &Self::Item) -> bool {
+        !self.inner.eval(item)
     }
 }
