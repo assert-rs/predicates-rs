@@ -74,6 +74,8 @@
 //! assert!(almost_the_answer.eval(&41));
 //! ```
 
+#![deny(missing_docs, missing_debug_implementations)]
+
 // core `Predicate` trait
 pub mod predicate;
 pub use self::predicate::Predicate;

@@ -26,6 +26,7 @@ impl<M1, M2> AndPredicate<M1, M2>
     where M1: Predicate,
           M2: Predicate<Item = M1::Item>
 {
+    /// Create a new `AndPredicate` over predicates `a` and `b`.
     pub fn new(a: M1, b: M2) -> AndPredicate<M1, M2> {
         AndPredicate { a: a, b: b }
     }
@@ -58,6 +59,7 @@ impl<M1, M2> OrPredicate<M1, M2>
     where M1: Predicate,
           M2: Predicate<Item = M1::Item>
 {
+    /// Create a new `OrPredicate` over predicates `a` and `b`.
     pub fn new(a: M1, b: M2) -> OrPredicate<M1, M2> {
         OrPredicate { a: a, b: b }
     }
@@ -87,6 +89,7 @@ pub struct NotPredicate<M>
 impl<M> NotPredicate<M>
     where M: Predicate
 {
+    /// Create a new `NotPredicate` over predicate `inner`.
     pub fn new(inner: M) -> NotPredicate<M> {
         NotPredicate { inner: inner }
     }
