@@ -32,7 +32,7 @@ For more information on using predicates, look at the
 
 # License
 
-`predicates-rs` is primarily distributed under the terms of both the MIT
-license and the Apache License (Version 2.0).
+`predicates-rs` is distributed under the terms of both the MIT license and the
+Apache License (Version 2.0).
 
 See LICENSE-APACHE, and LICENSE-MIT for details.
