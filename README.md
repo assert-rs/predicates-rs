@@ -30,9 +30,16 @@ For more information on using predicates, look at the
 [documentation](https://docs.rs/predicates)
 
 
-# License
+## License
 
 `predicates-rs` is distributed under the terms of both the MIT license and the
 Apache License (Version 2.0).
 
 See LICENSE-APACHE, and LICENSE-MIT for details.
+
+
+## Credits
+
+Big thanks to [futures-rs](https://github.com/alexcrichton/futures-rs), whose
+slick API design informed a lot of decisions made on the API design of this
+library.
