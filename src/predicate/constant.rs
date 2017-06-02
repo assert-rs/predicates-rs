@@ -37,11 +37,11 @@ impl<T> Predicate for BooleanPredicate<T> {
 /// use predicates::predicate::*;
 ///
 /// let predicate_fn = always();
-/// assert!(predicate_fn.eval(&5));
-/// assert!(predicate_fn.eval(&10));
-/// assert!(predicate_fn.eval(&15));
+/// assert_eq!(true, predicate_fn.eval(&5));
+/// assert_eq!(true, predicate_fn.eval(&10));
+/// assert_eq!(true, predicate_fn.eval(&15));
 /// // Won't work - Predicates can only operate on a single type
-/// // assert!(predicate_fn.eval("hello"))
+/// // assert_eq!(true, predicate_fn.eval("hello"))
 /// ```
 pub fn always<T>() -> BooleanPredicate<T> {
     BooleanPredicate {
@@ -58,11 +58,11 @@ pub fn always<T>() -> BooleanPredicate<T> {
 /// use predicates::predicate::*;
 ///
 /// let predicate_fn = never();
-/// assert!(!predicate_fn.eval(&5));
-/// assert!(!predicate_fn.eval(&10));
-/// assert!(!predicate_fn.eval(&15));
+/// assert_eq!(false, predicate_fn.eval(&5));
+/// assert_eq!(false, predicate_fn.eval(&10));
+/// assert_eq!(false, predicate_fn.eval(&15));
 /// // Won't work - Predicates can only operate on a single type
-/// // assert!(!predicate_fn.eval("hello"))
+/// // assert_eq!(false, predicate_fn.eval("hello"))
 /// ```
 pub fn never<T>() -> BooleanPredicate<T> {
     BooleanPredicate {

@@ -38,24 +38,24 @@
 //! // `true` and always returns `false`, respectively. The values are simply
 //! // ignored when evaluating against these predicates:
 //! let always_true = predicate::always();
-//! assert!(always_true.eval(&5));
+//! assert_eq!(true, always_true.eval(&5));
 //! let always_false = predicate::never();
-//! assert!(!always_false.eval(&5));
+//! assert_eq!(false, always_false.eval(&5));
 //!
 //! // Pre-made predicates are available for types that implement the `PartialOrd` and
 //! // `PartialEq` traits. The following example uses `lt`, but `eq`, `ne`, `le`, `gt`,
 //! // `ge` are also available.
 //! let less_than_ten = predicate::lt(10);
-//! assert!(less_than_ten.eval(&9));
-//! assert!(!less_than_ten.eval(&11));
+//! assert_eq!(true, less_than_ten.eval(&9));
+//! assert_eq!(false, less_than_ten.eval(&11));
 //!
 //! // The `Predicate` type is actually a trait, and that trait implements a
 //! // number of useful combinator functions. For example, evaluating for a value
 //! // between two other values can be accomplished as follows:
 //! let between_5_and_10 = predicate::ge(5).and(predicate::le(10));
-//! assert!(between_5_and_10.eval(&7));
-//! assert!(!between_5_and_10.eval(&11));
-//! assert!(!between_5_and_10.eval(&4));
+//! assert_eq!(true, between_5_and_10.eval(&7));
+//! assert_eq!(false, between_5_and_10.eval(&11));
+//! assert_eq!(false, between_5_and_10.eval(&4));
 //!
 //! // The `Predicate` trait is pretty simple, requiring only the
 //! // implementation of a `eval` function that takes a single argument and
@@ -69,9 +69,9 @@
 //!     }
 //! }
 //!
-//! assert!(IsTheAnswer.eval(&42));
+//! assert_eq!(true, IsTheAnswer.eval(&42));
 //! let almost_the_answer = IsTheAnswer.or(predicate::contains(vec![41, 43]));
-//! assert!(almost_the_answer.eval(&41));
+//! assert_eq!(true, almost_the_answer.eval(&41));
 //! ```
 
 #![deny(missing_docs, missing_debug_implementations)]

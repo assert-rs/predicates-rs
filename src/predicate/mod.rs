@@ -48,8 +48,8 @@ pub trait Predicate {
     ///
     /// let predicate_fn1 = always().and(always());
     /// let predicate_fn2 = always().and(never());
-    /// assert!(predicate_fn1.eval(&4));
-    /// assert!(!predicate_fn2.eval(&4));
+    /// assert_eq!(true, predicate_fn1.eval(&4));
+    /// assert_eq!(false, predicate_fn2.eval(&4));
     fn and<B>(self, other: B) -> AndPredicate<Self, B>
         where B: Predicate<Item = Self::Item>,
               Self: Sized
@@ -67,9 +67,9 @@ pub trait Predicate {
     /// let predicate_fn1 = always().or(always());
     /// let predicate_fn2 = always().or(never());
     /// let predicate_fn3 = never().or(never());
-    /// assert!(predicate_fn1.eval(&4));
-    /// assert!(predicate_fn2.eval(&4));
-    /// assert!(!predicate_fn3.eval(&4));
+    /// assert_eq!(true, predicate_fn1.eval(&4));
+    /// assert_eq!(true, predicate_fn2.eval(&4));
+    /// assert_eq!(false, predicate_fn3.eval(&4));
     fn or<B>(self, other: B) -> OrPredicate<Self, B>
         where B: Predicate<Item = Self::Item>,
               Self: Sized
@@ -86,8 +86,8 @@ pub trait Predicate {
     ///
     /// let predicate_fn1 = always().not();
     /// let predicate_fn2 = never().not();
-    /// assert!(!predicate_fn1.eval(&4));
-    /// assert!(predicate_fn2.eval(&4));
+    /// assert_eq!(false, predicate_fn1.eval(&4));
+    /// assert_eq!(true, predicate_fn2.eval(&4));
     fn not(self) -> NotPredicate<Self>
         where Self: Sized
     {
@@ -105,8 +105,8 @@ pub trait Predicate {
     ///     always().boxed(),
     ///     never().boxed(),
     /// ];
-    /// assert!(predicates[0].eval(&4));
-    /// assert!(!predicates[1].eval(&4));
+    /// assert_eq!(true, predicates[0].eval(&4));
+    /// assert_eq!(false, predicates[1].eval(&4));
     /// ```
     fn boxed(self) -> Box<Predicate<Item = Self::Item>>
         where Self: 'static + Sized

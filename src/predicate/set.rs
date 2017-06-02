@@ -56,11 +56,11 @@ impl<T> Predicate for ContainsPredicate<T>
 /// use predicates::predicate::*;
 ///
 /// let predicate_fn = contains(vec![1, 3, 5]);
-/// assert!(predicate_fn.eval(&1));
-/// assert!(!predicate_fn.eval(&2));
-/// assert!(predicate_fn.eval(&3));
-/// assert!(!predicate_fn.eval(&4));
-/// assert!(predicate_fn.eval(&5));
+/// assert_eq!(true, predicate_fn.eval(&1));
+/// assert_eq!(false, predicate_fn.eval(&2));
+/// assert_eq!(true, predicate_fn.eval(&3));
+/// assert_eq!(false, predicate_fn.eval(&4));
+/// assert_eq!(true, predicate_fn.eval(&5));
 /// ```
 pub fn contains<I, T>(iter: I) -> ContainsPredicate<T>
     where T: PartialEq,
@@ -109,11 +109,11 @@ impl<T> Predicate for OrdContainsPredicate<T>
 /// use predicates::predicate::*;
 ///
 /// let predicate_fn = contains_ord(vec![1, 3, 5]);
-/// assert!(predicate_fn.eval(&1));
-/// assert!(!predicate_fn.eval(&2));
-/// assert!(predicate_fn.eval(&3));
-/// assert!(!predicate_fn.eval(&4));
-/// assert!(predicate_fn.eval(&5));
+/// assert_eq!(true, predicate_fn.eval(&1));
+/// assert_eq!(false, predicate_fn.eval(&2));
+/// assert_eq!(true, predicate_fn.eval(&3));
+/// assert_eq!(false, predicate_fn.eval(&4));
+/// assert_eq!(true, predicate_fn.eval(&5));
 /// ```
 pub fn contains_ord<I, T>(iter: I) -> OrdContainsPredicate<T>
     where T: Ord,
@@ -164,11 +164,11 @@ impl<T> Predicate for HashableContainsPredicate<T>
 /// use predicates::predicate::*;
 ///
 /// let predicate_fn = contains_hashable(vec![1, 3, 5]);
-/// assert!(predicate_fn.eval(&1));
-/// assert!(!predicate_fn.eval(&2));
-/// assert!(predicate_fn.eval(&3));
-/// assert!(!predicate_fn.eval(&4));
-/// assert!(predicate_fn.eval(&5));
+/// assert_eq!(true, predicate_fn.eval(&1));
+/// assert_eq!(false, predicate_fn.eval(&2));
+/// assert_eq!(true, predicate_fn.eval(&3));
+/// assert_eq!(false, predicate_fn.eval(&4));
+/// assert_eq!(true, predicate_fn.eval(&5));
 /// ```
 pub fn contains_hashable<I, T>(iter: I) -> HashableContainsPredicate<T>
     where T: Hash + Eq,
