@@ -78,4 +78,4 @@
 
 // core `Predicate` trait
 pub mod predicate;
-pub use self::predicate::Predicate;
+pub use self::predicate::{BoxPredicate, Predicate};

@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - Unreleased
+### Added
+- `BoxPredicate` type that wraps a `Predicate` trait object to make it easier
+  to store and work with predicates through a program. Also implements `Debug`
+  and `Display` wrappers as a convenience.
 
 ## [0.2.0] - 2017-06-02
 ### Added
