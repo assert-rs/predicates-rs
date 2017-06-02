@@ -8,6 +8,8 @@ This library is an implementation of **boolean-valued predicate functions** in R
 
 [Documentation](https://docs.rs/predicates)
 
+[Changelog](https://github.com/nastevens/predicates-rs/blob/master/CHANGELOG.md)
+
 
 ## Usage
 
