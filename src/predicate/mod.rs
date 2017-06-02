@@ -12,16 +12,16 @@
 //! the trait. See the crate docs, and the docs for `Predicate`, for full detail.
 
 // primitive `Predicate` types
-pub mod constant;
-pub mod ord;
-pub mod set;
+mod constant;
+mod ord;
+mod set;
 pub use self::constant::{always, never, BooleanPredicate};
 pub use self::ord::{eq, ne, lt, le, gt, ge, EqPredicate, OrdPredicate};
 pub use self::set::{contains, ContainsPredicate, contains_ord, OrdContainsPredicate,
                     contains_hashable, HashableContainsPredicate};
 
 // combinators
-pub mod boolean;
+mod boolean;
 pub use self::boolean::{AndPredicate, OrPredicate, NotPredicate};
 
 /// Trait for generically evaluating a type against a dynamically created
