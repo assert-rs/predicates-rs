@@ -4,8 +4,7 @@ version = "0.1.0"
 authors = ["Nick Stevens <nick@bitcurry.com>"]
 license = "MIT/Apache-2.0"
 readme = "README.md"
-keywords = ["predicate", "boolean", "combinatorial", "match",
-            "matcher", "logic"]
+keywords = ["predicate", "boolean", "combinatorial", "match", "logic"]
 repository = "https://github.com/nastevens/predicates-rs"
 homepage = "https://github.com/nastevens/predicates-rs"
 documentation = "https://docs.rs/predicates"
