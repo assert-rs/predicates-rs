@@ -33,7 +33,7 @@ pub use self::boolean::{AndPredicate, OrPredicate, NotPredicate};
 /// same type as the implementing `Predicate` type.
 pub trait Predicate {
     /// The type that this `Predicate` will accept for evaluating.
-    type Item;
+    type Item: ?Sized;
 
     /// Execute this `Predicate` against `variable`, returning the resulting
     /// boolean.
