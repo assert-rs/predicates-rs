@@ -13,9 +13,11 @@
 
 // primitive `Predicate` types
 mod constant;
+mod map;
 mod ord;
 mod set;
 pub use self::constant::{always, never, BooleanPredicate};
+pub use self::map::{map, MapPredicate};
 pub use self::ord::{eq, ne, lt, le, gt, ge, EqPredicate, OrdPredicate};
 pub use self::set::{contains, ContainsPredicate, contains_ord, OrdContainsPredicate,
                     contains_hashable, HashableContainsPredicate};

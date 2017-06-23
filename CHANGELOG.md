@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - Unreleased
+### Added
+- `MapPredicate` that maps one type to another type before applying an inner
+  predicate. Specifically useful for extracting fields from a struct before
+  evaluating the predicate.
 
 ## [0.2.0] - 2017-06-02
 ### Added
