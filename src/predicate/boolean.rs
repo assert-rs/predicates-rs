@@ -15,16 +15,18 @@ use Predicate;
 /// This is created by the `Predicate::and` function.
 #[derive(Debug)]
 pub struct AndPredicate<M1, M2>
-    where M1: Predicate,
-          M2: Predicate<Item = M1::Item>
+where
+    M1: Predicate,
+    M2: Predicate<Item = M1::Item>,
 {
     a: M1,
     b: M2,
 }
 
 impl<M1, M2> AndPredicate<M1, M2>
-    where M1: Predicate,
-          M2: Predicate<Item = M1::Item>
+where
+    M1: Predicate,
+    M2: Predicate<Item = M1::Item>,
 {
     /// Create a new `AndPredicate` over predicates `a` and `b`.
     pub fn new(a: M1, b: M2) -> AndPredicate<M1, M2> {
@@ -33,8 +35,9 @@ impl<M1, M2> AndPredicate<M1, M2>
 }
 
 impl<M1, M2> Predicate for AndPredicate<M1, M2>
-    where M1: Predicate,
-          M2: Predicate<Item = M1::Item>
+where
+    M1: Predicate,
+    M2: Predicate<Item = M1::Item>,
 {
     type Item = M1::Item;
 
@@ -48,16 +51,18 @@ impl<M1, M2> Predicate for AndPredicate<M1, M2>
 /// This is created by the `Predicate::or` function.
 #[derive(Debug)]
 pub struct OrPredicate<M1, M2>
-    where M1: Predicate,
-          M2: Predicate<Item = M1::Item>
+where
+    M1: Predicate,
+    M2: Predicate<Item = M1::Item>,
 {
     a: M1,
     b: M2,
 }
 
 impl<M1, M2> OrPredicate<M1, M2>
-    where M1: Predicate,
-          M2: Predicate<Item = M1::Item>
+where
+    M1: Predicate,
+    M2: Predicate<Item = M1::Item>,
 {
     /// Create a new `OrPredicate` over predicates `a` and `b`.
     pub fn new(a: M1, b: M2) -> OrPredicate<M1, M2> {
@@ -66,8 +71,9 @@ impl<M1, M2> OrPredicate<M1, M2>
 }
 
 impl<M1, M2> Predicate for OrPredicate<M1, M2>
-    where M1: Predicate,
-          M2: Predicate<Item = M1::Item>
+where
+    M1: Predicate,
+    M2: Predicate<Item = M1::Item>,
 {
     type Item = M1::Item;
 
@@ -81,13 +87,15 @@ impl<M1, M2> Predicate for OrPredicate<M1, M2>
 /// This is created by the `Predicate::not` function.
 #[derive(Debug)]
 pub struct NotPredicate<M>
-    where M: Predicate
+where
+    M: Predicate,
 {
     inner: M,
 }
 
 impl<M> NotPredicate<M>
-    where M: Predicate
+where
+    M: Predicate,
 {
     /// Create a new `NotPredicate` over predicate `inner`.
     pub fn new(inner: M) -> NotPredicate<M> {
@@ -96,7 +104,8 @@ impl<M> NotPredicate<M>
 }
 
 impl<M> Predicate for NotPredicate<M>
-    where M: Predicate
+where
+    M: Predicate,
 {
     type Item = M::Item;
 

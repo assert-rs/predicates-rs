@@ -25,13 +25,15 @@ use Predicate;
 /// deprecated when Rust supports trait specialization.
 #[derive(Debug)]
 pub struct ContainsPredicate<T>
-    where T: PartialEq
+where
+    T: PartialEq,
 {
     inner: Vec<T>,
 }
 
 impl<T> Predicate for ContainsPredicate<T>
-    where T: PartialEq
+where
+    T: PartialEq,
 {
     type Item = T;
 
@@ -63,8 +65,9 @@ impl<T> Predicate for ContainsPredicate<T>
 /// assert_eq!(true, predicate_fn.eval(&5));
 /// ```
 pub fn contains<I, T>(iter: I) -> ContainsPredicate<T>
-    where T: PartialEq,
-          I: IntoIterator<Item = T>
+where
+    T: PartialEq,
+    I: IntoIterator<Item = T>,
 {
     ContainsPredicate { inner: Vec::from_iter(iter) }
 }
@@ -80,13 +83,15 @@ pub fn contains<I, T>(iter: I) -> ContainsPredicate<T>
 /// This is created by the `predicate::contains_ord` function.
 #[derive(Debug)]
 pub struct OrdContainsPredicate<T>
-    where T: Ord
+where
+    T: Ord,
 {
     inner: Vec<T>,
 }
 
 impl<T> Predicate for OrdContainsPredicate<T>
-    where T: Ord
+where
+    T: Ord,
 {
     type Item = T;
 
@@ -116,8 +121,9 @@ impl<T> Predicate for OrdContainsPredicate<T>
 /// assert_eq!(true, predicate_fn.eval(&5));
 /// ```
 pub fn contains_ord<I, T>(iter: I) -> OrdContainsPredicate<T>
-    where T: Ord,
-          I: IntoIterator<Item = T>
+where
+    T: Ord,
+    I: IntoIterator<Item = T>,
 {
     let mut items = Vec::from_iter(iter);
     items.sort();
@@ -135,13 +141,15 @@ pub fn contains_ord<I, T>(iter: I) -> OrdContainsPredicate<T>
 /// This is created by the `predicate::contains_hashable` function.
 #[derive(Debug)]
 pub struct HashableContainsPredicate<T>
-    where T: Hash + Eq
+where
+    T: Hash + Eq,
 {
     inner: HashSet<T>,
 }
 
 impl<T> Predicate for HashableContainsPredicate<T>
-    where T: Hash + Eq
+where
+    T: Hash + Eq,
 {
     type Item = T;
 
@@ -171,8 +179,9 @@ impl<T> Predicate for HashableContainsPredicate<T>
 /// assert_eq!(true, predicate_fn.eval(&5));
 /// ```
 pub fn contains_hashable<I, T>(iter: I) -> HashableContainsPredicate<T>
-    where T: Hash + Eq,
-          I: IntoIterator<Item = T>
+where
+    T: Hash + Eq,
+    I: IntoIterator<Item = T>,
 {
     HashableContainsPredicate { inner: HashSet::from_iter(iter) }
 }

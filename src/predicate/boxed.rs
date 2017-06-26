@@ -37,14 +37,13 @@ impl<T: ?Sized> Predicate for BoxPredicate<T> {
     }
 }
 
-impl<T:? Sized> BoxPredicate<T> {
+impl<T: ?Sized> BoxPredicate<T> {
     /// Creates a new `BoxPredicate`, a wrapper around a dynamically-dispatched
     /// `Predicate` type with useful trait impls.
     pub fn new<P: Predicate<Item = T>>(inner: P) -> BoxPredicate<T>
-        where P: Send + Sync + 'static
+    where
+        P: Send + Sync + 'static,
     {
         BoxPredicate(Box::new(inner))
     }
 }
-
-

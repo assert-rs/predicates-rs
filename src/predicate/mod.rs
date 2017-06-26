@@ -53,8 +53,9 @@ pub trait Predicate {
     /// assert_eq!(true, predicate_fn1.eval(&4));
     /// assert_eq!(false, predicate_fn2.eval(&4));
     fn and<B>(self, other: B) -> AndPredicate<Self, B>
-        where B: Predicate<Item = Self::Item>,
-              Self: Sized
+    where
+        B: Predicate<Item = Self::Item>,
+        Self: Sized,
     {
         AndPredicate::new(self, other)
     }
@@ -73,8 +74,9 @@ pub trait Predicate {
     /// assert_eq!(true, predicate_fn2.eval(&4));
     /// assert_eq!(false, predicate_fn3.eval(&4));
     fn or<B>(self, other: B) -> OrPredicate<Self, B>
-        where B: Predicate<Item = Self::Item>,
-              Self: Sized
+    where
+        B: Predicate<Item = Self::Item>,
+        Self: Sized,
     {
         OrPredicate::new(self, other)
     }
@@ -91,7 +93,8 @@ pub trait Predicate {
     /// assert_eq!(false, predicate_fn1.eval(&4));
     /// assert_eq!(true, predicate_fn2.eval(&4));
     fn not(self) -> NotPredicate<Self>
-        where Self: Sized
+    where
+        Self: Sized,
     {
         NotPredicate::new(self)
     }
@@ -121,7 +124,8 @@ pub trait Predicate {
     /// assert_eq!(false, predicates[1].eval(&4));
     /// ```
     fn boxed(self) -> BoxPredicate<Self::Item>
-        where Self: Sized + Send + Sync + 'static
+    where
+        Self: Sized + Send + Sync + 'static,
     {
         BoxPredicate::new(self)
     }

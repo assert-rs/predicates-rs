@@ -27,7 +27,8 @@ pub struct EqPredicate<T> {
 }
 
 impl<T> Predicate for EqPredicate<T>
-    where T: PartialEq
+where
+    T: PartialEq,
 {
     type Item = T;
 
@@ -52,7 +53,8 @@ impl<T> Predicate for EqPredicate<T>
 /// assert_eq!(false, predicate_fn.eval(&10));
 /// ```
 pub fn eq<T>(constant: T) -> EqPredicate<T>
-    where T: PartialEq
+where
+    T: PartialEq,
 {
     EqPredicate {
         constant: constant,
@@ -73,7 +75,8 @@ pub fn eq<T>(constant: T) -> EqPredicate<T>
 /// assert_eq!(true, predicate_fn.eval(&10));
 /// ```
 pub fn ne<T>(constant: T) -> EqPredicate<T>
-    where T: PartialEq
+where
+    T: PartialEq,
 {
     EqPredicate {
         constant: constant,
@@ -100,7 +103,8 @@ pub struct OrdPredicate<T> {
 }
 
 impl<T> Predicate for OrdPredicate<T>
-    where T: PartialOrd
+where
+    T: PartialOrd,
 {
     type Item = T;
 
@@ -127,7 +131,8 @@ impl<T> Predicate for OrdPredicate<T>
 /// assert_eq!(false, predicate_fn.eval(&6));
 /// ```
 pub fn lt<T>(constant: T) -> OrdPredicate<T>
-    where T: PartialOrd
+where
+    T: PartialOrd,
 {
     OrdPredicate {
         constant: constant,
@@ -149,7 +154,8 @@ pub fn lt<T>(constant: T) -> OrdPredicate<T>
 /// assert_eq!(false, predicate_fn.eval(&6));
 /// ```
 pub fn le<T>(constant: T) -> OrdPredicate<T>
-    where T: PartialOrd
+where
+    T: PartialOrd,
 {
     OrdPredicate {
         constant: constant,
@@ -171,7 +177,8 @@ pub fn le<T>(constant: T) -> OrdPredicate<T>
 /// assert_eq!(true, predicate.eval(&6));
 /// ```
 pub fn ge<T>(constant: T) -> OrdPredicate<T>
-    where T: PartialOrd
+where
+    T: PartialOrd,
 {
     OrdPredicate {
         constant: constant,
@@ -193,7 +200,8 @@ pub fn ge<T>(constant: T) -> OrdPredicate<T>
 /// assert_eq!(true, predicate_fn.eval(&6));
 /// ```
 pub fn gt<T>(constant: T) -> OrdPredicate<T>
-    where T: PartialOrd
+where
+    T: PartialOrd,
 {
     OrdPredicate {
         constant: constant,
