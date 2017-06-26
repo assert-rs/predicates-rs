@@ -72,6 +72,15 @@
 //! assert_eq!(true, IsTheAnswer.eval(&42));
 //! let almost_the_answer = IsTheAnswer.or(predicate::contains(vec![41, 43]));
 //! assert_eq!(true, almost_the_answer.eval(&41));
+//!
+//! // Any function over a reference to the desired `Item` that returns `bool`
+//! // can easily be made into a `Predicate` using the `predicate::function`
+//! // function.
+//! let bound = 5;
+//! let predicate_fn = predicate::function(|&x| x >= bound);
+//! let between_5_and_10 = predicate_fn.and(predicate::le(10));
+//! assert_eq!(true, between_5_and_10.eval(&7));
+//! assert_eq!(false, between_5_and_10.eval(&3));
 //! ```
 
 #![deny(missing_docs, missing_debug_implementations)]
