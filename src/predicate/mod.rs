@@ -22,7 +22,9 @@ pub use self::set::{contains, ContainsPredicate, contains_ord, OrdContainsPredic
 
 // combinators
 mod boolean;
+mod boxed;
 pub use self::boolean::{AndPredicate, OrPredicate, NotPredicate};
+pub use self::boxed::BoxPredicate;
 
 /// Trait for generically evaluating a type against a dynamically created
 /// predicate function.
@@ -94,7 +96,17 @@ pub trait Predicate {
         NotPredicate::new(self)
     }
 
-    /// Convenience function that returns a trait object of this `Predicate`.
+    /// Returns a `BoxPredicate` wrapper around this `Predicate` type.
+    ///
+    /// Returns a `BoxPredicate` wrapper around this `Predicate type. The
+    /// `BoxPredicate` type has a number of useful properties:
+    ///
+    ///   - It stores the inner predicate as a trait object, so the type of
+    ///     `BoxPredicate` will always be the same even if steps are added or
+    ///     removed from the predicate.
+    ///   - It is a common type, allowing it to be stored in vectors or other
+    ///     collection types.
+    ///   - It implements `Debug` and `Display`.
     ///
     /// # Examples
     ///
@@ -108,9 +120,9 @@ pub trait Predicate {
     /// assert_eq!(true, predicates[0].eval(&4));
     /// assert_eq!(false, predicates[1].eval(&4));
     /// ```
-    fn boxed(self) -> Box<Predicate<Item = Self::Item>>
-        where Self: 'static + Sized
+    fn boxed(self) -> BoxPredicate<Self::Item>
+        where Self: Sized + Send + Sync + 'static
     {
-        Box::new(self)
+        BoxPredicate::new(self)
     }
 }
