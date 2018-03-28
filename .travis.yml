@@ -1,42 +1,19 @@
 sudo: false
-
 language: rust
-
-cache: cargo
-
-addons:
-  apt:
-    sources:
-      - kalakris-cmake
-    packages:
-      - cmake
-      - libcurl4-openssl-dev
-      - libelf-dev
-      - libdw-dev
-      - binutils-dev
-
 rust:
-  - 1.10.0
-  - stable
-  - beta
-  - nightly
+- 1.22.0 # oldest supported version
+- stable
+- beta
+- nightly
 
-before_script:
-  - pip install 'travis-cargo<0.2' --user
-  - export PATH=$HOME/.local/bin:$PATH
-  - |
-      if [ $TRAVIS_RUST_VERSION = "stable" ]; then
-        cargo install cargo-update
-        export PATH=$HOME/.cargo/bin:$PATH
-        cargo install-update --allow-no-update rustfmt cargo-update
-      fi
+install:
+- rustc -Vv
+- cargo -V
 
 script:
-  - travis-cargo --only stable fmt
-  - travis-cargo build
-  - travis-cargo test
-  - travis-cargo bench
-  - travis-cargo --only stable doc -- --no-deps
+- cargo check --verbose
+- cargo test --verbose
+- cargo doc --no-deps
 
-after_success:
-  - travis-cargo coveralls --no-sudo --verify
+cache:
+  cargo: true
