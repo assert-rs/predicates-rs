@@ -69,7 +69,9 @@ where
     T: PartialEq,
     I: IntoIterator<Item = T>,
 {
-    ContainsPredicate { inner: Vec::from_iter(iter) }
+    ContainsPredicate {
+        inner: Vec::from_iter(iter),
+    }
 }
 
 /// Predicate that returns `true` if `variable` is a member of the pre-defined
@@ -183,5 +185,7 @@ where
     T: Hash + Eq,
     I: IntoIterator<Item = T>,
 {
-    HashableContainsPredicate { inner: HashSet::from_iter(iter) }
+    HashableContainsPredicate {
+        inner: HashSet::from_iter(iter),
+    }
 }

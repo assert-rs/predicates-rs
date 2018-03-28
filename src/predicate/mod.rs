@@ -18,14 +18,14 @@ mod ord;
 mod set;
 pub use self::constant::{always, never, BooleanPredicate};
 pub use self::function::{function, FnPredicate};
-pub use self::ord::{eq, ne, lt, le, gt, ge, EqPredicate, OrdPredicate};
-pub use self::set::{contains, ContainsPredicate, contains_ord, OrdContainsPredicate,
-                    contains_hashable, HashableContainsPredicate};
+pub use self::ord::{eq, ge, gt, le, lt, ne, EqPredicate, OrdPredicate};
+pub use self::set::{contains, contains_hashable, contains_ord, ContainsPredicate,
+                    HashableContainsPredicate, OrdContainsPredicate};
 
 // combinators
 mod boolean;
 mod boxed;
-pub use self::boolean::{AndPredicate, OrPredicate, NotPredicate};
+pub use self::boolean::{AndPredicate, NotPredicate, OrPredicate};
 pub use self::boxed::BoxPredicate;
 
 /// Trait for generically evaluating a type against a dynamically created

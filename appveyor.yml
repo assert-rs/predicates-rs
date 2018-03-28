@@ -1,17 +1,33 @@
 environment:
+  global:
+    TARGET: x86_64-pc-windows-msvc
+    CHANNEL: stable
   matrix:
-  - TARGET: x86_64-pc-windows-msvc
+  - CHANNEL: 1.22.0 # oldest supported version
+  - CHANNEL: stable
+  - CHANNEL: beta
+  - CHANNEL: nightly
 
 install:
-  - set PATH=C:\Program Files\Git\mingw64\bin;%PATH%
-  - curl -sSf -o rustup-init.exe https://win.rustup.rs/
-  - rustup-init.exe -y --default-host %TARGET%
-  - set PATH=%PATH%;C:\Users\appveyor\.cargo\bin
-  - rustc -V
-  - cargo -V
-
-build: false
+- ps: >-
+    $Env:PATH += ';C:\msys64\usr\bin'
+- curl -sSf -o rustup-init.exe https://win.rustup.rs/
+- rustup-init.exe -y --default-host %TARGET% --default-toolchain %CHANNEL%
+- set PATH=%PATH%;C:\Users\appveyor\.cargo\bin
+- rustc -Vv
+- cargo -V
 
 test_script:
-  - cargo build
-  - cargo test
+  - cargo check --verbose
+  - cargo test --verbose
+
+cache:
+- C:\Users\appveyor\.cargo\registry
+- target
+
+notifications:
+- provider: Email
+  on_build_success: false
+
+# Building is done in the test phase, so we disable Appveyor's build phase.
+build: false

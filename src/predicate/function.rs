@@ -17,7 +17,7 @@ use Predicate;
 #[derive(Debug)]
 pub struct FnPredicate<F, T>
 where
-    F: Fn(&T) -> bool
+    F: Fn(&T) -> bool,
 {
     function: F,
     _phantom: PhantomData<T>,
