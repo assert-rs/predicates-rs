@@ -1,12 +1,12 @@
 # predicates-rs
 
-This library is an implementation of **boolean-valued predicate functions** in Rust.
+> This library is an implementation of **boolean-valued predicate functions** in Rust.
 
 [![Build Status](https://travis-ci.org/assert-rs/predicates-rs.svg?branch=master)](https://travis-ci.org/assert-rs/predicates-rs)
 [![Build status](https://ci.appveyor.com/api/projects/status/enru6k55xme867u6?svg=true)](https://ci.appveyor.com/project/epage/predicates-rs)
+[![Documentation](https://img.shields.io/badge/docs-master-blue.svg)](https://docs.rs/predicates)
+![License](https://img.shields.io/crates/l/predicates.svg)
 [![Crates.io](https://img.shields.io/crates/v/predicates.svg?maxAge=2592000)](https://crates.io/crates/predicates)
-
-[Documentation](https://docs.rs/predicates)
 
 [Changelog](https://github.com/assert-rs/predicates-rs/blob/master/CHANGELOG.md)
 
