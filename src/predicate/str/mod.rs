@@ -14,3 +14,8 @@
 mod difference;
 #[cfg(feature = "difference")]
 pub use self::difference::{diff, similar, DifferencePredicate};
+
+#[cfg(feature = "regex")]
+mod regex;
+#[cfg(feature = "regex")]
+pub use self::regex::{is_match, RegexError, RegexPredicate};

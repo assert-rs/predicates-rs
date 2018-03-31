@@ -87,6 +87,8 @@
 
 #[cfg(feature = "difference")]
 extern crate difference;
+#[cfg(feature = "regex")]
+extern crate regex;
 
 // core `Predicate` trait
 pub mod predicate;
