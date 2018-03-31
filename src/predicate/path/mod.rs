@@ -12,3 +12,5 @@
 
 mod existence;
 pub use self::existence::{exists, missing, ExistencePredicate};
+mod ft;
+pub use self::ft::{is_dir, is_file, is_symlink, FileTypePredicate};
