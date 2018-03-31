@@ -22,6 +22,9 @@ pub use self::ord::{eq, ge, gt, le, lt, ne, EqPredicate, OrdPredicate};
 pub use self::set::{contains, contains_hashable, contains_ord, ContainsPredicate,
                     HashableContainsPredicate, OrdContainsPredicate};
 
+// specialized primitive `Predicate` types
+pub mod str;
+
 // combinators
 mod boolean;
 mod boxed;

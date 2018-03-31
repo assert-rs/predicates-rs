@@ -85,6 +85,9 @@
 
 #![deny(missing_docs, missing_debug_implementations)]
 
+#[cfg(feature = "difference")]
+extern crate difference;
+
 // core `Predicate` trait
 pub mod predicate;
 pub use self::predicate::{BoxPredicate, Predicate};
