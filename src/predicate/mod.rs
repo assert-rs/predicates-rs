@@ -24,6 +24,7 @@ pub use self::set::{contains, contains_hashable, contains_ord, ContainsPredicate
 
 // specialized primitive `Predicate` types
 pub mod str;
+pub mod path;
 
 // combinators
 mod boolean;
