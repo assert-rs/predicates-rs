@@ -87,6 +87,8 @@
 
 #[cfg(feature = "difference")]
 extern crate difference;
+#[cfg(feature = "float-cmp")]
+extern crate float_cmp;
 #[cfg(feature = "regex")]
 extern crate regex;
 
