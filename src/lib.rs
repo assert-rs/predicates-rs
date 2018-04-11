@@ -85,6 +85,13 @@
 
 #![deny(missing_docs, missing_debug_implementations)]
 
+#[cfg(feature = "difference")]
+extern crate difference;
+#[cfg(feature = "float-cmp")]
+extern crate float_cmp;
+#[cfg(feature = "regex")]
+extern crate regex;
+
 // core `Predicate` trait
 pub mod predicate;
 pub use self::predicate::{BoxPredicate, Predicate};

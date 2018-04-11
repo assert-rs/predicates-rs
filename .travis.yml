@@ -30,6 +30,7 @@ install:
 - cargo -V
 
 script:
+- cargo check --verbose --no-default-features
 - cargo check --verbose
 - cargo test --verbose
 - cargo doc --no-deps
