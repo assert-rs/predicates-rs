@@ -41,7 +41,7 @@ where
 /// # Examples
 ///
 /// ```
-/// use predicates::predicate::{self, Predicate};
+/// use predicates::prelude::*;
 ///
 /// struct Example {
 ///     string: String,

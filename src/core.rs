@@ -1,37 +1,13 @@
-// Copyright (c) 2017, Nick Stevens <nick@bitcurry.com>
+// Copyright (c) 2018 The predicates-rs Project Developers.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
-// http://www.apache.org/license/LICENSE-2.0> or the MIT license
+// http://www.apache.org/licenses/LICENSE-2.0> or the MIT license
 // <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-//! Predicate
-//!
-//! This module contains the `Predicate` trait and a number of combinators for
-//! the trait. See the crate docs, and the docs for `Predicate`, for full detail.
-
-// primitive `Predicate` types
-mod constant;
-mod function;
-mod ord;
-mod set;
-pub use self::constant::{always, never, BooleanPredicate};
-pub use self::function::{function, FnPredicate};
-pub use self::ord::{eq, ge, gt, le, lt, ne, EqPredicate, OrdPredicate};
-pub use self::set::{contains, contains_hashable, contains_ord, ContainsPredicate,
-                    HashableContainsPredicate, OrdContainsPredicate};
-
-// specialized primitive `Predicate` types
-pub mod str;
-pub mod path;
-pub mod float;
-
-// combinators
-mod boolean;
-mod boxed;
-pub use self::boolean::{AndPredicate, NotPredicate, OrPredicate};
-pub use self::boxed::BoxPredicate;
+use boolean::{AndPredicate, NotPredicate, OrPredicate};
+use boxed::BoxPredicate;
 
 /// Trait for generically evaluating a type against a dynamically created
 /// predicate function.
@@ -53,10 +29,10 @@ pub trait Predicate {
     /// # Examples
     ///
     /// ```
-    /// use predicates::predicate::*;
+    /// use predicates::prelude::*;
     ///
-    /// let predicate_fn1 = always().and(always());
-    /// let predicate_fn2 = always().and(never());
+    /// let predicate_fn1 = predicate::always().and(predicate::always());
+    /// let predicate_fn2 = predicate::always().and(predicate::never());
     /// assert_eq!(true, predicate_fn1.eval(&4));
     /// assert_eq!(false, predicate_fn2.eval(&4));
     fn and<B>(self, other: B) -> AndPredicate<Self, B>
@@ -72,11 +48,11 @@ pub trait Predicate {
     /// # Examples
     ///
     /// ```
-    /// use predicates::predicate::*;
+    /// use predicates::prelude::*;
     ///
-    /// let predicate_fn1 = always().or(always());
-    /// let predicate_fn2 = always().or(never());
-    /// let predicate_fn3 = never().or(never());
+    /// let predicate_fn1 = predicate::always().or(predicate::always());
+    /// let predicate_fn2 = predicate::always().or(predicate::never());
+    /// let predicate_fn3 = predicate::never().or(predicate::never());
     /// assert_eq!(true, predicate_fn1.eval(&4));
     /// assert_eq!(true, predicate_fn2.eval(&4));
     /// assert_eq!(false, predicate_fn3.eval(&4));
@@ -93,10 +69,10 @@ pub trait Predicate {
     /// # Examples
     ///
     /// ```
-    /// use predicates::predicate::*;
+    /// use predicates::prelude::*;
     ///
-    /// let predicate_fn1 = always().not();
-    /// let predicate_fn2 = never().not();
+    /// let predicate_fn1 = predicate::always().not();
+    /// let predicate_fn2 = predicate::never().not();
     /// assert_eq!(false, predicate_fn1.eval(&4));
     /// assert_eq!(true, predicate_fn2.eval(&4));
     fn not(self) -> NotPredicate<Self>
@@ -121,11 +97,11 @@ pub trait Predicate {
     /// # Examples
     ///
     /// ```
-    /// use predicates::predicate::*;
+    /// use predicates::prelude::*;
     ///
     /// let predicates = vec![
-    ///     always().boxed(),
-    ///     never().boxed(),
+    ///     predicate::always().boxed(),
+    ///     predicate::never().boxed(),
     /// ];
     /// assert_eq!(true, predicates[0].eval(&4));
     /// assert_eq!(false, predicates[1].eval(&4));

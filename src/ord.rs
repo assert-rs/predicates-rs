@@ -46,9 +46,9 @@ where
 /// # Examples
 ///
 /// ```
-/// use predicates::predicate::*;
+/// use predicates::prelude::*;
 ///
-/// let predicate_fn = eq(5);
+/// let predicate_fn = predicate::eq(5);
 /// assert_eq!(true, predicate_fn.eval(&5));
 /// assert_eq!(false, predicate_fn.eval(&10));
 /// ```
@@ -68,9 +68,9 @@ where
 /// # Examples
 ///
 /// ```
-/// use predicates::predicate::*;
+/// use predicates::prelude::*;
 ///
-/// let predicate_fn = ne(5);
+/// let predicate_fn = predicate::ne(5);
 /// assert_eq!(false, predicate_fn.eval(&5));
 /// assert_eq!(true, predicate_fn.eval(&10));
 /// ```
@@ -124,9 +124,9 @@ where
 /// # Examples
 ///
 /// ```
-/// use predicates::predicate::*;
+/// use predicates::prelude::*;
 ///
-/// let predicate_fn = lt(5);
+/// let predicate_fn = predicate::lt(5);
 /// assert_eq!(true, predicate_fn.eval(&4));
 /// assert_eq!(false, predicate_fn.eval(&6));
 /// ```
@@ -146,9 +146,9 @@ where
 /// # Examples
 ///
 /// ```
-/// use predicates::predicate::*;
+/// use predicates::prelude::*;
 ///
-/// let predicate_fn = le(5);
+/// let predicate_fn = predicate::le(5);
 /// assert_eq!(true, predicate_fn.eval(&4));
 /// assert_eq!(true, predicate_fn.eval(&5));
 /// assert_eq!(false, predicate_fn.eval(&6));
@@ -169,9 +169,9 @@ where
 /// # Examples
 ///
 /// ```
-/// use predicates::predicate::*;
+/// use predicates::prelude::*;
 ///
-/// let predicate = ge(5);
+/// let predicate = predicate::ge(5);
 /// assert_eq!(false, predicate.eval(&4));
 /// assert_eq!(true, predicate.eval(&5));
 /// assert_eq!(true, predicate.eval(&6));
@@ -192,9 +192,9 @@ where
 /// # Examples
 ///
 /// ```
-/// use predicates::predicate::*;
+/// use predicates::prelude::*;
 ///
-/// let predicate_fn = gt(5);
+/// let predicate_fn = predicate::gt(5);
 /// assert_eq!(false, predicate_fn.eval(&4));
 /// assert_eq!(false, predicate_fn.eval(&5));
 /// assert_eq!(true, predicate_fn.eval(&6));

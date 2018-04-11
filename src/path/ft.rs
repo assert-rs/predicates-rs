@@ -70,9 +70,9 @@ impl Predicate for FileTypePredicate {
 ///
 /// ```
 /// use std::path::Path;
-/// use predicates::predicate::*;
+/// use predicates::prelude::*;
 ///
-/// let predicate_fn = path::is_file();
+/// let predicate_fn = predicate::path::is_file();
 /// assert_eq!(true, predicate_fn.eval(Path::new("Cargo.toml")));
 /// assert_eq!(false, predicate_fn.eval(Path::new("src")));
 /// assert_eq!(false, predicate_fn.eval(Path::new("non-existent-file.foo")));
@@ -90,9 +90,9 @@ pub fn is_file() -> FileTypePredicate {
 ///
 /// ```
 /// use std::path::Path;
-/// use predicates::predicate::*;
+/// use predicates::prelude::*;
 ///
-/// let predicate_fn = path::is_dir();
+/// let predicate_fn = predicate::path::is_dir();
 /// assert_eq!(false, predicate_fn.eval(Path::new("Cargo.toml")));
 /// assert_eq!(true, predicate_fn.eval(Path::new("src")));
 /// assert_eq!(false, predicate_fn.eval(Path::new("non-existent-file.foo")));
@@ -110,9 +110,9 @@ pub fn is_dir() -> FileTypePredicate {
 ///
 /// ```
 /// use std::path::Path;
-/// use predicates::predicate::*;
+/// use predicates::prelude::*;
 ///
-/// let predicate_fn = path::is_symlink();
+/// let predicate_fn = predicate::path::is_symlink();
 /// assert_eq!(false, predicate_fn.eval(Path::new("Cargo.toml")));
 /// assert_eq!(false, predicate_fn.eval(Path::new("src")));
 /// assert_eq!(false, predicate_fn.eval(Path::new("non-existent-file.foo")));

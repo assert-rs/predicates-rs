@@ -55,9 +55,9 @@ where
 /// # Examples
 ///
 /// ```
-/// use predicates::predicate::*;
+/// use predicates::prelude::*;
 ///
-/// let predicate_fn = contains(vec![1, 3, 5]);
+/// let predicate_fn = predicate::contains(vec![1, 3, 5]);
 /// assert_eq!(true, predicate_fn.eval(&1));
 /// assert_eq!(false, predicate_fn.eval(&2));
 /// assert_eq!(true, predicate_fn.eval(&3));
@@ -113,9 +113,9 @@ where
 /// # Examples
 ///
 /// ```
-/// use predicates::predicate::*;
+/// use predicates::prelude::*;
 ///
-/// let predicate_fn = contains_ord(vec![1, 3, 5]);
+/// let predicate_fn = predicate::contains_ord(vec![1, 3, 5]);
 /// assert_eq!(true, predicate_fn.eval(&1));
 /// assert_eq!(false, predicate_fn.eval(&2));
 /// assert_eq!(true, predicate_fn.eval(&3));
@@ -171,9 +171,9 @@ where
 /// # Examples
 ///
 /// ```
-/// use predicates::predicate::*;
+/// use predicates::prelude::*;
 ///
-/// let predicate_fn = contains_hashable(vec![1, 3, 5]);
+/// let predicate_fn = predicate::contains_hashable(vec![1, 3, 5]);
 /// assert_eq!(true, predicate_fn.eval(&1));
 /// assert_eq!(false, predicate_fn.eval(&2));
 /// assert_eq!(true, predicate_fn.eval(&3));

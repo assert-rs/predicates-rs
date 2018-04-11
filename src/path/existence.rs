@@ -32,9 +32,9 @@ impl Predicate for ExistencePredicate {
 ///
 /// ```
 /// use std::path::Path;
-/// use predicates::predicate::*;
+/// use predicates::prelude::*;
 ///
-/// let predicate_fn = path::exists();
+/// let predicate_fn = predicate::path::exists();
 /// assert_eq!(true, predicate_fn.eval(Path::new("Cargo.toml")));
 /// ```
 pub fn exists() -> ExistencePredicate {
@@ -47,9 +47,9 @@ pub fn exists() -> ExistencePredicate {
 ///
 /// ```
 /// use std::path::Path;
-/// use predicates::predicate::*;
+/// use predicates::prelude::*;
 ///
-/// let predicate_fn = path::missing();
+/// let predicate_fn = predicate::path::missing();
 /// assert_eq!(true, predicate_fn.eval(Path::new("non-existent-file.foo")));
 /// ```
 pub fn missing() -> ExistencePredicate {
