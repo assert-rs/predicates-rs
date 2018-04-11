@@ -8,7 +8,7 @@
 
 //! String Predicates
 //!
-//! This module contains predicates specifiuc to string handling.
+//! This module contains predicates specific to string handling.
 
 #[cfg(feature = "difference")]
 mod difference;

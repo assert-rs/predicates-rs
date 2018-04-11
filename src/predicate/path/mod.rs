@@ -8,7 +8,7 @@
 
 //! Path Predicates
 //!
-//! This module contains predicates specifiuc to the file system.
+//! This module contains predicates specific to the file system.
 
 mod existence;
 pub use self::existence::{exists, missing, ExistencePredicate};

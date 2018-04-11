@@ -25,7 +25,7 @@ pub struct IsClosePredicate {
 impl IsClosePredicate {
     /// Set the amount of error allowed.
     ///
-    /// Values `1`-`5` should work in most cases.  Some times more control is needed and you will
+    /// Values `1`-`5` should work in most cases.  Sometimes more control is needed and you will
     /// need to set `IsClosePredicate::epsilon` separately from `IsClosePredicate::ulps`.
     ///
     /// # Examples

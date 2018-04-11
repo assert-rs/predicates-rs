@@ -8,7 +8,7 @@
 
 //! Float Predicates
 //!
-//! This module contains predicates specifiuc to string handling.
+//! This module contains predicates specific to string handling.
 
 #[cfg(feature = "float-cmp")]
 mod close;
