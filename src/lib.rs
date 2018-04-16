@@ -32,7 +32,7 @@
 //! A few different examples of how predicates might be used:
 //!
 //! ```
-//! use predicates::{predicate, Predicate};
+//! use predicates::prelude::*;
 //!
 //! // The simplest predicates are `always()` and `never()`, which always returns
 //! // `true` and always returns `false`, respectively. The values are simply
@@ -92,6 +92,23 @@ extern crate float_cmp;
 #[cfg(feature = "regex")]
 extern crate regex;
 
-// core `Predicate` trait
-pub mod predicate;
-pub use self::predicate::{BoxPredicate, Predicate};
+pub mod prelude;
+
+mod core;
+pub use core::Predicate;
+mod boxed;
+pub use boxed::BoxPredicate;
+
+// core predicates
+pub mod constant;
+pub mod function;
+pub mod ord;
+pub mod set;
+
+// combinators
+pub mod boolean;
+
+// specialized primitive `Predicate` types
+pub mod str;
+pub mod path;
+pub mod float;

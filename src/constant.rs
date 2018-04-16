@@ -34,9 +34,9 @@ impl<T> Predicate for BooleanPredicate<T> {
 /// # Examples
 ///
 /// ```
-/// use predicates::predicate::*;
+/// use predicates::prelude::*;
 ///
-/// let predicate_fn = always();
+/// let predicate_fn = predicate::always();
 /// assert_eq!(true, predicate_fn.eval(&5));
 /// assert_eq!(true, predicate_fn.eval(&10));
 /// assert_eq!(true, predicate_fn.eval(&15));
@@ -55,9 +55,9 @@ pub fn always<T>() -> BooleanPredicate<T> {
 /// # Examples
 ///
 /// ```
-/// use predicates::predicate::*;
+/// use predicates::prelude::*;
 ///
-/// let predicate_fn = never();
+/// let predicate_fn = predicate::never();
 /// assert_eq!(false, predicate_fn.eval(&5));
 /// assert_eq!(false, predicate_fn.eval(&10));
 /// assert_eq!(false, predicate_fn.eval(&15));

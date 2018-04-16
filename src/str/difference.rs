@@ -44,16 +44,16 @@ impl DifferencePredicate {
     /// Common splits include:
     /// - `""` for char-level.
     /// - `" "` for word-level.
-    /// - `"\n" for line-level.
+    /// - `"\n"` for line-level.
     ///
     /// Default: `"\n"`
     ///
     /// # Examples
     ///
     /// ```
-    /// use predicates::predicate::*;
+    /// use predicates::prelude::*;
     ///
-    /// let predicate_fn = str::similar("Hello World").split(" ");
+    /// let predicate_fn = predicate::str::similar("Hello World").split(" ");
     /// assert_eq!(true, predicate_fn.eval("Hello World"));
     /// ```
     pub fn split<S>(mut self, split: S) -> Self
@@ -71,9 +71,9 @@ impl DifferencePredicate {
     /// # Examples
     ///
     /// ```
-    /// use predicates::predicate::*;
+    /// use predicates::prelude::*;
     ///
-    /// let predicate_fn = str::similar("Hello World!").split("").distance(1);
+    /// let predicate_fn = predicate::str::similar("Hello World!").split("").distance(1);
     /// assert_eq!(true, predicate_fn.eval("Hello World!"));
     /// assert_eq!(true, predicate_fn.eval("Hello World"));
     /// assert_eq!(false, predicate_fn.eval("Hello World?"));
@@ -98,9 +98,9 @@ impl Predicate for DifferencePredicate {
 /// # Examples
 ///
 /// ```
-/// use predicates::predicate::*;
+/// use predicates::prelude::*;
 ///
-/// let predicate_fn = str::diff("Hello World");
+/// let predicate_fn = predicate::str::diff("Hello World");
 /// assert_eq!(false, predicate_fn.eval("Hello World"));
 /// assert_eq!(true, predicate_fn.eval("Goodbye World"));
 /// ```
@@ -121,9 +121,9 @@ where
 /// # Examples
 ///
 /// ```
-/// use predicates::predicate::*;
+/// use predicates::prelude::*;
 ///
-/// let predicate_fn = str::similar("Hello World");
+/// let predicate_fn = predicate::str::similar("Hello World");
 /// assert_eq!(true, predicate_fn.eval("Hello World"));
 /// assert_eq!(false, predicate_fn.eval("Goodbye World"));
 /// ```

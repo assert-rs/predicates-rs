@@ -31,10 +31,10 @@ impl IsClosePredicate {
     /// # Examples
     ///
     /// ```
-    /// use predicates::predicate::*;
+    /// use predicates::prelude::*;
     ///
     /// let a = 0.15_f64 + 0.15_f64 + 0.15_f64;
-    /// let predicate_fn = float::is_close(a).distance(5);
+    /// let predicate_fn = predicate::float::is_close(a).distance(5);
     /// ```
     pub fn distance(mut self, distance: <f64 as Ulps>::U) -> Self {
         self.epsilon = (distance as f64) * ::std::f64::EPSILON;
@@ -50,10 +50,10 @@ impl IsClosePredicate {
     /// # Examples
     ///
     /// ```
-    /// use predicates::predicate::*;
+    /// use predicates::prelude::*;
     ///
     /// let a = 0.15_f64 + 0.15_f64 + 0.15_f64;
-    /// let predicate_fn = float::is_close(a).epsilon(5.0 * ::std::f64::EPSILON);
+    /// let predicate_fn = predicate::float::is_close(a).epsilon(5.0 * ::std::f64::EPSILON);
     /// ```
     pub fn epsilon(mut self, epsilon: f64) -> Self {
         self.epsilon = epsilon;
@@ -67,10 +67,10 @@ impl IsClosePredicate {
     /// # Examples
     ///
     /// ```
-    /// use predicates::predicate::*;
+    /// use predicates::prelude::*;
     ///
     /// let a = 0.15_f64 + 0.15_f64 + 0.15_f64;
-    /// let predicate_fn = float::is_close(a).ulps(5);
+    /// let predicate_fn = predicate::float::is_close(a).ulps(5);
     /// ```
     pub fn ulps(mut self, ulps: <f64 as Ulps>::U) -> Self {
         self.ulps = ulps;
@@ -92,11 +92,11 @@ impl Predicate for IsClosePredicate {
 /// # Examples
 ///
 /// ```
-/// use predicates::predicate::*;
+/// use predicates::prelude::*;
 ///
 /// let a = 0.15_f64 + 0.15_f64 + 0.15_f64;
 /// let b = 0.1_f64 + 0.1_f64 + 0.25_f64;
-/// let predicate_fn = float::is_close(a);
+/// let predicate_fn = predicate::float::is_close(a);
 /// assert_eq!(true, predicate_fn.eval(&b));
 /// assert_eq!(false, predicate_fn.distance(0).eval(&b));
 /// ```

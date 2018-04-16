@@ -34,9 +34,9 @@ impl Predicate for RegexPredicate {
 /// # Examples
 ///
 /// ```
-/// use predicates::predicate::*;
+/// use predicates::prelude::*;
 ///
-/// let predicate_fn = str::is_match("^Hel.o.*$").unwrap();
+/// let predicate_fn = predicate::str::is_match("^Hel.o.*$").unwrap();
 /// assert_eq!(true, predicate_fn.eval("Hello World"));
 /// assert_eq!(false, predicate_fn.eval("Food World"));
 /// ```
