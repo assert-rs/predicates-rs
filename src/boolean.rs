@@ -1,4 +1,4 @@
-// Copyright (c) 2017, Nick Stevens <nick@bitcurry.com>
+// Copyright (c) 2018 The predicates-rs Project Developers.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // http://www.apache.org/license/LICENSE-2.0> or the MIT license
