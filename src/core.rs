@@ -16,13 +16,10 @@ use boxed::BoxPredicate;
 /// mean that the evaluated item is in some sort of pre-defined set.  This is
 /// different from `Ord` and `Eq` in that an `item` will almost never be the
 /// same type as the implementing `Predicate` type.
-pub trait Predicate {
-    /// The type that this `Predicate` will accept for evaluating.
-    type Item: ?Sized;
-
+pub trait Predicate<Item: ?Sized> {
     /// Execute this `Predicate` against `variable`, returning the resulting
     /// boolean.
-    fn eval(&self, variable: &Self::Item) -> bool;
+    fn eval(&self, variable: &Item) -> bool;
 
     /// Compute the logical AND of two `Predicate` results, returning the result.
     ///
@@ -35,9 +32,9 @@ pub trait Predicate {
     /// let predicate_fn2 = predicate::always().and(predicate::never());
     /// assert_eq!(true, predicate_fn1.eval(&4));
     /// assert_eq!(false, predicate_fn2.eval(&4));
-    fn and<B>(self, other: B) -> AndPredicate<Self, B>
+    fn and<B>(self, other: B) -> AndPredicate<Self, B, Item>
     where
-        B: Predicate<Item = Self::Item>,
+        B: Predicate<Item>,
         Self: Sized,
     {
         AndPredicate::new(self, other)
@@ -56,9 +53,9 @@ pub trait Predicate {
     /// assert_eq!(true, predicate_fn1.eval(&4));
     /// assert_eq!(true, predicate_fn2.eval(&4));
     /// assert_eq!(false, predicate_fn3.eval(&4));
-    fn or<B>(self, other: B) -> OrPredicate<Self, B>
+    fn or<B>(self, other: B) -> OrPredicate<Self, B, Item>
     where
-        B: Predicate<Item = Self::Item>,
+        B: Predicate<Item>,
         Self: Sized,
     {
         OrPredicate::new(self, other)
@@ -75,7 +72,7 @@ pub trait Predicate {
     /// let predicate_fn2 = predicate::never().not();
     /// assert_eq!(false, predicate_fn1.eval(&4));
     /// assert_eq!(true, predicate_fn2.eval(&4));
-    fn not(self) -> NotPredicate<Self>
+    fn not(self) -> NotPredicate<Self, Item>
     where
         Self: Sized,
     {
@@ -106,7 +103,7 @@ pub trait Predicate {
     /// assert_eq!(true, predicates[0].eval(&4));
     /// assert_eq!(false, predicates[1].eval(&4));
     /// ```
-    fn boxed(self) -> BoxPredicate<Self::Item>
+    fn boxed(self) -> BoxPredicate<Item>
     where
         Self: Sized + Send + Sync + 'static,
     {

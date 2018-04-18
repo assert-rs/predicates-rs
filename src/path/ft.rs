@@ -49,9 +49,7 @@ impl FileTypePredicate {
     }
 }
 
-impl Predicate for FileTypePredicate {
-    type Item = path::Path;
-
+impl Predicate<path::Path> for FileTypePredicate {
     fn eval(&self, path: &path::Path) -> bool {
         let metadata = if self.follow {
             path.metadata()

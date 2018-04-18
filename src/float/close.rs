@@ -78,9 +78,7 @@ impl IsClosePredicate {
     }
 }
 
-impl Predicate for IsClosePredicate {
-    type Item = f64;
-
+impl Predicate<f64> for IsClosePredicate {
     fn eval(&self, variable: &f64) -> bool {
         variable.approx_eq(&self.target, self.epsilon, self.ulps)
     }

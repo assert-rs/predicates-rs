@@ -21,9 +21,7 @@ pub struct RegexPredicate {
     re: regex::Regex,
 }
 
-impl Predicate for RegexPredicate {
-    type Item = str;
-
+impl Predicate<str> for RegexPredicate {
     fn eval(&self, variable: &str) -> bool {
         self.re.is_match(variable)
     }

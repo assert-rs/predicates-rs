@@ -23,12 +23,10 @@ where
     _phantom: PhantomData<T>,
 }
 
-impl<F, T> Predicate for FnPredicate<F, T>
+impl<F, T> Predicate<T> for FnPredicate<F, T>
 where
     F: Fn(&T) -> bool,
 {
-    type Item = T;
-
     fn eval(&self, variable: &T) -> bool {
         (self.function)(variable)
     }

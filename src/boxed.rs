@@ -15,35 +15,45 @@ use Predicate;
 
 /// `Predicate` that wraps another `Predicate` as a trait object, allowing
 /// sized storage of predicate types.
-pub struct BoxPredicate<T: ?Sized>(Box<Predicate<Item = T> + Send + Sync>);
+pub struct BoxPredicate<Item: ?Sized>(Box<Predicate<Item> + Send + Sync>);
 
-impl<T> fmt::Debug for BoxPredicate<T> {
+impl<Item> BoxPredicate<Item>
+where
+    Item: ?Sized,
+{
+    /// Creates a new `BoxPredicate`, a wrapper around a dynamically-dispatched
+    /// `Predicate` type with useful trait impls.
+    pub fn new<P: Predicate<Item>>(inner: P) -> BoxPredicate<Item>
+    where
+        P: Send + Sync + 'static,
+    {
+        BoxPredicate(Box::new(inner))
+    }
+}
+
+impl<Item> fmt::Debug for BoxPredicate<Item>
+where
+    Item: ?Sized,
+{
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         f.debug_struct("BoxPredicate").finish()
     }
 }
 
-impl<T> fmt::Display for BoxPredicate<T> {
+impl<Item> fmt::Display for BoxPredicate<Item>
+where
+    Item: ?Sized,
+{
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "BoxPredicate")
     }
 }
 
-impl<T: ?Sized> Predicate for BoxPredicate<T> {
-    type Item = T;
-
-    fn eval(&self, variable: &Self::Item) -> bool {
+impl<Item> Predicate<Item> for BoxPredicate<Item>
+where
+    Item: ?Sized,
+{
+    fn eval(&self, variable: &Item) -> bool {
         self.0.eval(variable)
-    }
-}
-
-impl<T: ?Sized> BoxPredicate<T> {
-    /// Creates a new `BoxPredicate`, a wrapper around a dynamically-dispatched
-    /// `Predicate` type with useful trait impls.
-    pub fn new<P: Predicate<Item = T>>(inner: P) -> BoxPredicate<T>
-    where
-        P: Send + Sync + 'static,
-    {
-        BoxPredicate(Box::new(inner))
     }
 }
