@@ -16,7 +16,7 @@ pub mod predicate {
     pub use constant::{always, never};
     pub use function::function;
     pub use ord::{eq, ge, gt, le, lt, ne};
-    pub use set::{contains, contains_hashable, contains_ord};
+    pub use iter::{contains, contains_hashable, contains_ord};
 
     /// `str` Predicate factories
     ///

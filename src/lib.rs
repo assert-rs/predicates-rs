@@ -102,7 +102,7 @@ pub use boxed::BoxPredicate;
 pub mod constant;
 pub mod function;
 pub mod ord;
-pub mod set;
+pub mod iter;
 
 // combinators
 pub mod boolean;
