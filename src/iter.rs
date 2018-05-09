@@ -31,6 +31,37 @@ where
     inner: Vec<T>,
 }
 
+impl<T> ContainsPredicate<T>
+where
+    T: Ord,
+{
+    /// Creates a new predicate that will return `true` when the given `variable` is
+    /// contained with the set of items provided.
+    ///
+    /// Note that this implementation requires `Item` to be `Ord`. The
+    /// `ContainsPredicate` uses a less efficient search algorithm but only
+    /// requires `Item` implement `PartialEq`. The implementation-specific
+    /// predicates will be deprecated when Rust supports trait specialization.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use predicates::prelude::*;
+    ///
+    /// let predicate_fn = predicate::contains(vec![1, 3, 5]).ord();
+    /// assert_eq!(true, predicate_fn.eval(&1));
+    /// assert_eq!(false, predicate_fn.eval(&2));
+    /// assert_eq!(true, predicate_fn.eval(&3));
+    /// assert_eq!(false, predicate_fn.eval(&4));
+    /// assert_eq!(true, predicate_fn.eval(&5));
+    /// ```
+    pub fn ord(self) -> OrdContainsPredicate<T> {
+        let mut items = self.inner;
+        items.sort();
+        OrdContainsPredicate { inner: items }
+    }
+}
+
 impl<T> Predicate<T> for ContainsPredicate<T>
 where
     T: PartialEq,
@@ -80,7 +111,7 @@ where
 /// requires `Item` implement `PartialEq`. The implementation-specific
 /// predicates will be deprecated when Rust supports trait specialization.
 ///
-/// This is created by the `predicate::contains_ord` function.
+/// This is created by the `predicate::contains(...).ord` function.
 #[derive(Debug)]
 pub struct OrdContainsPredicate<T>
 where
@@ -96,36 +127,6 @@ where
     fn eval(&self, variable: &T) -> bool {
         self.inner.binary_search(variable).is_ok()
     }
-}
-
-/// Creates a new predicate that will return `true` when the given `variable` is
-/// contained with the set of items provided.
-///
-/// Note that this implementation requires `Item` to be `Ord`. The
-/// `ContainsPredicate` uses a less efficient search algorithm but only
-/// requires `Item` implement `PartialEq`. The implementation-specific
-/// predicates will be deprecated when Rust supports trait specialization.
-///
-/// # Examples
-///
-/// ```
-/// use predicates::prelude::*;
-///
-/// let predicate_fn = predicate::contains_ord(vec![1, 3, 5]);
-/// assert_eq!(true, predicate_fn.eval(&1));
-/// assert_eq!(false, predicate_fn.eval(&2));
-/// assert_eq!(true, predicate_fn.eval(&3));
-/// assert_eq!(false, predicate_fn.eval(&4));
-/// assert_eq!(true, predicate_fn.eval(&5));
-/// ```
-pub fn contains_ord<I, T>(iter: I) -> OrdContainsPredicate<T>
-where
-    T: Ord,
-    I: IntoIterator<Item = T>,
-{
-    let mut items = Vec::from_iter(iter);
-    items.sort();
-    OrdContainsPredicate { inner: items }
 }
 
 /// Predicate that returns `true` if `variable` is a member of the pre-defined
