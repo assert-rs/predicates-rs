@@ -25,7 +25,7 @@ Next, add this to your crate:
 ```rust
 extern crate predicates;
 
-use predicates::Predicate;
+use predicates::prelude::*;
 ```
 
 For more information on using predicates, look at the
