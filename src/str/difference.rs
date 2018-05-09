@@ -84,9 +84,7 @@ impl DifferencePredicate {
     }
 }
 
-impl Predicate for DifferencePredicate {
-    type Item = str;
-
+impl Predicate<str> for DifferencePredicate {
     fn eval(&self, edit: &str) -> bool {
         let change = difference::Changeset::new(&self.orig, edit, &self.split);
         self.op.eval(self.distance, change.distance)

@@ -31,13 +31,11 @@ where
     inner: Vec<T>,
 }
 
-impl<T> Predicate for ContainsPredicate<T>
+impl<T> Predicate<T> for ContainsPredicate<T>
 where
     T: PartialEq,
 {
-    type Item = T;
-
-    fn eval(&self, variable: &Self::Item) -> bool {
+    fn eval(&self, variable: &T) -> bool {
         self.inner.contains(variable)
     }
 }
@@ -91,13 +89,11 @@ where
     inner: Vec<T>,
 }
 
-impl<T> Predicate for OrdContainsPredicate<T>
+impl<T> Predicate<T> for OrdContainsPredicate<T>
 where
     T: Ord,
 {
-    type Item = T;
-
-    fn eval(&self, variable: &Self::Item) -> bool {
+    fn eval(&self, variable: &T) -> bool {
         self.inner.binary_search(variable).is_ok()
     }
 }
@@ -149,13 +145,11 @@ where
     inner: HashSet<T>,
 }
 
-impl<T> Predicate for HashableContainsPredicate<T>
+impl<T> Predicate<T> for HashableContainsPredicate<T>
 where
     T: Hash + Eq,
 {
-    type Item = T;
-
-    fn eval(&self, variable: &Self::Item) -> bool {
+    fn eval(&self, variable: &T) -> bool {
         self.inner.contains(variable)
     }
 }

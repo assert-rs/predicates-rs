@@ -26,13 +26,11 @@ pub struct EqPredicate<T> {
     op: EqOps,
 }
 
-impl<T> Predicate for EqPredicate<T>
+impl<T> Predicate<T> for EqPredicate<T>
 where
     T: PartialEq,
 {
-    type Item = T;
-
-    fn eval(&self, variable: &Self::Item) -> bool {
+    fn eval(&self, variable: &T) -> bool {
         match self.op {
             EqOps::Equal => variable.eq(&self.constant),
             EqOps::NotEqual => variable.ne(&self.constant),
@@ -102,13 +100,11 @@ pub struct OrdPredicate<T> {
     op: OrdOps,
 }
 
-impl<T> Predicate for OrdPredicate<T>
+impl<T> Predicate<T> for OrdPredicate<T>
 where
     T: PartialOrd,
 {
-    type Item = T;
-
-    fn eval(&self, variable: &Self::Item) -> bool {
+    fn eval(&self, variable: &T) -> bool {
         match self.op {
             OrdOps::LessThan => variable.lt(&self.constant),
             OrdOps::LessThanOrEqual => variable.le(&self.constant),

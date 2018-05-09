@@ -8,40 +8,48 @@
 
 //! Definition of boolean logic combinators over `Predicate`s.
 
+use std::marker::PhantomData;
+
 use Predicate;
 
 /// Predicate that combines two `Predicate`s, returning the AND of the results.
 ///
 /// This is created by the `Predicate::and` function.
 #[derive(Debug)]
-pub struct AndPredicate<M1, M2>
+pub struct AndPredicate<M1, M2, Item>
 where
-    M1: Predicate,
-    M2: Predicate<Item = M1::Item>,
+    M1: Predicate<Item>,
+    M2: Predicate<Item>,
+    Item: ?Sized,
 {
     a: M1,
     b: M2,
+    _phantom: PhantomData<Item>,
 }
 
-impl<M1, M2> AndPredicate<M1, M2>
+impl<M1, M2, Item> AndPredicate<M1, M2, Item>
 where
-    M1: Predicate,
-    M2: Predicate<Item = M1::Item>,
+    M1: Predicate<Item>,
+    M2: Predicate<Item>,
+    Item: ?Sized,
 {
     /// Create a new `AndPredicate` over predicates `a` and `b`.
-    pub fn new(a: M1, b: M2) -> AndPredicate<M1, M2> {
-        AndPredicate { a: a, b: b }
+    pub fn new(a: M1, b: M2) -> AndPredicate<M1, M2, Item> {
+        AndPredicate {
+            a: a,
+            b: b,
+            _phantom: PhantomData,
+        }
     }
 }
 
-impl<M1, M2> Predicate for AndPredicate<M1, M2>
+impl<M1, M2, Item> Predicate<Item> for AndPredicate<M1, M2, Item>
 where
-    M1: Predicate,
-    M2: Predicate<Item = M1::Item>,
+    M1: Predicate<Item>,
+    M2: Predicate<Item>,
+    Item: ?Sized,
 {
-    type Item = M1::Item;
-
-    fn eval(&self, item: &Self::Item) -> bool {
+    fn eval(&self, item: &Item) -> bool {
         self.a.eval(item) && self.b.eval(item)
     }
 }
@@ -50,34 +58,40 @@ where
 ///
 /// This is created by the `Predicate::or` function.
 #[derive(Debug)]
-pub struct OrPredicate<M1, M2>
+pub struct OrPredicate<M1, M2, Item>
 where
-    M1: Predicate,
-    M2: Predicate<Item = M1::Item>,
+    M1: Predicate<Item>,
+    M2: Predicate<Item>,
+    Item: ?Sized,
 {
     a: M1,
     b: M2,
+    _phantom: PhantomData<Item>,
 }
 
-impl<M1, M2> OrPredicate<M1, M2>
+impl<M1, M2, Item> OrPredicate<M1, M2, Item>
 where
-    M1: Predicate,
-    M2: Predicate<Item = M1::Item>,
+    M1: Predicate<Item>,
+    M2: Predicate<Item>,
+    Item: ?Sized,
 {
     /// Create a new `OrPredicate` over predicates `a` and `b`.
-    pub fn new(a: M1, b: M2) -> OrPredicate<M1, M2> {
-        OrPredicate { a: a, b: b }
+    pub fn new(a: M1, b: M2) -> OrPredicate<M1, M2, Item> {
+        OrPredicate {
+            a: a,
+            b: b,
+            _phantom: PhantomData,
+        }
     }
 }
 
-impl<M1, M2> Predicate for OrPredicate<M1, M2>
+impl<M1, M2, Item> Predicate<Item> for OrPredicate<M1, M2, Item>
 where
-    M1: Predicate,
-    M2: Predicate<Item = M1::Item>,
+    M1: Predicate<Item>,
+    M2: Predicate<Item>,
+    Item: ?Sized,
 {
-    type Item = M1::Item;
-
-    fn eval(&self, item: &Self::Item) -> bool {
+    fn eval(&self, item: &Item) -> bool {
         self.a.eval(item) || self.b.eval(item)
     }
 }
@@ -86,30 +100,35 @@ where
 ///
 /// This is created by the `Predicate::not` function.
 #[derive(Debug)]
-pub struct NotPredicate<M>
+pub struct NotPredicate<M, Item>
 where
-    M: Predicate,
+    M: Predicate<Item>,
+    Item: ?Sized,
 {
     inner: M,
+    _phantom: PhantomData<Item>,
 }
 
-impl<M> NotPredicate<M>
+impl<M, Item> NotPredicate<M, Item>
 where
-    M: Predicate,
+    M: Predicate<Item>,
+    Item: ?Sized,
 {
     /// Create a new `NotPredicate` over predicate `inner`.
-    pub fn new(inner: M) -> NotPredicate<M> {
-        NotPredicate { inner: inner }
+    pub fn new(inner: M) -> NotPredicate<M, Item> {
+        NotPredicate {
+            inner: inner,
+            _phantom: PhantomData,
+        }
     }
 }
 
-impl<M> Predicate for NotPredicate<M>
+impl<M, Item> Predicate<Item> for NotPredicate<M, Item>
 where
-    M: Predicate,
+    M: Predicate<Item>,
+    Item: ?Sized,
 {
-    type Item = M::Item;
-
-    fn eval(&self, item: &Self::Item) -> bool {
+    fn eval(&self, item: &Item) -> bool {
         !self.inner.eval(item)
     }
 }
