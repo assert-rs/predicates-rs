@@ -20,18 +20,18 @@ use Predicate;
 /// Note that this implementation places the fewest restrictions on the
 /// underlying `Item` type at the expense of having the least performant
 /// implementation (linear search). If the type to be searched is `Hash + Eq`,
-/// it is much more efficient to use `HashableContainsPredicate` and
-/// `contains_hashable`. The implementation-specific predicates will be
+/// it is much more efficient to use `HashableInPredicate` and
+/// `in_hash`. The implementation-specific predicates will be
 /// deprecated when Rust supports trait specialization.
 #[derive(Debug)]
-pub struct ContainsPredicate<T>
+pub struct InPredicate<T>
 where
     T: PartialEq,
 {
     inner: Vec<T>,
 }
 
-impl<T> ContainsPredicate<T>
+impl<T> InPredicate<T>
 where
     T: Ord,
 {
@@ -39,7 +39,7 @@ where
     /// contained with the set of items provided.
     ///
     /// Note that this implementation requires `Item` to be `Ord`. The
-    /// `ContainsPredicate` uses a less efficient search algorithm but only
+    /// `InPredicate` uses a less efficient search algorithm but only
     /// requires `Item` implement `PartialEq`. The implementation-specific
     /// predicates will be deprecated when Rust supports trait specialization.
     ///
@@ -48,21 +48,21 @@ where
     /// ```
     /// use predicates::prelude::*;
     ///
-    /// let predicate_fn = predicate::contains(vec![1, 3, 5]).ord();
+    /// let predicate_fn = predicate::in_iter(vec![1, 3, 5]).sort();
     /// assert_eq!(true, predicate_fn.eval(&1));
     /// assert_eq!(false, predicate_fn.eval(&2));
     /// assert_eq!(true, predicate_fn.eval(&3));
     /// assert_eq!(false, predicate_fn.eval(&4));
     /// assert_eq!(true, predicate_fn.eval(&5));
     /// ```
-    pub fn ord(self) -> OrdContainsPredicate<T> {
+    pub fn sort(self) -> OrdInPredicate<T> {
         let mut items = self.inner;
         items.sort();
-        OrdContainsPredicate { inner: items }
+        OrdInPredicate { inner: items }
     }
 }
 
-impl<T> Predicate<T> for ContainsPredicate<T>
+impl<T> Predicate<T> for InPredicate<T>
 where
     T: PartialEq,
 {
@@ -77,8 +77,8 @@ where
 /// Note that this implementation places the fewest restrictions on the
 /// underlying `Item` type at the expense of having the least performant
 /// implementation (linear search). If the type to be searched is `Hash + Eq`,
-/// it is much more efficient to use `HashableContainsPredicate` and
-/// `contains_hashable`. The implementation-specific predicates will be
+/// it is much more efficient to use `HashableInPredicate` and
+/// `in_hash`. The implementation-specific predicates will be
 /// deprecated when Rust supports trait specialization.
 ///
 /// # Examples
@@ -86,19 +86,19 @@ where
 /// ```
 /// use predicates::prelude::*;
 ///
-/// let predicate_fn = predicate::contains(vec![1, 3, 5]);
+/// let predicate_fn = predicate::in_iter(vec![1, 3, 5]);
 /// assert_eq!(true, predicate_fn.eval(&1));
 /// assert_eq!(false, predicate_fn.eval(&2));
 /// assert_eq!(true, predicate_fn.eval(&3));
 /// assert_eq!(false, predicate_fn.eval(&4));
 /// assert_eq!(true, predicate_fn.eval(&5));
 /// ```
-pub fn contains<I, T>(iter: I) -> ContainsPredicate<T>
+pub fn in_iter<I, T>(iter: I) -> InPredicate<T>
 where
     T: PartialEq,
     I: IntoIterator<Item = T>,
 {
-    ContainsPredicate {
+    InPredicate {
         inner: Vec::from_iter(iter),
     }
 }
@@ -107,20 +107,20 @@ where
 /// set, otherwise returns `false`.
 ///
 /// Note that this implementation requires `Item` to be `Ord`. The
-/// `ContainsPredicate` uses a less efficient search algorithm but only
+/// `InPredicate` uses a less efficient search algorithm but only
 /// requires `Item` implement `PartialEq`. The implementation-specific
 /// predicates will be deprecated when Rust supports trait specialization.
 ///
-/// This is created by the `predicate::contains(...).ord` function.
+/// This is created by the `predicate::in_iter(...).sort` function.
 #[derive(Debug)]
-pub struct OrdContainsPredicate<T>
+pub struct OrdInPredicate<T>
 where
     T: Ord,
 {
     inner: Vec<T>,
 }
 
-impl<T> Predicate<T> for OrdContainsPredicate<T>
+impl<T> Predicate<T> for OrdInPredicate<T>
 where
     T: Ord,
 {
@@ -133,20 +133,20 @@ where
 /// `HashSet`, otherwise returns `false`.
 ///
 /// Note that this implementation requires `Item` to be `Hash + Eq`. The
-/// `ContainsPredicate` uses a less efficient search algorithm but only
+/// `InPredicate` uses a less efficient search algorithm but only
 /// requires `Item` implement `PartialEq`. The implementation-specific
 /// predicates will be deprecated when Rust supports trait specialization.
 ///
-/// This is created by the `predicate::contains_hashable` function.
+/// This is created by the `predicate::in_hash` function.
 #[derive(Debug)]
-pub struct HashableContainsPredicate<T>
+pub struct HashableInPredicate<T>
 where
     T: Hash + Eq,
 {
     inner: HashSet<T>,
 }
 
-impl<T> Predicate<T> for HashableContainsPredicate<T>
+impl<T> Predicate<T> for HashableInPredicate<T>
 where
     T: Hash + Eq,
 {
@@ -159,7 +159,7 @@ where
 /// contained with the set of items provided.
 ///
 /// Note that this implementation requires `Item` to be `Hash + Eq`. The
-/// `ContainsPredicate` uses a less efficient search algorithm but only
+/// `InPredicate` uses a less efficient search algorithm but only
 /// requires `Item` implement `PartialEq`. The implementation-specific
 /// predicates will be deprecated when Rust supports trait specialization.
 ///
@@ -168,19 +168,19 @@ where
 /// ```
 /// use predicates::prelude::*;
 ///
-/// let predicate_fn = predicate::contains_hashable(vec![1, 3, 5]);
+/// let predicate_fn = predicate::in_hash(vec![1, 3, 5]);
 /// assert_eq!(true, predicate_fn.eval(&1));
 /// assert_eq!(false, predicate_fn.eval(&2));
 /// assert_eq!(true, predicate_fn.eval(&3));
 /// assert_eq!(false, predicate_fn.eval(&4));
 /// assert_eq!(true, predicate_fn.eval(&5));
 /// ```
-pub fn contains_hashable<I, T>(iter: I) -> HashableContainsPredicate<T>
+pub fn in_hash<I, T>(iter: I) -> HashableInPredicate<T>
 where
     T: Hash + Eq,
     I: IntoIterator<Item = T>,
 {
-    HashableContainsPredicate {
+    HashableInPredicate {
         inner: HashSet::from_iter(iter),
     }
 }
