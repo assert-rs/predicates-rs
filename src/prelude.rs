@@ -16,12 +16,15 @@ pub mod predicate {
     pub use constant::{always, never};
     pub use function::function;
     pub use ord::{eq, ge, gt, le, lt, ne};
-    pub use set::{contains, contains_hashable, contains_ord};
+    pub use iter::{in_hash, in_iter};
 
     /// `str` Predicate factories
     ///
     /// This module contains predicates specific to string handling.
     pub mod str {
+        pub use str::is_empty;
+        pub use str::{contains, ends_with, starts_with};
+
         #[cfg(feature = "difference")]
         pub use str::{diff, similar};
 

@@ -69,7 +69,7 @@
 //! }
 //!
 //! assert_eq!(true, IsTheAnswer.eval(&42));
-//! let almost_the_answer = IsTheAnswer.or(predicate::contains(vec![41, 43]));
+//! let almost_the_answer = IsTheAnswer.or(predicate::in_iter(vec![41, 43]));
 //! assert_eq!(true, almost_the_answer.eval(&41));
 //!
 //! // Any function over a reference to the desired `Item` that returns `bool`
@@ -102,7 +102,7 @@ pub use boxed::BoxPredicate;
 pub mod constant;
 pub mod function;
 pub mod ord;
-pub mod set;
+pub mod iter;
 
 // combinators
 pub mod boolean;
