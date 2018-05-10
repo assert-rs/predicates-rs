@@ -35,29 +35,17 @@ pub fn is_empty() -> IsEmptyPredicate {
     IsEmptyPredicate {}
 }
 
-#[derive(Copy, Clone, Debug)]
-enum PatternOp {
-    StartsWith,
-    EndsWith,
-    Contains,
-}
-
-/// Predicate that checks for patterns.
+/// Predicate checks start of str
 ///
-/// This is created by `predicates::str::{starts_with, ends_with, contains}`.
+/// This is created by `predicates::str::starts_with`.
 #[derive(Clone, Debug)]
-pub struct PatternPredicate {
+pub struct StartsWithPredicate {
     pattern: String,
-    op: PatternOp,
 }
 
-impl Predicate<str> for PatternPredicate {
+impl Predicate<str> for StartsWithPredicate {
     fn eval(&self, variable: &str) -> bool {
-        match self.op {
-            PatternOp::StartsWith => variable.starts_with(&self.pattern),
-            PatternOp::EndsWith => variable.ends_with(&self.pattern),
-            PatternOp::Contains => variable.contains(&self.pattern),
-        }
+        variable.starts_with(&self.pattern)
     }
 }
 
@@ -72,13 +60,26 @@ impl Predicate<str> for PatternPredicate {
 /// assert_eq!(true, predicate_fn.eval("Hello World"));
 /// assert_eq!(false, predicate_fn.eval("Goodbye World"));
 /// ```
-pub fn starts_with<P>(pattern: P) -> PatternPredicate
+pub fn starts_with<P>(pattern: P) -> StartsWithPredicate
 where
     P: Into<String>,
 {
-    PatternPredicate {
+    StartsWithPredicate {
         pattern: pattern.into(),
-        op: PatternOp::StartsWith,
+    }
+}
+
+/// Predicate checks end of str
+///
+/// This is created by `predicates::str::ends_with`.
+#[derive(Clone, Debug)]
+pub struct EndsWithPredicate {
+    pattern: String,
+}
+
+impl Predicate<str> for EndsWithPredicate {
+    fn eval(&self, variable: &str) -> bool {
+        variable.ends_with(&self.pattern)
     }
 }
 
@@ -93,13 +94,61 @@ where
 /// assert_eq!(true, predicate_fn.eval("Hello World"));
 /// assert_eq!(false, predicate_fn.eval("Hello Moon"));
 /// ```
-pub fn ends_with<P>(pattern: P) -> PatternPredicate
+pub fn ends_with<P>(pattern: P) -> EndsWithPredicate
 where
     P: Into<String>,
 {
-    PatternPredicate {
+    EndsWithPredicate {
         pattern: pattern.into(),
-        op: PatternOp::EndsWith,
+    }
+}
+
+/// Predicate that checks for patterns.
+///
+/// This is created by `predicates::str:contains`.
+#[derive(Clone, Debug)]
+pub struct ContainsPredicate {
+    pattern: String,
+}
+
+impl ContainsPredicate {
+    /// Require a specific count of matches.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use predicates::prelude::*;
+    ///
+    /// let predicate_fn = predicate::str::contains("Two").count(2);
+    /// assert_eq!(true, predicate_fn.eval("One Two Three Two One"));
+    /// assert_eq!(false, predicate_fn.eval("One Two Three"));
+    /// ```
+    pub fn count(self, count: usize) -> MatchesPredicate {
+        MatchesPredicate {
+            pattern: self.pattern,
+            count,
+        }
+    }
+}
+
+impl Predicate<str> for ContainsPredicate {
+    fn eval(&self, variable: &str) -> bool {
+        variable.contains(&self.pattern)
+    }
+}
+
+/// Predicate that checks for repeated patterns.
+///
+/// This is created by `predicates::str::contains(...).count`.
+#[derive(Clone, Debug)]
+pub struct MatchesPredicate {
+    pattern: String,
+    count: usize,
+}
+
+impl Predicate<str> for MatchesPredicate {
+    fn eval(&self, variable: &str) -> bool {
+        variable.matches(&self.pattern).count() == self.count
     }
 }
 
@@ -114,12 +163,11 @@ where
 /// assert_eq!(true, predicate_fn.eval("One Two Three"));
 /// assert_eq!(false, predicate_fn.eval("Four Five Six"));
 /// ```
-pub fn contains<P>(pattern: P) -> PatternPredicate
+pub fn contains<P>(pattern: P) -> ContainsPredicate
 where
     P: Into<String>,
 {
-    PatternPredicate {
+    ContainsPredicate {
         pattern: pattern.into(),
-        op: PatternOp::Contains,
     }
 }
