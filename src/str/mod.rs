@@ -10,6 +10,9 @@
 //!
 //! This module contains predicates specific to string handling.
 
+mod basics;
+pub use self::basics::*;
+
 #[cfg(feature = "difference")]
 mod difference;
 #[cfg(feature = "difference")]

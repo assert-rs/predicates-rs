@@ -22,6 +22,9 @@ pub mod predicate {
     ///
     /// This module contains predicates specific to string handling.
     pub mod str {
+        pub use str::is_empty;
+        pub use str::{contains, ends_with, starts_with};
+
         #[cfg(feature = "difference")]
         pub use str::{diff, similar};
 
