@@ -9,6 +9,7 @@
 //! Module that contains the essentials for working with predicates.
 
 pub use core::Predicate;
+pub use boolean::PredicateBooleanExt;
 
 /// Predicate factories
 pub mod predicate {
