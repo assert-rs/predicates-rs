@@ -10,6 +10,7 @@
 
 pub use core::Predicate;
 pub use boolean::PredicateBooleanExt;
+pub use boxed::PredicateBoxExt;
 
 /// Predicate factories
 pub mod predicate {
