@@ -21,12 +21,43 @@ pub struct RegexPredicate {
     re: regex::Regex,
 }
 
+impl RegexPredicate {
+    /// Require a specific count of matches.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use predicates::prelude::*;
+    ///
+    /// let predicate_fn = predicate::str::is_match("T[a-z]*").unwrap().count(3);
+    /// assert_eq!(true, predicate_fn.eval("One Two Three Two One"));
+    /// assert_eq!(false, predicate_fn.eval("One Two Three"));
+    /// ```
+    pub fn count(self, count: usize) -> RegexMatchesPredicate {
+        RegexMatchesPredicate { re: self.re, count }
+    }
+}
+
 impl Predicate<str> for RegexPredicate {
     fn eval(&self, variable: &str) -> bool {
         self.re.is_match(variable)
     }
 }
 
+/// Predicate that checks for repeated patterns.
+///
+/// This is created by `predicates::str::is_match(...).count`.
+#[derive(Clone, Debug)]
+pub struct RegexMatchesPredicate {
+    re: regex::Regex,
+    count: usize,
+}
+
+impl Predicate<str> for RegexMatchesPredicate {
+    fn eval(&self, variable: &str) -> bool {
+        self.re.find_iter(variable).count() == self.count
+    }
+}
 /// Creates a new `Predicate` that uses a regular expression to match the string.
 ///
 /// # Examples
