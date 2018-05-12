@@ -200,5 +200,6 @@ where
 impl<P, Item> PredicateBooleanExt<Item> for P
 where
     P: Predicate<Item>,
+    Item: ?Sized,
 {
 }
