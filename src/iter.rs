@@ -81,6 +81,10 @@ where
 /// `in_hash`. The implementation-specific predicates will be
 /// deprecated when Rust supports trait specialization.
 ///
+/// If you need to optimize this
+/// - Type is `Ord`, call `sort()` on this predicate.
+/// - Type is `Hash`, replace `in_iter` with `in_hash`.
+///
 /// # Examples
 ///
 /// ```
