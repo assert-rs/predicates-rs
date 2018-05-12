@@ -12,6 +12,8 @@
 
 mod basics;
 pub use self::basics::*;
+mod adapters;
+pub use self::adapters::*;
 
 #[cfg(feature = "difference")]
 mod difference;
