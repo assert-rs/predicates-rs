@@ -7,6 +7,7 @@
 // except according to those terms.
 
 use std::path;
+use std::fmt;
 use std::fs;
 
 use Predicate;
@@ -25,6 +26,17 @@ impl FileType {
             FileType::Dir => ft.is_dir(),
             FileType::Symlink => ft.is_symlink(),
         }
+    }
+}
+
+impl fmt::Display for FileType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let t = match *self {
+            FileType::File => "file",
+            FileType::Dir => "dir",
+            FileType::Symlink => "symlink",
+        };
+        write!(f, "{}", t)
     }
 }
 
@@ -59,6 +71,12 @@ impl Predicate<path::Path> for FileTypePredicate {
         metadata
             .map(|m| self.ft.eval(&m.file_type()))
             .unwrap_or(false)
+    }
+}
+
+impl fmt::Display for FileTypePredicate {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "var is {}", self.ft)
     }
 }
 

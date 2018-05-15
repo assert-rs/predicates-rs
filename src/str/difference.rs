@@ -7,6 +7,7 @@
 // except according to those terms.
 
 use std::borrow;
+use std::fmt;
 
 use difference;
 
@@ -88,6 +89,15 @@ impl Predicate<str> for DifferencePredicate {
     fn eval(&self, edit: &str) -> bool {
         let change = difference::Changeset::new(&self.orig, edit, &self.split);
         self.op.eval(self.distance, change.distance)
+    }
+}
+
+impl fmt::Display for DifferencePredicate {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match self.op {
+            DistanceOp::Similar => write!(f, "var - {:?} <= {}", self.orig, self.distance),
+            DistanceOp::Different => write!(f, "{} < var - {:?}", self.distance, self.orig),
+        }
     }
 }
 

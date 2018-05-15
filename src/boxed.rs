@@ -45,7 +45,7 @@ where
     Item: ?Sized,
 {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "BoxPredicate")
+        write!(f, "{}", self.0)
     }
 }
 

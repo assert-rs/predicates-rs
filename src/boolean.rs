@@ -9,6 +9,7 @@
 //! Definition of boolean logic combinators over `Predicate`s.
 
 use std::marker::PhantomData;
+use std::fmt;
 
 use Predicate;
 
@@ -54,6 +55,17 @@ where
     }
 }
 
+impl<M1, M2, Item> fmt::Display for AndPredicate<M1, M2, Item>
+where
+    M1: Predicate<Item>,
+    M2: Predicate<Item>,
+    Item: ?Sized,
+{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "({} && {})", self.a, self.b)
+    }
+}
+
 /// Predicate that combines two `Predicate`s, returning the OR of the results.
 ///
 /// This is created by the `Predicate::or` function.
@@ -96,6 +108,17 @@ where
     }
 }
 
+impl<M1, M2, Item> fmt::Display for OrPredicate<M1, M2, Item>
+where
+    M1: Predicate<Item>,
+    M2: Predicate<Item>,
+    Item: ?Sized,
+{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "({} || {})", self.a, self.b)
+    }
+}
+
 /// Predicate that returns a `Predicate` taking the logical NOT of the result.
 ///
 /// This is created by the `Predicate::not` function.
@@ -130,6 +153,16 @@ where
 {
     fn eval(&self, item: &Item) -> bool {
         !self.inner.eval(item)
+    }
+}
+
+impl<M, Item> fmt::Display for NotPredicate<M, Item>
+where
+    M: Predicate<Item>,
+    Item: ?Sized,
+{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "(! {})", self.inner)
     }
 }
 
