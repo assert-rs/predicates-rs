@@ -110,6 +110,7 @@ pub mod constant;
 pub mod function;
 pub mod ord;
 pub mod iter;
+pub mod name;
 
 // combinators
 pub mod boolean;
