@@ -9,6 +9,7 @@
 //! Definition of a constant (always true or always false) `Predicate`.
 
 use std::marker::PhantomData;
+use std::fmt;
 
 use Predicate;
 
@@ -24,6 +25,12 @@ pub struct BooleanPredicate<Item> {
 impl<Item> Predicate<Item> for BooleanPredicate<Item> {
     fn eval(&self, _variable: &Item) -> bool {
         self.retval
+    }
+}
+
+impl<Item> fmt::Display for BooleanPredicate<Item> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.retval)
     }
 }
 

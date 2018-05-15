@@ -8,6 +8,8 @@
 
 //! Definition of `Predicate`s for comparisons over `Ord` and `Eq` types.
 
+use std::fmt;
+
 use Predicate;
 
 #[derive(Clone, Copy, Debug)]
@@ -16,25 +18,47 @@ enum EqOps {
     NotEqual,
 }
 
+impl fmt::Display for EqOps {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let op = match *self {
+            EqOps::Equal => "==",
+            EqOps::NotEqual => "!=",
+        };
+        write!(f, "{}", op)
+    }
+}
+
 /// Predicate that returns `true` if `variable` matches the pre-defined `Eq`
 /// value, otherwise returns `false`.
 ///
 /// This is created by the `predicate::{eq, ne}` functions.
 #[derive(Debug)]
-pub struct EqPredicate<T> {
+pub struct EqPredicate<T>
+where
+    T: fmt::Debug,
+{
     constant: T,
     op: EqOps,
 }
 
 impl<T> Predicate<T> for EqPredicate<T>
 where
-    T: PartialEq,
+    T: PartialEq + fmt::Debug,
 {
     fn eval(&self, variable: &T) -> bool {
         match self.op {
             EqOps::Equal => variable.eq(&self.constant),
             EqOps::NotEqual => variable.ne(&self.constant),
         }
+    }
+}
+
+impl<T> fmt::Display for EqPredicate<T>
+where
+    T: fmt::Debug,
+{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "var {} {:?}", self.op, self.constant)
     }
 }
 
@@ -52,7 +76,7 @@ where
 /// ```
 pub fn eq<T>(constant: T) -> EqPredicate<T>
 where
-    T: PartialEq,
+    T: PartialEq + fmt::Debug,
 {
     EqPredicate {
         constant: constant,
@@ -74,7 +98,7 @@ where
 /// ```
 pub fn ne<T>(constant: T) -> EqPredicate<T>
 where
-    T: PartialEq,
+    T: PartialEq + fmt::Debug,
 {
     EqPredicate {
         constant: constant,
@@ -90,19 +114,34 @@ enum OrdOps {
     GreaterThan,
 }
 
+impl fmt::Display for OrdOps {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let op = match *self {
+            OrdOps::LessThan => "<",
+            OrdOps::LessThanOrEqual => "<=",
+            OrdOps::GreaterThanOrEqual => ">=",
+            OrdOps::GreaterThan => ">",
+        };
+        write!(f, "{}", op)
+    }
+}
+
 /// Predicate that returns `true` if `variable` matches the pre-defined `Ord`
 /// value, otherwise returns `false`.
 ///
 /// This is created by the `predicate::{gt, ge, lt, le}` functions.
 #[derive(Debug)]
-pub struct OrdPredicate<T> {
+pub struct OrdPredicate<T>
+where
+    T: fmt::Debug,
+{
     constant: T,
     op: OrdOps,
 }
 
 impl<T> Predicate<T> for OrdPredicate<T>
 where
-    T: PartialOrd,
+    T: PartialOrd + fmt::Debug,
 {
     fn eval(&self, variable: &T) -> bool {
         match self.op {
@@ -111,6 +150,15 @@ where
             OrdOps::GreaterThanOrEqual => variable.ge(&self.constant),
             OrdOps::GreaterThan => variable.gt(&self.constant),
         }
+    }
+}
+
+impl<T> fmt::Display for OrdPredicate<T>
+where
+    T: fmt::Debug,
+{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "var {} {:?}", self.op, self.constant)
     }
 }
 
@@ -128,7 +176,7 @@ where
 /// ```
 pub fn lt<T>(constant: T) -> OrdPredicate<T>
 where
-    T: PartialOrd,
+    T: PartialOrd + fmt::Debug,
 {
     OrdPredicate {
         constant: constant,
@@ -151,7 +199,7 @@ where
 /// ```
 pub fn le<T>(constant: T) -> OrdPredicate<T>
 where
-    T: PartialOrd,
+    T: PartialOrd + fmt::Debug,
 {
     OrdPredicate {
         constant: constant,
@@ -174,7 +222,7 @@ where
 /// ```
 pub fn ge<T>(constant: T) -> OrdPredicate<T>
 where
-    T: PartialOrd,
+    T: PartialOrd + fmt::Debug,
 {
     OrdPredicate {
         constant: constant,
@@ -197,7 +245,7 @@ where
 /// ```
 pub fn gt<T>(constant: T) -> OrdPredicate<T>
 where
-    T: PartialOrd,
+    T: PartialOrd + fmt::Debug,
 {
     OrdPredicate {
         constant: constant,

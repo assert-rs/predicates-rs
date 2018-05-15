@@ -1,4 +1,5 @@
 use std::ffi;
+use std::fmt;
 use std::str;
 
 use Predicate;
@@ -20,6 +21,15 @@ where
 {
     fn eval(&self, variable: &str) -> bool {
         self.p.eval(variable.trim())
+    }
+}
+
+impl<P> fmt::Display for TrimPedicate<P>
+where
+    P: Predicate<str>,
+{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.p)
     }
 }
 
@@ -51,6 +61,15 @@ where
         str::from_utf8(variable)
             .map(|s| self.p.eval(s))
             .unwrap_or(false)
+    }
+}
+
+impl<P> fmt::Display for Utf8Pedicate<P>
+where
+    P: Predicate<str>,
+{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.p)
     }
 }
 

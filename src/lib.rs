@@ -34,6 +34,8 @@
 //! ```
 //! use predicates::prelude::*;
 //!
+//! use std::fmt;
+//!
 //! // The simplest predicates are `always()` and `never()`, which always returns
 //! // `true` and always returns `false`, respectively. The values are simply
 //! // ignored when evaluating against these predicates:
@@ -57,7 +59,7 @@
 //! assert_eq!(false, between_5_and_10.eval(&11));
 //! assert_eq!(false, between_5_and_10.eval(&4));
 //!
-//! // The `Predicate` trait is pretty simple, requiring only the
+//! // The `Predicate` trait is pretty simple, the core of it is an
 //! // implementation of a `eval` function that takes a single argument and
 //! // returns a `bool`. Implementing a custom `Predicate` still allows all the
 //! // usual combinators of the `Predicate` trait to work!
@@ -65,6 +67,11 @@
 //! impl Predicate<i32> for IsTheAnswer {
 //!     fn eval(&self, variable: &i32) -> bool {
 //!         *variable == 42
+//!     }
+//! }
+//! impl fmt::Display for IsTheAnswer {
+//!     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+//!         write!(f, "var.is_the_answer()")
 //!     }
 //! }
 //!

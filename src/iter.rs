@@ -9,6 +9,7 @@
 //! Definition of `Predicate`s for comparisons of membership in a set.
 
 use std::collections::HashSet;
+use std::fmt;
 use std::hash::Hash;
 use std::iter::FromIterator;
 
@@ -26,14 +27,14 @@ use Predicate;
 #[derive(Debug)]
 pub struct InPredicate<T>
 where
-    T: PartialEq,
+    T: PartialEq + fmt::Debug,
 {
     inner: Vec<T>,
 }
 
 impl<T> InPredicate<T>
 where
-    T: Ord,
+    T: Ord + fmt::Debug,
 {
     /// Creates a new predicate that will return `true` when the given `variable` is
     /// contained with the set of items provided.
@@ -64,10 +65,19 @@ where
 
 impl<T> Predicate<T> for InPredicate<T>
 where
-    T: PartialEq,
+    T: PartialEq + fmt::Debug,
 {
     fn eval(&self, variable: &T) -> bool {
         self.inner.contains(variable)
+    }
+}
+
+impl<T> fmt::Display for InPredicate<T>
+where
+    T: PartialEq + fmt::Debug,
+{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "var in {:?}", self.inner)
     }
 }
 
@@ -99,7 +109,7 @@ where
 /// ```
 pub fn in_iter<I, T>(iter: I) -> InPredicate<T>
 where
-    T: PartialEq,
+    T: PartialEq + fmt::Debug,
     I: IntoIterator<Item = T>,
 {
     InPredicate {
@@ -119,17 +129,26 @@ where
 #[derive(Debug)]
 pub struct OrdInPredicate<T>
 where
-    T: Ord,
+    T: Ord + fmt::Debug,
 {
     inner: Vec<T>,
 }
 
 impl<T> Predicate<T> for OrdInPredicate<T>
 where
-    T: Ord,
+    T: Ord + fmt::Debug,
 {
     fn eval(&self, variable: &T) -> bool {
         self.inner.binary_search(variable).is_ok()
+    }
+}
+
+impl<T> fmt::Display for OrdInPredicate<T>
+where
+    T: Ord + fmt::Debug,
+{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "var in {:?}", self.inner)
     }
 }
 
@@ -145,17 +164,26 @@ where
 #[derive(Debug)]
 pub struct HashableInPredicate<T>
 where
-    T: Hash + Eq,
+    T: Hash + Eq + fmt::Debug,
 {
     inner: HashSet<T>,
 }
 
 impl<T> Predicate<T> for HashableInPredicate<T>
 where
-    T: Hash + Eq,
+    T: Hash + Eq + fmt::Debug,
 {
     fn eval(&self, variable: &T) -> bool {
         self.inner.contains(variable)
+    }
+}
+
+impl<T> fmt::Display for HashableInPredicate<T>
+where
+    T: Hash + Eq + fmt::Debug,
+{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "var in {:?}", self.inner)
     }
 }
 
@@ -181,7 +209,7 @@ where
 /// ```
 pub fn in_hash<I, T>(iter: I) -> HashableInPredicate<T>
 where
-    T: Hash + Eq,
+    T: Hash + Eq + fmt::Debug,
     I: IntoIterator<Item = T>,
 {
     HashableInPredicate {

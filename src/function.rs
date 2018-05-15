@@ -9,6 +9,7 @@
 //! Definition of `Predicate` for wrapping a `Fn(&T) -> bool`
 
 use std::marker::PhantomData;
+use std::fmt;
 
 use Predicate;
 
@@ -20,7 +21,34 @@ where
     F: Fn(&T) -> bool,
 {
     function: F,
+    name: &'static str,
     _phantom: PhantomData<T>,
+}
+
+impl<F, T> FnPredicate<F, T>
+where
+    F: Fn(&T) -> bool,
+{
+    /// Provide a descriptive name for this function.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use predicates::prelude::*;
+    ///
+    /// struct Example {
+    ///     string: String,
+    ///     number: i32,
+    /// }
+    ///
+    /// let string_check = predicate::function(|x: &Example| x.string == "hello")
+    ///     .fn_name("is_hello");
+    /// println!("predicate: {}", string_check);
+    /// ```
+    pub fn fn_name(mut self, name: &'static str) -> Self {
+        self.name = name;
+        self
+    }
 }
 
 impl<F, T> Predicate<T> for FnPredicate<F, T>
@@ -29,6 +57,15 @@ where
 {
     fn eval(&self, variable: &T) -> bool {
         (self.function)(variable)
+    }
+}
+
+impl<F, T> fmt::Display for FnPredicate<F, T>
+where
+    F: Fn(&T) -> bool,
+{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}(var)", self.name)
     }
 }
 
@@ -60,6 +97,7 @@ where
 {
     FnPredicate {
         function: function,
+        name: "fn",
         _phantom: PhantomData,
     }
 }

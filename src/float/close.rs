@@ -6,6 +6,8 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+use std::fmt;
+
 use float_cmp::ApproxEq;
 use float_cmp::Ulps;
 
@@ -81,6 +83,16 @@ impl IsClosePredicate {
 impl Predicate<f64> for IsClosePredicate {
     fn eval(&self, variable: &f64) -> bool {
         variable.approx_eq(&self.target, self.epsilon, self.ulps)
+    }
+}
+
+impl fmt::Display for IsClosePredicate {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(
+            f,
+            "var ~= {} +/- {} ({})",
+            self.target, self.epsilon, self.ulps
+        )
     }
 }
 

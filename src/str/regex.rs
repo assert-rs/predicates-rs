@@ -6,6 +6,8 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+use std::fmt;
+
 use regex;
 
 use Predicate;
@@ -44,6 +46,12 @@ impl Predicate<str> for RegexPredicate {
     }
 }
 
+impl fmt::Display for RegexPredicate {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "var.is_match({})", self.re)
+    }
+}
+
 /// Predicate that checks for repeated patterns.
 ///
 /// This is created by `predicates::str::is_match(...).count`.
@@ -58,6 +66,13 @@ impl Predicate<str> for RegexMatchesPredicate {
         self.re.find_iter(variable).count() == self.count
     }
 }
+
+impl fmt::Display for RegexMatchesPredicate {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "var.is_match({}).count({})", self.re, self.count)
+    }
+}
+
 /// Creates a new `Predicate` that uses a regular expression to match the string.
 ///
 /// # Examples

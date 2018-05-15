@@ -6,6 +6,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+use std::fmt;
 use std::path;
 
 use Predicate;
@@ -21,6 +22,12 @@ pub struct ExistencePredicate {
 impl Predicate<path::Path> for ExistencePredicate {
     fn eval(&self, path: &path::Path) -> bool {
         path.exists() == self.exists
+    }
+}
+
+impl fmt::Display for ExistencePredicate {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}(var)", if self.exists { "exists" } else { "missing" })
     }
 }
 

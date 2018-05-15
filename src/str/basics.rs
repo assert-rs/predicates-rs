@@ -6,6 +6,8 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+use std::fmt;
+
 use Predicate;
 
 /// Predicate that checks for empty strings.
@@ -17,6 +19,12 @@ pub struct IsEmptyPredicate {}
 impl Predicate<str> for IsEmptyPredicate {
     fn eval(&self, variable: &str) -> bool {
         variable.is_empty()
+    }
+}
+
+impl fmt::Display for IsEmptyPredicate {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "var.is_empty()")
     }
 }
 
@@ -46,6 +54,12 @@ pub struct StartsWithPredicate {
 impl Predicate<str> for StartsWithPredicate {
     fn eval(&self, variable: &str) -> bool {
         variable.starts_with(&self.pattern)
+    }
+}
+
+impl fmt::Display for StartsWithPredicate {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "var.starts_with({:?})", self.pattern)
     }
 }
 
@@ -80,6 +94,12 @@ pub struct EndsWithPredicate {
 impl Predicate<str> for EndsWithPredicate {
     fn eval(&self, variable: &str) -> bool {
         variable.ends_with(&self.pattern)
+    }
+}
+
+impl fmt::Display for EndsWithPredicate {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "var.ends_with({:?})", self.pattern)
     }
 }
 
@@ -137,6 +157,12 @@ impl Predicate<str> for ContainsPredicate {
     }
 }
 
+impl fmt::Display for ContainsPredicate {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "var.contains({:?})", self.pattern)
+    }
+}
+
 /// Predicate that checks for repeated patterns.
 ///
 /// This is created by `predicates::str::contains(...).count`.
@@ -149,6 +175,12 @@ pub struct MatchesPredicate {
 impl Predicate<str> for MatchesPredicate {
     fn eval(&self, variable: &str) -> bool {
         variable.matches(&self.pattern).count() == self.count
+    }
+}
+
+impl fmt::Display for MatchesPredicate {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "var.contains({:?}, {})", self.pattern, self.count)
     }
 }
 
