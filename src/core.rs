@@ -15,8 +15,13 @@ use std::fmt;
 /// mean that the evaluated item is in some sort of pre-defined set.  This is
 /// different from `Ord` and `Eq` in that an `item` will almost never be the
 /// same type as the implementing `Predicate` type.
-pub trait Predicate<Item: ?Sized>: fmt::Display {
+pub trait Predicate<Item: ?Sized + fmt::Debug>: fmt::Display {
     /// Execute this `Predicate` against `variable`, returning the resulting
     /// boolean.
     fn eval(&self, variable: &Item) -> bool;
+
+    /// TODO
+    fn eval_to_string(&self, variable: &Item) -> String {
+        format!("pred = {}, actual = {:?}", self, variable)
+    }
 }

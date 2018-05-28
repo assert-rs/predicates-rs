@@ -51,11 +51,12 @@ where
     }
 }
 
-impl<F, T> Predicate<T> for FnPredicate<F, T>
+impl<F, Item> Predicate<Item> for FnPredicate<F, Item>
 where
-    F: Fn(&T) -> bool,
+    F: Fn(&Item) -> bool,
+    Item: fmt::Debug
 {
-    fn eval(&self, variable: &T) -> bool {
+    fn eval(&self, variable: &Item) -> bool {
         (self.function)(variable)
     }
 }

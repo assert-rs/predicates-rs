@@ -22,7 +22,7 @@ pub struct BooleanPredicate<Item> {
     _phantom: PhantomData<Item>,
 }
 
-impl<Item> Predicate<Item> for BooleanPredicate<Item> {
+impl<Item: fmt::Debug> Predicate<Item> for BooleanPredicate<Item> {
     fn eval(&self, _variable: &Item) -> bool {
         self.retval
     }

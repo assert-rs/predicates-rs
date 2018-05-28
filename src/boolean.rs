@@ -21,7 +21,7 @@ pub struct AndPredicate<M1, M2, Item>
 where
     M1: Predicate<Item>,
     M2: Predicate<Item>,
-    Item: ?Sized,
+    Item: ?Sized + fmt::Debug,
 {
     a: M1,
     b: M2,
@@ -32,7 +32,7 @@ impl<M1, M2, Item> AndPredicate<M1, M2, Item>
 where
     M1: Predicate<Item>,
     M2: Predicate<Item>,
-    Item: ?Sized,
+    Item: ?Sized + fmt::Debug,
 {
     /// Create a new `AndPredicate` over predicates `a` and `b`.
     pub fn new(a: M1, b: M2) -> AndPredicate<M1, M2, Item> {
@@ -48,7 +48,7 @@ impl<M1, M2, Item> Predicate<Item> for AndPredicate<M1, M2, Item>
 where
     M1: Predicate<Item>,
     M2: Predicate<Item>,
-    Item: ?Sized,
+    Item: ?Sized + fmt::Debug,
 {
     fn eval(&self, item: &Item) -> bool {
         self.a.eval(item) && self.b.eval(item)
@@ -59,7 +59,7 @@ impl<M1, M2, Item> fmt::Display for AndPredicate<M1, M2, Item>
 where
     M1: Predicate<Item>,
     M2: Predicate<Item>,
-    Item: ?Sized,
+    Item: ?Sized + fmt::Debug,
 {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "({} && {})", self.a, self.b)
@@ -74,7 +74,7 @@ pub struct OrPredicate<M1, M2, Item>
 where
     M1: Predicate<Item>,
     M2: Predicate<Item>,
-    Item: ?Sized,
+    Item: ?Sized + fmt::Debug,
 {
     a: M1,
     b: M2,
@@ -85,7 +85,7 @@ impl<M1, M2, Item> OrPredicate<M1, M2, Item>
 where
     M1: Predicate<Item>,
     M2: Predicate<Item>,
-    Item: ?Sized,
+    Item: ?Sized + fmt::Debug,
 {
     /// Create a new `OrPredicate` over predicates `a` and `b`.
     pub fn new(a: M1, b: M2) -> OrPredicate<M1, M2, Item> {
@@ -101,7 +101,7 @@ impl<M1, M2, Item> Predicate<Item> for OrPredicate<M1, M2, Item>
 where
     M1: Predicate<Item>,
     M2: Predicate<Item>,
-    Item: ?Sized,
+    Item: ?Sized + fmt::Debug,
 {
     fn eval(&self, item: &Item) -> bool {
         self.a.eval(item) || self.b.eval(item)
@@ -112,7 +112,7 @@ impl<M1, M2, Item> fmt::Display for OrPredicate<M1, M2, Item>
 where
     M1: Predicate<Item>,
     M2: Predicate<Item>,
-    Item: ?Sized,
+    Item: ?Sized + fmt::Debug,
 {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "({} || {})", self.a, self.b)
@@ -126,7 +126,7 @@ where
 pub struct NotPredicate<M, Item>
 where
     M: Predicate<Item>,
-    Item: ?Sized,
+    Item: ?Sized + fmt::Debug,
 {
     inner: M,
     _phantom: PhantomData<Item>,
@@ -135,7 +135,7 @@ where
 impl<M, Item> NotPredicate<M, Item>
 where
     M: Predicate<Item>,
-    Item: ?Sized,
+    Item: ?Sized + fmt::Debug,
 {
     /// Create a new `NotPredicate` over predicate `inner`.
     pub fn new(inner: M) -> NotPredicate<M, Item> {
@@ -149,7 +149,7 @@ where
 impl<M, Item> Predicate<Item> for NotPredicate<M, Item>
 where
     M: Predicate<Item>,
-    Item: ?Sized,
+    Item: ?Sized + fmt::Debug,
 {
     fn eval(&self, item: &Item) -> bool {
         !self.inner.eval(item)
@@ -159,7 +159,7 @@ where
 impl<M, Item> fmt::Display for NotPredicate<M, Item>
 where
     M: Predicate<Item>,
-    Item: ?Sized,
+    Item: ?Sized + fmt::Debug,
 {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "(! {})", self.inner)
@@ -167,7 +167,7 @@ where
 }
 
 /// `Predicate` extension that adds boolean logic.
-pub trait PredicateBooleanExt<Item: ?Sized>
+pub trait PredicateBooleanExt<Item: ?Sized + fmt::Debug>
 where
     Self: Predicate<Item>,
 {
@@ -233,6 +233,6 @@ where
 impl<P, Item> PredicateBooleanExt<Item> for P
 where
     P: Predicate<Item>,
-    Item: ?Sized,
+    Item: ?Sized + fmt::Debug,
 {
 }

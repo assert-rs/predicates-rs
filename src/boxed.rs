@@ -15,11 +15,11 @@ use Predicate;
 
 /// `Predicate` that wraps another `Predicate` as a trait object, allowing
 /// sized storage of predicate types.
-pub struct BoxPredicate<Item: ?Sized>(Box<Predicate<Item> + Send + Sync>);
+pub struct BoxPredicate<Item: ?Sized + fmt::Debug>(Box<Predicate<Item> + Send + Sync>);
 
 impl<Item> BoxPredicate<Item>
 where
-    Item: ?Sized,
+    Item: ?Sized + fmt::Debug,
 {
     /// Creates a new `BoxPredicate`, a wrapper around a dynamically-dispatched
     /// `Predicate` type with useful trait impls.
@@ -33,7 +33,7 @@ where
 
 impl<Item> fmt::Debug for BoxPredicate<Item>
 where
-    Item: ?Sized,
+    Item: ?Sized + fmt::Debug,
 {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         f.debug_struct("BoxPredicate").finish()
@@ -42,7 +42,7 @@ where
 
 impl<Item> fmt::Display for BoxPredicate<Item>
 where
-    Item: ?Sized,
+    Item: ?Sized + fmt::Debug,
 {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{}", self.0)
@@ -51,7 +51,7 @@ where
 
 impl<Item> Predicate<Item> for BoxPredicate<Item>
 where
-    Item: ?Sized,
+    Item: ?Sized + fmt::Debug,
 {
     fn eval(&self, variable: &Item) -> bool {
         self.0.eval(variable)
@@ -59,7 +59,7 @@ where
 }
 
 /// `Predicate` extension for boxing a `Predicate`.
-pub trait PredicateBoxExt<Item: ?Sized>
+pub trait PredicateBoxExt<Item: ?Sized + fmt::Debug>
 where
     Self: Predicate<Item>,
 {
@@ -98,5 +98,6 @@ where
 impl<P, Item> PredicateBoxExt<Item> for P
 where
     P: Predicate<Item>,
+    Item: ?Sized + fmt::Debug
 {
 }
