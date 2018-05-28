@@ -53,6 +53,16 @@ where
     fn eval(&self, item: &Item) -> bool {
         self.a.eval(item) && self.b.eval(item)
     }
+
+    fn flatten<'a, 'b>(&'a self, vec: &'b mut Vec<&'a Predicate<Item>>) {
+        vec.push(self);
+        self.a.flatten(vec);
+        self.b.flatten(vec);
+    }
+
+    fn stringify(&self, variable: &Item) -> String {
+        format!("{} && {}", self.a.stringify(variable), self.b.stringify(variable))
+    }
 }
 
 impl<M1, M2, Item> fmt::Display for AndPredicate<M1, M2, Item>

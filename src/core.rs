@@ -8,6 +8,10 @@
 
 use std::fmt;
 
+struct TreeWriter<'a, Item: ?Sized + fmt::Debug + 'a> {
+    items: Vec<&'a Predicate<Item>>,
+}
+
 /// Trait for generically evaluating a type against a dynamically created
 /// predicate function.
 ///
@@ -21,7 +25,43 @@ pub trait Predicate<Item: ?Sized + fmt::Debug>: fmt::Display {
     fn eval(&self, variable: &Item) -> bool;
 
     /// TODO
-    fn eval_to_string(&self, variable: &Item) -> String {
-        format!("pred = {}, actual = {:?}", self, variable)
+    fn flatten<'a, 'b>(&'a self, _vec: &'b mut Vec<&'a Predicate<Item>>) {
+        unimplemented!()
+    }
+
+    /// TODO
+    fn stringify(&self, _variable: &Item) -> String {
+        unimplemented!()
+    }
+
+    /// TODO
+    #[cfg(feature = "term-table")]
+    fn tree_eval(&self, variable: &Item) -> String {
+        use term_table::{
+            Table,
+            cell::Cell,
+            row::Row,
+        };
+
+        let mut table = Table::new();
+        table.max_column_width = 80;
+        let mut vec = Vec::new();
+        self.flatten(&mut vec);
+
+        table.add_row(Row::new(vec![
+            Cell::new("PREDICATE", 1),
+            Cell::new("RESULT", 1),
+        ]));
+
+        for item in vec {
+            let result = if item.eval(variable) {"PASSED"} else {"FAILED"};
+
+            table.add_row(Row::new(vec![
+                Cell::new(item.stringify(variable), 1),
+                Cell::new(result, 1),
+            ]));
+        }
+
+        table.as_string()
     }
 }
