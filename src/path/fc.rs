@@ -10,8 +10,23 @@ use std::fmt;
 use std::fs;
 use std::io::{self, Read};
 use std::path;
+use std::str;
 
 use Predicate;
+
+#[derive(Clone, Debug, PartialEq)]
+pub struct FileContent(Vec<u8>);
+
+impl FileContent {
+    pub fn new(path: &path::Path) -> io::Result<FileContent> {
+        let mut buffer = Vec::new();
+        fs::File::open(path)?.read_to_end(&mut buffer)?;
+        Ok(FileContent(buffer))
+    }
+    pub fn utf8(&self) -> Result<String, str::Utf8Error> {
+        str::from_utf8(&self.0).map(|s| s.to_string())
+    }
+}
 
 /// Predicate adaper that converts a `path` to file content predicate to byte predicate.
 ///
@@ -29,11 +44,8 @@ where
     P: Predicate<[u8]>,
 {
     fn eval(&self, path: &path::Path) -> io::Result<bool> {
-        let mut buffer = Vec::new();
-
-        // read the whole file
-        fs::File::open(path)?.read_to_end(&mut buffer)?;
-        Ok(self.p.eval(&buffer))
+        let buffer = FileContent::new(path)?;
+        Ok(self.p.eval(&buffer.0))
     }
 }
 
