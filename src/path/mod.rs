@@ -16,3 +16,5 @@ mod ft;
 pub use self::ft::{is_dir, is_file, is_symlink, FileTypePredicate};
 mod fc;
 pub use self::fc::{FileContentPredicate, PredicateFileContentExt};
+mod fs;
+pub use self::fs::{eq_file, BinaryFilePredicate, StrFilePredicate};

@@ -6,13 +6,14 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-use std::path;
 use std::fmt;
 use std::fs;
+use std::io;
+use std::path;
 
 use Predicate;
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 enum FileType {
     File,
     Dir,
@@ -20,6 +21,17 @@ enum FileType {
 }
 
 impl FileType {
+    fn new(path: &path::Path) -> io::Result<FileType> {
+        let file_type = path.metadata()?.file_type();
+        if file_type.is_dir() {
+            return Ok(FileType::Dir);
+        }
+        if path.is_file() {
+            return Ok(FileType::File);
+        }
+        Ok(FileType::Symlink)
+    }
+
     fn eval(self, ft: &fs::FileType) -> bool {
         match self {
             FileType::File => ft.is_file(),
@@ -43,7 +55,7 @@ impl fmt::Display for FileType {
 /// Predicate that checks the `std::fs::FileType`.
 ///
 /// This is created by the `predicate::path::is_file`, `predicate::path::is_dir`, and `predicate::path::is_symlink`.
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct FileTypePredicate {
     ft: FileType,
     follow: bool,
@@ -58,6 +70,14 @@ impl FileTypePredicate {
     pub fn follow_links(mut self, yes: bool) -> Self {
         self.follow = yes;
         self
+    }
+
+    /// Allow to create an `FileTypePredicate` from a `path`
+    pub fn from_path(path: &path::Path) -> io::Result<FileTypePredicate> {
+        Ok(FileTypePredicate {
+            ft: FileType::new(path)?,
+            follow: true,
+        })
     }
 }
 

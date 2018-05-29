@@ -8,20 +8,20 @@
 
 //! Module that contains the essentials for working with predicates.
 
-pub use core::Predicate;
 pub use boolean::PredicateBooleanExt;
 pub use boxed::PredicateBoxExt;
+pub use core::Predicate;
+pub use name::PredicateNameExt;
 pub use path::PredicateFileContentExt;
 pub use str::PredicateStrExt;
-pub use name::PredicateNameExt;
 
 /// Predicate factories
 pub mod predicate {
     // primitive `Predicate` types
     pub use constant::{always, never};
     pub use function::function;
-    pub use ord::{eq, ge, gt, le, lt, ne};
     pub use iter::{in_hash, in_iter};
+    pub use ord::{eq, ge, gt, le, lt, ne};
 
     /// `str` Predicate factories
     ///
@@ -41,6 +41,7 @@ pub mod predicate {
     ///
     /// This module contains predicates specific to path handling.
     pub mod path {
+        pub use path::eq_file;
         pub use path::{exists, missing};
         pub use path::{is_dir, is_file, is_symlink};
     }
