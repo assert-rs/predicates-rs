@@ -21,7 +21,7 @@ enum FileType {
 }
 
 impl FileType {
-    fn new(path: &path::Path) -> io::Result<FileType> {
+    fn from_path(path: &path::Path) -> io::Result<FileType> {
         let file_type = path.metadata()?.file_type();
         if file_type.is_dir() {
             return Ok(FileType::Dir);
@@ -75,7 +75,7 @@ impl FileTypePredicate {
     /// Allow to create an `FileTypePredicate` from a `path`
     pub fn from_path(path: &path::Path) -> io::Result<FileTypePredicate> {
         Ok(FileTypePredicate {
-            ft: FileType::new(path)?,
+            ft: FileType::from_path(path)?,
             follow: true,
         })
     }
