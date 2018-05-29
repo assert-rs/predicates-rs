@@ -10,8 +10,8 @@ use std::fmt;
 use std::io;
 use std::path;
 
-use path::fc::FileContent;
 use Predicate;
+use path::fc::FileContent;
 
 /// Predicate that compares file matches
 #[derive(Clone, Debug)]
@@ -24,6 +24,27 @@ impl BinaryFilePredicate {
     fn eval(&self, path: &path::Path) -> io::Result<bool> {
         let content = FileContent::new(path)?;
         Ok(self.file_content == content)
+    }
+
+    /// Creates a new `Predicate` that ensures complete equality
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use std::path::Path;
+    /// use predicates::prelude::*;
+    ///
+    /// let predicate_file = predicate::path::eq_file(Path::new("Cargo.toml")).utf8().unwrap();
+    /// assert_eq!(true, predicate_file.eval(Path::new("Cargo.toml")));
+    /// assert_eq!(false, predicate_file.eval(Path::new("Cargo.lock")));
+    /// assert_eq!(false, predicate_file.eval(Path::new("src")));
+    /// ```
+    pub fn utf8(self) -> Option<StrFilePredicate> {
+        let path = self.path;
+        self.file_content.utf8().ok().map(|s| StrFilePredicate {
+            path: path,
+            content: s.to_string(),
+        })
     }
 }
 
@@ -60,28 +81,6 @@ pub fn eq_file(path: &path::Path) -> BinaryFilePredicate {
     }
 }
 
-impl BinaryFilePredicate {
-    /// Creates a new `Predicate` that ensures complete equality
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use std::path::Path;
-    /// use predicates::prelude::*;
-    ///
-    /// let predicate_file = predicate::path::eq_file(Path::new("Cargo.toml")).utf8();
-    /// assert_eq!(true, predicate_file.eval(Path::new("Cargo.toml")));
-    /// assert_eq!(false, predicate_file.eval(Path::new("Cargo.lock")));
-    /// assert_eq!(false, predicate_file.eval(Path::new("src")));
-    /// ```
-    pub fn utf8(self) -> StrFilePredicate {
-        StrFilePredicate {
-            path: self.path,
-            content: self.file_content.utf8().unwrap(),
-        }
-    }
-}
-
 /// Predicate that compares string content of files
 #[derive(Debug)]
 pub struct StrFilePredicate {
@@ -91,8 +90,9 @@ pub struct StrFilePredicate {
 
 impl StrFilePredicate {
     fn eval(&self, path: &path::Path) -> Option<bool> {
-        let content = FileContent::new(path).ok()?.utf8().ok()?;
-        Some(self.content == content)
+        let content = FileContent::new(path).ok()?;
+        let string = content.utf8().ok()?;
+        Some(self.content == string)
     }
 }
 

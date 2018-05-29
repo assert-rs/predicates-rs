@@ -23,8 +23,9 @@ impl FileContent {
         fs::File::open(path)?.read_to_end(&mut buffer)?;
         Ok(FileContent(buffer))
     }
-    pub fn utf8(&self) -> Result<String, str::Utf8Error> {
-        str::from_utf8(&self.0).map(|s| s.to_string())
+
+    pub fn utf8(&self) -> Result<&str, str::Utf8Error> {
+        str::from_utf8(&self.0)
     }
 }
 
