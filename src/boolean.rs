@@ -164,6 +164,15 @@ where
     fn eval(&self, item: &Item) -> bool {
         !self.inner.eval(item)
     }
+
+    fn flatten<'a, 'b>(&'a self, vec: &'b mut Vec<&'a Predicate<Item>>) {
+        vec.push(self);
+        vec.push(&self.inner);
+    }
+
+    fn stringify(&self, item: &Item) -> String {
+        format!("!({})", self.inner.stringify(item))
+    }
 }
 
 impl<M, Item> fmt::Display for NotPredicate<M, Item>
