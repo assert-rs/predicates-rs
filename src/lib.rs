@@ -97,8 +97,8 @@ extern crate difference;
 extern crate float_cmp;
 #[cfg(feature = "regex")]
 extern crate regex;
-#[cfg(feature = "term-table")]
-extern crate term_table;
+#[cfg(feature = "treeline")]
+extern crate treeline;
 
 pub mod prelude;
 

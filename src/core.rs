@@ -8,8 +8,15 @@
 
 use std::fmt;
 
-struct TreeWriter<'a, Item: ?Sized + fmt::Debug + 'a> {
-    items: Vec<&'a Predicate<Item>>,
+#[cfg(feature = "treeline")]
+use treeline::Tree;
+
+pub(crate) fn pass_fail(b: bool) -> &'static str {
+    if b {
+        "PASSED"
+    } else {
+        "FAILED"
+    }
 }
 
 /// Trait for generically evaluating a type against a dynamically created
@@ -25,63 +32,19 @@ pub trait Predicate<Item: ?Sized + fmt::Debug>: fmt::Display {
     fn eval(&self, variable: &Item) -> bool;
 
     /// TODO
-    fn flatten<'a, 'b>(&'a self, _vec: &'b mut Vec<&'a Predicate<Item>>) {
+    fn stringify(&self, _item: &Item) -> String {
         unimplemented!()
     }
 
     /// TODO
-    fn stringify(&self, _variable: &Item) -> String {
+    #[cfg(feature = "treeline")]
+    fn make_tree(&self, _item: &Item) -> Tree<String> {
         unimplemented!()
     }
 
     /// TODO
-    #[cfg(feature = "term-table")]
-    fn tree_eval(&self, variable: &Item) -> (bool, String) {
-        use term_table::{
-            Table,
-            cell::Cell,
-            row::Row,
-        };
-
-
-        let mut table = Table::new();
-        table.max_column_width = 80;
-        let mut vec = Vec::new();
-        self.flatten(&mut vec);
-        let pass_fail = |r| if r { "PASSED" } else { "FAILED" };
-
-        macro_rules! row {
-            ($($expr:expr),*) => {{
-                table.add_row(Row::new(vec![
-                    $(
-                        Cell::new($expr, 1)
-                    ),*
-                ]));
-            }}
-        }
-
-        row! {
-            "PREDICATE",
-            "ROW"
-        }
-
-        let mut iter = vec.into_iter();
-
-        let first = iter.next().unwrap();
-        let first_result = first.eval(variable);
-
-        row! {
-            first.stringify(variable),
-            (pass_fail)(first_result)
-        }
-
-        for item in iter {
-            row! {
-                item.stringify(variable),
-                (pass_fail)(item.eval(variable))
-            }
-        }
-
-        (first_result, table.as_string())
+    #[cfg(feature = "treeline")]
+    fn tree_eval(&self, item: &Item) -> (bool, Tree<String>) {
+        (self.eval(item), self.make_tree(item))
     }
 }

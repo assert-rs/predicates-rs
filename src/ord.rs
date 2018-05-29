@@ -10,6 +10,9 @@
 
 use std::fmt;
 
+#[cfg(feature = "treeline")]
+use treeline::Tree;
+
 use Predicate;
 
 #[derive(Clone, Copy, Debug)]
@@ -52,12 +55,19 @@ where
         }
     }
 
-    fn flatten<'a, 'b>(&'a self, vec: &'b mut Vec<&'a Predicate<Item>>) {
-        vec.push(self);
+    #[cfg(feature = "treeline")]
+    fn make_tree(&self, item: &Item) -> Tree<String> {
+        Tree::root(
+            format!(
+                "{} {}",
+                self.stringify(item),
+                ::core::pass_fail(self.eval(item))
+            )
+        )
     }
 
-    fn stringify(&self, variable: &Item) -> String {
-        format!("{:?} {} {:?}", variable, self.op, self.constant)
+    fn stringify(&self, item: &Item) -> String {
+        format!("{:?} {} {:?}", item, self.op, self.constant)
     }
 }
 
@@ -66,7 +76,7 @@ where
     T: fmt::Debug,
 {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{} {:?}", self.op, self.constant)
+        write!(f, "var {} {:?}", self.op, self.constant)
     }
 }
 
@@ -160,12 +170,19 @@ where
         }
     }
 
-    fn flatten<'a, 'b>(&'a self, vec: &'b mut Vec<&'a Predicate<Item>>) {
-        vec.push(self);
+    #[cfg(feature = "treeline")]
+    fn make_tree(&self, item: &Item) -> Tree<String> {
+        Tree::root(
+            format!(
+                "{} {}",
+                self.stringify(item),
+                ::core::pass_fail(self.eval(item))
+            )
+        )
     }
 
-    fn stringify(&self, variable: &Item) -> String {
-        format!("{:?} {} {:?}", variable, self.op, self.constant)
+    fn stringify(&self, item: &Item) -> String {
+        format!("{:?} {} {:?}", item, self.op, self.constant)
     }
 }
 

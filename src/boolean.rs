@@ -11,6 +11,9 @@
 use std::marker::PhantomData;
 use std::fmt;
 
+#[cfg(feature = "treeline")]
+use treeline::Tree;
+
 use Predicate;
 
 /// Predicate that combines two `Predicate`s, returning the AND of the results.
@@ -54,14 +57,23 @@ where
         self.a.eval(item) && self.b.eval(item)
     }
 
-    fn flatten<'a, 'b>(&'a self, vec: &'b mut Vec<&'a Predicate<Item>>) {
-        vec.push(self);
-        self.a.flatten(vec);
-        self.b.flatten(vec);
+    #[cfg(feature = "treeline")]
+    fn make_tree(&self, item: &Item) -> Tree<String> {
+        Tree::new(
+            format!(
+                "{} {}",
+                self.stringify(item),
+                ::core::pass_fail(self.eval(item))
+            ),
+            vec![
+                self.a.make_tree(item),
+                self.b.make_tree(item),
+            ]
+        )
     }
 
-    fn stringify(&self, variable: &Item) -> String {
-        format!("{} && {}", self.a.stringify(variable), self.b.stringify(variable))
+    fn stringify(&self, item: &Item) -> String {
+        format!("{} && {}", self.a.stringify(item), self.b.stringify(item))
     }
 }
 
@@ -165,9 +177,16 @@ where
         !self.inner.eval(item)
     }
 
-    fn flatten<'a, 'b>(&'a self, vec: &'b mut Vec<&'a Predicate<Item>>) {
-        vec.push(self);
-        vec.push(&self.inner);
+    #[cfg(feature = "treeline")]
+    fn make_tree(&self, item: &Item) -> Tree<String> {
+        Tree::new(
+            format!(
+                "{} {}",
+                self.stringify(item),
+                ::core::pass_fail(self.eval(item))
+            ),
+            vec![self.inner.make_tree(item)]
+        )
     }
 
     fn stringify(&self, item: &Item) -> String {
