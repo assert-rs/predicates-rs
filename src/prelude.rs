@@ -11,6 +11,7 @@
 pub use core::Predicate;
 pub use boolean::PredicateBooleanExt;
 pub use boxed::PredicateBoxExt;
+pub use path::PredicateFileContentExt;
 pub use str::PredicateStrExt;
 pub use name::PredicateNameExt;
 
