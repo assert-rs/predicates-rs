@@ -8,14 +8,14 @@ use Predicate;
 ///
 /// This is created by `pred.trim()`.
 #[derive(Copy, Clone, Debug)]
-pub struct TrimPedicate<P>
+pub struct TrimPredicate<P>
 where
     P: Predicate<str>,
 {
     p: P,
 }
 
-impl<P> Predicate<str> for TrimPedicate<P>
+impl<P> Predicate<str> for TrimPredicate<P>
 where
     P: Predicate<str>,
 {
@@ -24,7 +24,7 @@ where
     }
 }
 
-impl<P> fmt::Display for TrimPedicate<P>
+impl<P> fmt::Display for TrimPredicate<P>
 where
     P: Predicate<str>,
 {
@@ -37,14 +37,14 @@ where
 ///
 /// This is created by `pred.from_utf8()`.
 #[derive(Copy, Clone, Debug)]
-pub struct Utf8Pedicate<P>
+pub struct Utf8Predicate<P>
 where
     P: Predicate<str>,
 {
     p: P,
 }
 
-impl<P> Predicate<ffi::OsStr> for Utf8Pedicate<P>
+impl<P> Predicate<ffi::OsStr> for Utf8Predicate<P>
 where
     P: Predicate<str>,
 {
@@ -53,7 +53,7 @@ where
     }
 }
 
-impl<P> Predicate<[u8]> for Utf8Pedicate<P>
+impl<P> Predicate<[u8]> for Utf8Predicate<P>
 where
     P: Predicate<str>,
 {
@@ -64,7 +64,7 @@ where
     }
 }
 
-impl<P> fmt::Display for Utf8Pedicate<P>
+impl<P> fmt::Display for Utf8Predicate<P>
 where
     P: Predicate<str>,
 {
@@ -79,7 +79,7 @@ where
     Self: Predicate<str>,
     Self: Sized,
 {
-    /// Returns a `TrimPedicate` that ensures the data passed to `Self` is trimmed.
+    /// Returns a `TrimPredicate` that ensures the data passed to `Self` is trimmed.
     ///
     /// # Examples
     ///
@@ -90,11 +90,11 @@ where
     /// assert_eq!(true, predicate_fn.eval("    "));
     /// assert_eq!(false, predicate_fn.eval("    Hello    "));
     /// ```
-    fn trim(self) -> TrimPedicate<Self> {
-        TrimPedicate { p: self }
+    fn trim(self) -> TrimPredicate<Self> {
+        TrimPredicate { p: self }
     }
 
-    /// Returns a `Utf8Pedicate` that adapts `Self` to a `[u8]` `Predicate`.
+    /// Returns a `Utf8Predicate` that adapts `Self` to a `[u8]` `Predicate`.
     ///
     /// # Examples
     ///
@@ -108,8 +108,8 @@ where
     /// let variable: &[u8] = b"";
     /// assert_eq!(false, predicate_fn.eval(variable));
     /// ```
-    fn from_utf8(self) -> Utf8Pedicate<Self> {
-        Utf8Pedicate { p: self }
+    fn from_utf8(self) -> Utf8Predicate<Self> {
+        Utf8Predicate { p: self }
     }
 }
 
