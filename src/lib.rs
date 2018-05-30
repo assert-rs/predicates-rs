@@ -24,7 +24,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! predicates = "0.4"
+//! predicates = "0.5"
 //! ```
 //!
 //! ## Examples
@@ -108,14 +108,14 @@ pub use boxed::BoxPredicate;
 // core predicates
 pub mod constant;
 pub mod function;
-pub mod ord;
 pub mod iter;
 pub mod name;
+pub mod ord;
 
 // combinators
 pub mod boolean;
 
 // specialized primitive `Predicate` types
-pub mod str;
-pub mod path;
 pub mod float;
+pub mod path;
+pub mod str;

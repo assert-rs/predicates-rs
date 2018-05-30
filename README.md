@@ -17,7 +17,7 @@ First, add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-predicates = "0.4"
+predicates = "0.5"
 ```
 
 Next, add this to your crate:

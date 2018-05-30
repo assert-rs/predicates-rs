@@ -6,6 +6,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - Unreleased
 
+## [0.5.0] - 2018-05-30
+### Added
+* **trait:**
+  *  Allow naming `Predicate` expressions
+* **str:**
+  *  Add regex repetition count, closes #27
+  *  from_utf8 adapter, closes #21
+  *  Trimming predicate decorator
+* **path:**
+  * `eq_file` predicate to test a file-under-test with a fixture, closes #32.
+    * `eq_file(...).utf()` adapter to do string comparisons with the fixture
+  * Add a `from_file_path` extension method to `Predicate<[u8]>` that turns it into a `Predicate<Path>`, closes #31.
+
+### Breaking Changes
+* **trait:**
+  *  All `Predicate`s are now `Display` ([05216708](https://github.com/assert-rs/predicates-rs/commit/05216708359544f2c5f3a256f50c012f521c39a6), breaks [#](https://github.com/assert-rs/predicates-rs/issues/))
+  *  Decouple boxing from trait ([f981fac3](https://github.com/assert-rs/predicates-rs/commit/f981fac39271746162365f3c577cffac730e1d97), breaks [#](https://github.com/assert-rs/predicates-rs/issues/))
+  *  Decouple boolean logic from trait ([88b72f9e](https://github.com/assert-rs/predicates-rs/commit/88b72f9ef58a86f2af68c0510d99326f5e644f76), breaks [#](https://github.com/assert-rs/predicates-rs/issues/))
+
 ## [0.4.0] - 2018-05-10
 ### Added
 * Define oldest supported version of Rust as 1.22.
@@ -59,7 +78,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Continuous integration with Travis (Linux) and AppVeyor (Windows)
 - Basic README
 
-[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/assert-rs/predicates-rs/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/assert-rs/predicates-rs/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/assert-rs/predicates-rs/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/assert-rs/predicates-rs/compare/v0.1.0...v0.2.0
