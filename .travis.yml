@@ -9,13 +9,13 @@ rust:
 matrix:
   include:
   - env: RUSTFMT
-    rust: 1.24.0  # `stable`: Locking down for consistent behavior
+    rust: 1.26.0  # `stable`: Locking down for consistent behavior
     install:
     - rustup component add rustfmt-preview
     script:
     - cargo fmt -- --write-mode=diff
   - env: RUSTFLAGS="-D warnings"
-    rust: 1.24.0  # `stable`: Locking down for consistent behavior
+    rust: 1.26.0  # `stable`: Locking down for consistent behavior
     script:
     - cargo check --tests
   - env: CLIPPY_VERSION=0.0.179

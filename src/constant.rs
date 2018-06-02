@@ -8,8 +8,8 @@
 
 //! Definition of a constant (always true or always false) `Predicate`.
 
-use std::marker::PhantomData;
 use std::fmt;
+use std::marker::PhantomData;
 
 use Predicate;
 

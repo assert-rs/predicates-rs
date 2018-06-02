@@ -8,8 +8,8 @@
 
 //! Definition of boolean logic combinators over `Predicate`s.
 
-use std::marker::PhantomData;
 use std::fmt;
+use std::marker::PhantomData;
 
 use Predicate;
 

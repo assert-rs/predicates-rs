@@ -8,8 +8,8 @@
 
 //! Definition of `Predicate` for wrapping a `Fn(&T) -> bool`
 
-use std::marker::PhantomData;
 use std::fmt;
+use std::marker::PhantomData;
 
 use Predicate;
 
