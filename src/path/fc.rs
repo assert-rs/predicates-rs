@@ -10,22 +10,17 @@ use std::fmt;
 use std::fs;
 use std::io::{self, Read};
 use std::path;
-use std::str;
 
 use Predicate;
 
 #[derive(Clone, Debug, PartialEq)]
-pub struct FileContent(Vec<u8>);
+struct FileContent(Vec<u8>);
 
 impl FileContent {
     pub fn new(path: &path::Path) -> io::Result<FileContent> {
         let mut buffer = Vec::new();
         fs::File::open(path)?.read_to_end(&mut buffer)?;
         Ok(FileContent(buffer))
-    }
-
-    pub fn utf8(&self) -> Result<&str, str::Utf8Error> {
-        str::from_utf8(&self.0)
     }
 }
 
