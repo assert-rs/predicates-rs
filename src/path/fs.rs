@@ -7,11 +7,27 @@
 // except according to those terms.
 
 use std::fmt;
-use std::io;
+use std::fs;
+use std::io::{self, Read};
 use std::path;
+use std::str;
 
 use Predicate;
-use path::fc::FileContent;
+
+#[derive(Clone, Debug, PartialEq)]
+struct FileContent(Vec<u8>);
+
+impl FileContent {
+    pub fn new(path: &path::Path) -> io::Result<FileContent> {
+        let mut buffer = Vec::new();
+        fs::File::open(path)?.read_to_end(&mut buffer)?;
+        Ok(FileContent(buffer))
+    }
+
+    pub fn utf8(&self) -> Result<&str, str::Utf8Error> {
+        str::from_utf8(&self.0)
+    }
+}
 
 /// Predicate that compares file matches
 #[derive(Clone, Debug)]
