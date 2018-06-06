@@ -53,8 +53,11 @@ where
     /// assert_eq!(true, predicate_fn.eval(&1));
     /// assert_eq!(false, predicate_fn.eval(&2));
     /// assert_eq!(true, predicate_fn.eval(&3));
-    /// assert_eq!(false, predicate_fn.eval(&4));
-    /// assert_eq!(true, predicate_fn.eval(&5));
+    ///
+    /// let predicate_fn = predicate::in_iter(vec!["a", "c", "e"]).sort();
+    /// assert_eq!(true, predicate_fn.eval("a"));
+    /// assert_eq!(false, predicate_fn.eval("b"));
+    /// assert_eq!(true, predicate_fn.eval("c"));
     /// ```
     pub fn sort(self) -> OrdInPredicate<T> {
         let mut items = self.inner;
@@ -69,6 +72,15 @@ where
 {
     fn eval(&self, variable: &T) -> bool {
         self.inner.contains(variable)
+    }
+}
+
+impl<'a, T> Predicate<T> for InPredicate<&'a T>
+where
+    T: PartialEq + fmt::Debug + ?Sized,
+{
+    fn eval(&self, variable: &T) -> bool {
+        self.inner.contains(&variable)
     }
 }
 
@@ -104,8 +116,11 @@ where
 /// assert_eq!(true, predicate_fn.eval(&1));
 /// assert_eq!(false, predicate_fn.eval(&2));
 /// assert_eq!(true, predicate_fn.eval(&3));
-/// assert_eq!(false, predicate_fn.eval(&4));
-/// assert_eq!(true, predicate_fn.eval(&5));
+///
+/// let predicate_fn = predicate::in_iter(vec!["a", "c", "e"]);
+/// assert_eq!(true, predicate_fn.eval("a"));
+/// assert_eq!(false, predicate_fn.eval("b"));
+/// assert_eq!(true, predicate_fn.eval("c"));
 /// ```
 pub fn in_iter<I, T>(iter: I) -> InPredicate<T>
 where
@@ -140,6 +155,15 @@ where
 {
     fn eval(&self, variable: &T) -> bool {
         self.inner.binary_search(variable).is_ok()
+    }
+}
+
+impl<'a, T> Predicate<T> for OrdInPredicate<&'a T>
+where
+    T: Ord + fmt::Debug + ?Sized,
+{
+    fn eval(&self, variable: &T) -> bool {
+        self.inner.binary_search(&variable).is_ok()
     }
 }
 
@@ -178,6 +202,15 @@ where
     }
 }
 
+impl<'a, T> Predicate<T> for HashableInPredicate<&'a T>
+where
+    T: Hash + Eq + fmt::Debug + ?Sized,
+{
+    fn eval(&self, variable: &T) -> bool {
+        self.inner.contains(&variable)
+    }
+}
+
 impl<T> fmt::Display for HashableInPredicate<T>
 where
     T: Hash + Eq + fmt::Debug,
@@ -204,8 +237,11 @@ where
 /// assert_eq!(true, predicate_fn.eval(&1));
 /// assert_eq!(false, predicate_fn.eval(&2));
 /// assert_eq!(true, predicate_fn.eval(&3));
-/// assert_eq!(false, predicate_fn.eval(&4));
-/// assert_eq!(true, predicate_fn.eval(&5));
+///
+/// let predicate_fn = predicate::in_hash(vec!["a", "c", "e"]);
+/// assert_eq!(true, predicate_fn.eval("a"));
+/// assert_eq!(false, predicate_fn.eval("b"));
+/// assert_eq!(true, predicate_fn.eval("c"));
 /// ```
 pub fn in_hash<I, T>(iter: I) -> HashableInPredicate<T>
 where
