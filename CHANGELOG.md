@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - Unreleased
 
+## [0.5.1] - 2018-06-05
+### Added
+*   Fix eq for str ([7650e9e6](https://github.com/assert-rs/predicates-rs/commit/7650e9e6d43f2ddd047ad8defa0c724b31ebd1c4))
+
 ## [0.5.0] - 2018-05-30
 ### Added
 * **trait:**
@@ -78,7 +82,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Continuous integration with Travis (Linux) and AppVeyor (Windows)
 - Basic README
 
-[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v0.5.1...HEAD
+[0.5.1]: https://github.com/assert-rs/predicates-rs/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/assert-rs/predicates-rs/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/assert-rs/predicates-rs/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/assert-rs/predicates-rs/compare/v0.2.0...v0.3.0
