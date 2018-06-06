@@ -8,6 +8,17 @@
 
 use std::fmt;
 
+#[cfg(feature = "treeline")]
+use treeline::Tree;
+
+pub(crate) fn pass_fail(b: bool) -> &'static str {
+    if b {
+        "PASSED"
+    } else {
+        "FAILED"
+    }
+}
+
 /// Trait for generically evaluating a type against a dynamically created
 /// predicate function.
 ///
@@ -15,8 +26,25 @@ use std::fmt;
 /// mean that the evaluated item is in some sort of pre-defined set.  This is
 /// different from `Ord` and `Eq` in that an `item` will almost never be the
 /// same type as the implementing `Predicate` type.
-pub trait Predicate<Item: ?Sized>: fmt::Display {
+pub trait Predicate<Item: ?Sized + fmt::Debug>: fmt::Display {
     /// Execute this `Predicate` against `variable`, returning the resulting
     /// boolean.
     fn eval(&self, variable: &Item) -> bool;
+
+    /// TODO
+    fn stringify(&self, _item: &Item) -> String {
+        unimplemented!()
+    }
+
+    /// TODO
+    #[cfg(feature = "treeline")]
+    fn make_tree(&self, _item: &Item) -> Tree<String> {
+        unimplemented!()
+    }
+
+    /// TODO
+    #[cfg(feature = "treeline")]
+    fn tree_eval(&self, item: &Item) -> (bool, Tree<String>) {
+        (self.eval(item), self.make_tree(item))
+    }
 }

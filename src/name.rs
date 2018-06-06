@@ -20,7 +20,7 @@ use Predicate;
 pub struct NamePredicate<M, Item>
 where
     M: Predicate<Item>,
-    Item: ?Sized,
+    Item: ?Sized + fmt::Debug,
 {
     inner: M,
     name: &'static str,
@@ -30,7 +30,7 @@ where
 impl<M, Item> Predicate<Item> for NamePredicate<M, Item>
 where
     M: Predicate<Item>,
-    Item: ?Sized,
+    Item: ?Sized + fmt::Debug,
 {
     fn eval(&self, item: &Item) -> bool {
         self.inner.eval(item)
@@ -40,7 +40,7 @@ where
 impl<M, Item> fmt::Display for NamePredicate<M, Item>
 where
     M: Predicate<Item>,
-    Item: ?Sized,
+    Item: ?Sized + fmt::Debug,
 {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{}", self.name)
@@ -48,7 +48,7 @@ where
 }
 
 /// `Predicate` extension that adds naming predicate expressions.
-pub trait PredicateNameExt<Item: ?Sized>
+pub trait PredicateNameExt<Item: ?Sized + fmt::Debug>
 where
     Self: Predicate<Item>,
 {
@@ -77,6 +77,6 @@ where
 impl<P, Item> PredicateNameExt<Item> for P
 where
     P: Predicate<Item>,
-    Item: ?Sized,
+    Item: ?Sized + fmt::Debug,
 {
 }

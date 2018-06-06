@@ -10,6 +10,9 @@
 
 use std::fmt;
 
+#[cfg(feature = "treeline")]
+use treeline::Tree;
+
 use Predicate;
 
 #[derive(Clone, Copy, Debug)]
@@ -41,15 +44,30 @@ where
     op: EqOps,
 }
 
-impl<T> Predicate<T> for EqPredicate<T>
+impl<Item> Predicate<Item> for EqPredicate<Item>
 where
-    T: PartialEq + fmt::Debug,
+    Item: PartialEq + fmt::Debug,
 {
-    fn eval(&self, variable: &T) -> bool {
+    fn eval(&self, variable: &Item) -> bool {
         match self.op {
             EqOps::Equal => variable.eq(&self.constant),
             EqOps::NotEqual => variable.ne(&self.constant),
         }
+    }
+
+    #[cfg(feature = "treeline")]
+    fn make_tree(&self, item: &Item) -> Tree<String> {
+        Tree::root(
+            format!(
+                "{} {}",
+                self.stringify(item),
+                ::core::pass_fail(self.eval(item))
+            )
+        )
+    }
+
+    fn stringify(&self, item: &Item) -> String {
+        format!("{:?} {} {:?}", item, self.op, self.constant)
     }
 }
 
@@ -155,17 +173,32 @@ where
     op: OrdOps,
 }
 
-impl<T> Predicate<T> for OrdPredicate<T>
+impl<Item> Predicate<Item> for OrdPredicate<Item>
 where
-    T: PartialOrd + fmt::Debug,
+    Item: PartialOrd + fmt::Debug,
 {
-    fn eval(&self, variable: &T) -> bool {
+    fn eval(&self, variable: &Item) -> bool {
         match self.op {
             OrdOps::LessThan => variable.lt(&self.constant),
             OrdOps::LessThanOrEqual => variable.le(&self.constant),
             OrdOps::GreaterThanOrEqual => variable.ge(&self.constant),
             OrdOps::GreaterThan => variable.gt(&self.constant),
         }
+    }
+
+    #[cfg(feature = "treeline")]
+    fn make_tree(&self, item: &Item) -> Tree<String> {
+        Tree::root(
+            format!(
+                "{} {}",
+                self.stringify(item),
+                ::core::pass_fail(self.eval(item))
+            )
+        )
+    }
+
+    fn stringify(&self, item: &Item) -> String {
+        format!("{:?} {} {:?}", item, self.op, self.constant)
     }
 }
 
