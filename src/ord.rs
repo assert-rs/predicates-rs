@@ -53,6 +53,18 @@ where
     }
 }
 
+impl<'a, T> Predicate<T> for EqPredicate<&'a T>
+where
+    T: PartialEq + fmt::Debug + ?Sized,
+{
+    fn eval(&self, variable: &T) -> bool {
+        match self.op {
+            EqOps::Equal => variable.eq(self.constant),
+            EqOps::NotEqual => variable.ne(self.constant),
+        }
+    }
+}
+
 impl<T> fmt::Display for EqPredicate<T>
 where
     T: fmt::Debug,
@@ -73,6 +85,10 @@ where
 /// let predicate_fn = predicate::eq(5);
 /// assert_eq!(true, predicate_fn.eval(&5));
 /// assert_eq!(false, predicate_fn.eval(&10));
+///
+/// let predicate_fn = predicate::eq("Hello");
+/// assert_eq!(true, predicate_fn.eval("Hello"));
+/// assert_eq!(false, predicate_fn.eval("Goodbye"));
 /// ```
 pub fn eq<T>(constant: T) -> EqPredicate<T>
 where
@@ -153,6 +169,20 @@ where
     }
 }
 
+impl<'a, T> Predicate<T> for OrdPredicate<&'a T>
+where
+    T: PartialOrd + fmt::Debug + ?Sized,
+{
+    fn eval(&self, variable: &T) -> bool {
+        match self.op {
+            OrdOps::LessThan => variable.lt(self.constant),
+            OrdOps::LessThanOrEqual => variable.le(self.constant),
+            OrdOps::GreaterThanOrEqual => variable.ge(self.constant),
+            OrdOps::GreaterThan => variable.gt(self.constant),
+        }
+    }
+}
+
 impl<T> fmt::Display for OrdPredicate<T>
 where
     T: fmt::Debug,
@@ -173,6 +203,10 @@ where
 /// let predicate_fn = predicate::lt(5);
 /// assert_eq!(true, predicate_fn.eval(&4));
 /// assert_eq!(false, predicate_fn.eval(&6));
+///
+/// let predicate_fn = predicate::lt("b");
+/// assert_eq!(true, predicate_fn.eval("a"));
+/// assert_eq!(false, predicate_fn.eval("c"));
 /// ```
 pub fn lt<T>(constant: T) -> OrdPredicate<T>
 where
