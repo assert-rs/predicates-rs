@@ -18,7 +18,7 @@ pub type RegexError = regex::Error;
 /// Predicate that uses regex matching
 ///
 /// This is created by the `predicate::str::is_match`.
-#[derive(Clone, Debug)]
+#[derive(Debug, Clone)]
 pub struct RegexPredicate {
     re: regex::Regex,
 }
@@ -55,7 +55,7 @@ impl fmt::Display for RegexPredicate {
 /// Predicate that checks for repeated patterns.
 ///
 /// This is created by `predicates::str::is_match(...).count`.
-#[derive(Clone, Debug)]
+#[derive(Debug, Clone)]
 pub struct RegexMatchesPredicate {
     re: regex::Regex,
     count: usize,

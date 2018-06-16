@@ -14,7 +14,7 @@ use std::str;
 
 use Predicate;
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 struct FileContent(Vec<u8>);
 
 impl FileContent {
@@ -30,7 +30,7 @@ impl FileContent {
 }
 
 /// Predicate that compares file matches
-#[derive(Clone, Debug)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct BinaryFilePredicate {
     path: path::PathBuf,
     file_content: FileContent,
@@ -98,7 +98,7 @@ pub fn eq_file(path: &path::Path) -> BinaryFilePredicate {
 }
 
 /// Predicate that compares string content of files
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct StrFilePredicate {
     path: path::PathBuf,
     content: String,

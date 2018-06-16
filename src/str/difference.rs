@@ -13,7 +13,7 @@ use difference;
 
 use Predicate;
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 enum DistanceOp {
     Similar,
     Different,
@@ -31,7 +31,7 @@ impl DistanceOp {
 /// Predicate that diffs two strings.
 ///
 /// This is created by the `predicate::str::similar`.
-#[derive(Clone, Debug)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct DifferencePredicate {
     orig: borrow::Cow<'static, str>,
     split: borrow::Cow<'static, str>,

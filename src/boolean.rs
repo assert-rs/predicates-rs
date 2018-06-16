@@ -16,7 +16,7 @@ use Predicate;
 /// Predicate that combines two `Predicate`s, returning the AND of the results.
 ///
 /// This is created by the `Predicate::and` function.
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct AndPredicate<M1, M2, Item>
 where
     M1: Predicate<Item>,
@@ -69,7 +69,7 @@ where
 /// Predicate that combines two `Predicate`s, returning the OR of the results.
 ///
 /// This is created by the `Predicate::or` function.
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct OrPredicate<M1, M2, Item>
 where
     M1: Predicate<Item>,
@@ -122,7 +122,7 @@ where
 /// Predicate that returns a `Predicate` taking the logical NOT of the result.
 ///
 /// This is created by the `Predicate::not` function.
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct NotPredicate<M, Item>
 where
     M: Predicate<Item>,
