@@ -14,7 +14,7 @@ use Predicate;
 /// Predicate that checks if a file is present
 ///
 /// This is created by the `predicate::path::exists` and `predicate::path::missing`.
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct ExistencePredicate {
     exists: bool,
 }

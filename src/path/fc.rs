@@ -13,7 +13,7 @@ use std::path;
 
 use Predicate;
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Debug, Clone, PartialEq)]
 struct FileContent(Vec<u8>);
 
 impl FileContent {
@@ -24,10 +24,10 @@ impl FileContent {
     }
 }
 
-/// Predicate adaper that converts a `path` to file content predicate to byte predicate.
+/// Predicate adapter that converts a `path` predicate to a byte predicate on its content.
 ///
 /// This is created by `pred.from_path()`.
-#[derive(Clone, Debug)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct FileContentPredicate<P>
 where
     P: Predicate<[u8]>,

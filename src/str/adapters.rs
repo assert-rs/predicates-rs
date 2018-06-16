@@ -7,7 +7,7 @@ use Predicate;
 /// Predicate adaper that trims the variable being tested.
 ///
 /// This is created by `pred.trim()`.
-#[derive(Clone, Debug)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct TrimPredicate<P>
 where
     P: Predicate<str>,
@@ -36,7 +36,7 @@ where
 /// Predicate adaper that converts a `str` predicate to byte predicate.
 ///
 /// This is created by `pred.from_utf8()`.
-#[derive(Clone, Debug)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Utf8Predicate<P>
 where
     P: Predicate<str>,

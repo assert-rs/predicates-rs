@@ -17,7 +17,7 @@ use Predicate;
 /// occur.
 ///
 /// This is created by the `predicate::float::is_close`.
-#[derive(Clone, Debug)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub struct IsClosePredicate {
     target: f64,
     epsilon: f64,

@@ -12,7 +12,7 @@ use std::fmt;
 
 use Predicate;
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 enum EqOps {
     Equal,
     NotEqual,
@@ -32,10 +32,10 @@ impl fmt::Display for EqOps {
 /// value, otherwise returns `false`.
 ///
 /// This is created by the `predicate::{eq, ne}` functions.
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct EqPredicate<T>
 where
-    T: fmt::Debug,
+    T: fmt::Debug + PartialEq,
 {
     constant: T,
     op: EqOps,
@@ -43,7 +43,7 @@ where
 
 impl<T> Predicate<T> for EqPredicate<T>
 where
-    T: PartialEq + fmt::Debug,
+    T: fmt::Debug + PartialEq,
 {
     fn eval(&self, variable: &T) -> bool {
         match self.op {
@@ -55,7 +55,7 @@ where
 
 impl<'a, T> Predicate<T> for EqPredicate<&'a T>
 where
-    T: PartialEq + fmt::Debug + ?Sized,
+    T: fmt::Debug + PartialEq + ?Sized,
 {
     fn eval(&self, variable: &T) -> bool {
         match self.op {
@@ -67,7 +67,7 @@ where
 
 impl<T> fmt::Display for EqPredicate<T>
 where
-    T: fmt::Debug,
+    T: fmt::Debug + PartialEq,
 {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "var {} {:?}", self.op, self.constant)
@@ -92,7 +92,7 @@ where
 /// ```
 pub fn eq<T>(constant: T) -> EqPredicate<T>
 where
-    T: PartialEq + fmt::Debug,
+    T: fmt::Debug + PartialEq,
 {
     EqPredicate {
         constant: constant,
@@ -122,7 +122,7 @@ where
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 enum OrdOps {
     LessThan,
     LessThanOrEqual,
@@ -146,10 +146,10 @@ impl fmt::Display for OrdOps {
 /// value, otherwise returns `false`.
 ///
 /// This is created by the `predicate::{gt, ge, lt, le}` functions.
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct OrdPredicate<T>
 where
-    T: fmt::Debug,
+    T: fmt::Debug + PartialOrd,
 {
     constant: T,
     op: OrdOps,
@@ -157,7 +157,7 @@ where
 
 impl<T> Predicate<T> for OrdPredicate<T>
 where
-    T: PartialOrd + fmt::Debug,
+    T: fmt::Debug + PartialOrd,
 {
     fn eval(&self, variable: &T) -> bool {
         match self.op {
@@ -171,7 +171,7 @@ where
 
 impl<'a, T> Predicate<T> for OrdPredicate<&'a T>
 where
-    T: PartialOrd + fmt::Debug + ?Sized,
+    T: fmt::Debug + PartialOrd + ?Sized,
 {
     fn eval(&self, variable: &T) -> bool {
         match self.op {
@@ -185,7 +185,7 @@ where
 
 impl<T> fmt::Display for OrdPredicate<T>
 where
-    T: fmt::Debug,
+    T: fmt::Debug + PartialOrd,
 {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "var {} {:?}", self.op, self.constant)
@@ -210,7 +210,7 @@ where
 /// ```
 pub fn lt<T>(constant: T) -> OrdPredicate<T>
 where
-    T: PartialOrd + fmt::Debug,
+    T: fmt::Debug + PartialOrd,
 {
     OrdPredicate {
         constant: constant,

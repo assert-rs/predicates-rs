@@ -13,7 +13,7 @@ use Predicate;
 /// Predicate that checks for empty strings.
 ///
 /// This is created by `predicates::str::is_empty`.
-#[derive(Copy, Clone, Debug)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct IsEmptyPredicate {}
 
 impl Predicate<str> for IsEmptyPredicate {
@@ -46,7 +46,7 @@ pub fn is_empty() -> IsEmptyPredicate {
 /// Predicate checks start of str
 ///
 /// This is created by `predicates::str::starts_with`.
-#[derive(Clone, Debug)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct StartsWithPredicate {
     pattern: String,
 }
@@ -86,7 +86,7 @@ where
 /// Predicate checks end of str
 ///
 /// This is created by `predicates::str::ends_with`.
-#[derive(Clone, Debug)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct EndsWithPredicate {
     pattern: String,
 }
@@ -126,7 +126,7 @@ where
 /// Predicate that checks for patterns.
 ///
 /// This is created by `predicates::str:contains`.
-#[derive(Clone, Debug)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct ContainsPredicate {
     pattern: String,
 }
@@ -166,7 +166,7 @@ impl fmt::Display for ContainsPredicate {
 /// Predicate that checks for repeated patterns.
 ///
 /// This is created by `predicates::str::contains(...).count`.
-#[derive(Clone, Debug)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct MatchesPredicate {
     pattern: String,
     count: usize,

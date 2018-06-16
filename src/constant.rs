@@ -16,7 +16,7 @@ use Predicate;
 /// Predicate that always returns a constant (boolean) result.
 ///
 /// This is created by the `predicate::always` and `predicate::never` functions.
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct BooleanPredicate<Item> {
     retval: bool,
     _phantom: PhantomData<Item>,

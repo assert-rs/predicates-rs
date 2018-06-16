@@ -16,7 +16,7 @@ use Predicate;
 /// Augment an existing predicate with a name.
 ///
 /// This is created by the `PredicateNameExt::name` function.
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct NamePredicate<M, Item>
 where
     M: Predicate<Item>,

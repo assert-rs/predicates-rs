@@ -24,7 +24,7 @@ use Predicate;
 /// it is much more efficient to use `HashableInPredicate` and
 /// `in_hash`. The implementation-specific predicates will be
 /// deprecated when Rust supports trait specialization.
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct InPredicate<T>
 where
     T: PartialEq + fmt::Debug,
@@ -141,7 +141,7 @@ where
 /// predicates will be deprecated when Rust supports trait specialization.
 ///
 /// This is created by the `predicate::in_iter(...).sort` function.
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct OrdInPredicate<T>
 where
     T: Ord + fmt::Debug,
@@ -185,7 +185,7 @@ where
 /// predicates will be deprecated when Rust supports trait specialization.
 ///
 /// This is created by the `predicate::in_hash` function.
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct HashableInPredicate<T>
 where
     T: Hash + Eq + fmt::Debug,

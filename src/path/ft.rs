@@ -13,7 +13,7 @@ use std::path;
 
 use Predicate;
 
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 enum FileType {
     File,
     Dir,
@@ -55,7 +55,7 @@ impl fmt::Display for FileType {
 /// Predicate that checks the `std::fs::FileType`.
 ///
 /// This is created by the `predicate::path::is_file`, `predicate::path::is_dir`, and `predicate::path::is_symlink`.
-#[derive(Clone, Debug)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct FileTypePredicate {
     ft: FileType,
     follow: bool,
