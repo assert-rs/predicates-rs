@@ -96,7 +96,7 @@ where
     F: Fn(&T) -> bool,
 {
     FnPredicate {
-        function: function,
+        function,
         name: "fn",
         _phantom: PhantomData,
     }
