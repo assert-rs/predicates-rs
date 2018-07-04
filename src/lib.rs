@@ -89,7 +89,7 @@
 //! assert_eq!(false, between_5_and_10.eval(&3));
 //! ```
 
-#![deny(missing_docs, missing_debug_implementations)]
+#![warn(missing_docs, missing_debug_implementations)]
 
 #[cfg(feature = "difference")]
 extern crate difference;

@@ -58,7 +58,7 @@ impl BinaryFilePredicate {
     pub fn utf8(self) -> Option<StrFilePredicate> {
         let path = self.path;
         self.file_content.utf8().ok().map(|s| StrFilePredicate {
-            path: path,
+            path,
             content: s.to_string(),
         })
     }

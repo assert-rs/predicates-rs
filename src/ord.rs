@@ -95,7 +95,7 @@ where
     T: fmt::Debug + PartialEq,
 {
     EqPredicate {
-        constant: constant,
+        constant,
         op: EqOps::Equal,
     }
 }
@@ -117,7 +117,7 @@ where
     T: PartialEq + fmt::Debug,
 {
     EqPredicate {
-        constant: constant,
+        constant,
         op: EqOps::NotEqual,
     }
 }
@@ -213,7 +213,7 @@ where
     T: fmt::Debug + PartialOrd,
 {
     OrdPredicate {
-        constant: constant,
+        constant,
         op: OrdOps::LessThan,
     }
 }
@@ -236,7 +236,7 @@ where
     T: PartialOrd + fmt::Debug,
 {
     OrdPredicate {
-        constant: constant,
+        constant,
         op: OrdOps::LessThanOrEqual,
     }
 }
@@ -259,7 +259,7 @@ where
     T: PartialOrd + fmt::Debug,
 {
     OrdPredicate {
-        constant: constant,
+        constant,
         op: OrdOps::GreaterThanOrEqual,
     }
 }
@@ -282,7 +282,7 @@ where
     T: PartialOrd + fmt::Debug,
 {
     OrdPredicate {
-        constant: constant,
+        constant,
         op: OrdOps::GreaterThan,
     }
 }

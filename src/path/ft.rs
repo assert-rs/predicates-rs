@@ -32,7 +32,7 @@ impl FileType {
         Ok(FileType::Symlink)
     }
 
-    fn eval(self, ft: &fs::FileType) -> bool {
+    fn eval(self, ft: fs::FileType) -> bool {
         match self {
             FileType::File => ft.is_file(),
             FileType::Dir => ft.is_dir(),
@@ -89,7 +89,7 @@ impl Predicate<path::Path> for FileTypePredicate {
             path.symlink_metadata()
         };
         metadata
-            .map(|m| self.ft.eval(&m.file_type()))
+            .map(|m| self.ft.eval(m.file_type()))
             .unwrap_or(false)
     }
 }
