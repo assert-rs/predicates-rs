@@ -13,15 +13,10 @@ use std::path;
 
 use Predicate;
 
-#[derive(Debug, Clone, PartialEq)]
-struct FileContent(Vec<u8>);
-
-impl FileContent {
-    pub fn new(path: &path::Path) -> io::Result<FileContent> {
-        let mut buffer = Vec::new();
-        fs::File::open(path)?.read_to_end(&mut buffer)?;
-        Ok(FileContent(buffer))
-    }
+fn read_file(path: &path::Path) -> io::Result<Vec<u8>> {
+    let mut buffer = Vec::new();
+    fs::File::open(path)?.read_to_end(&mut buffer)?;
+    Ok(buffer)
 }
 
 /// Predicate adapter that converts a `path` predicate to a byte predicate on its content.
@@ -40,8 +35,8 @@ where
     P: Predicate<[u8]>,
 {
     fn eval(&self, path: &path::Path) -> io::Result<bool> {
-        let buffer = FileContent::new(path)?;
-        Ok(self.p.eval(&buffer.0))
+        let buffer = read_file(path)?;
+        Ok(self.p.eval(&buffer))
     }
 }
 
