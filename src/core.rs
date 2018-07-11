@@ -19,4 +19,17 @@ pub trait Predicate<Item: ?Sized>: reflection::PredicateReflection {
     /// Execute this `Predicate` against `variable`, returning the resulting
     /// boolean.
     fn eval(&self, variable: &Item) -> bool;
+
+    /// Find a case that proves this predicate as `expected` when run against `variable`.
+    fn find_case<'a>(&'a self, expected: bool, variable: &Item) -> Option<reflection::Case<'a>>
+    where
+        Self: Sized,
+    {
+        let actual = self.eval(variable);
+        if expected == actual {
+            Some(reflection::Case::new(Some(self), actual))
+        } else {
+            None
+        }
+    }
 }
