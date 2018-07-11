@@ -9,6 +9,7 @@
 use std::fmt;
 use std::path;
 
+use reflection;
 use Predicate;
 
 /// Predicate that checks if a file is present
@@ -24,6 +25,8 @@ impl Predicate<path::Path> for ExistencePredicate {
         path.exists() == self.exists
     }
 }
+
+impl reflection::PredicateReflection for ExistencePredicate {}
 
 impl fmt::Display for ExistencePredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

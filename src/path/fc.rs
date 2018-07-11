@@ -11,6 +11,7 @@ use std::fs;
 use std::io::{self, Read};
 use std::path;
 
+use reflection;
 use Predicate;
 
 fn read_file(path: &path::Path) -> io::Result<Vec<u8>> {
@@ -38,6 +39,12 @@ where
         let buffer = read_file(path)?;
         Ok(self.p.eval(&buffer))
     }
+}
+
+impl<P> reflection::PredicateReflection for FileContentPredicate<P>
+where
+    P: Predicate<[u8]>,
+{
 }
 
 impl<P> fmt::Display for FileContentPredicate<P>

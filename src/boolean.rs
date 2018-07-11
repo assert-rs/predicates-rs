@@ -11,6 +11,7 @@
 use std::fmt;
 use std::marker::PhantomData;
 
+use reflection;
 use Predicate;
 
 /// Predicate that combines two `Predicate`s, returning the AND of the results.
@@ -53,6 +54,14 @@ where
     fn eval(&self, item: &Item) -> bool {
         self.a.eval(item) && self.b.eval(item)
     }
+}
+
+impl<M1, M2, Item> reflection::PredicateReflection for AndPredicate<M1, M2, Item>
+where
+    M1: Predicate<Item>,
+    M2: Predicate<Item>,
+    Item: ?Sized,
+{
 }
 
 impl<M1, M2, Item> fmt::Display for AndPredicate<M1, M2, Item>
@@ -108,6 +117,14 @@ where
     }
 }
 
+impl<M1, M2, Item> reflection::PredicateReflection for OrPredicate<M1, M2, Item>
+where
+    M1: Predicate<Item>,
+    M2: Predicate<Item>,
+    Item: ?Sized,
+{
+}
+
 impl<M1, M2, Item> fmt::Display for OrPredicate<M1, M2, Item>
 where
     M1: Predicate<Item>,
@@ -154,6 +171,13 @@ where
     fn eval(&self, item: &Item) -> bool {
         !self.inner.eval(item)
     }
+}
+
+impl<M, Item> reflection::PredicateReflection for NotPredicate<M, Item>
+where
+    M: Predicate<Item>,
+    Item: ?Sized,
+{
 }
 
 impl<M, Item> fmt::Display for NotPredicate<M, Item>

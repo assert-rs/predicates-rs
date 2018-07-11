@@ -10,6 +10,7 @@ use std::fmt;
 
 use regex;
 
+use reflection;
 use Predicate;
 
 /// An error that occurred during parsing or compiling a regular expression.
@@ -46,6 +47,8 @@ impl Predicate<str> for RegexPredicate {
     }
 }
 
+impl reflection::PredicateReflection for RegexPredicate {}
+
 impl fmt::Display for RegexPredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "var.is_match({})", self.re)
@@ -66,6 +69,8 @@ impl Predicate<str> for RegexMatchesPredicate {
         self.re.find_iter(variable).count() == self.count
     }
 }
+
+impl reflection::PredicateReflection for RegexMatchesPredicate {}
 
 impl fmt::Display for RegexMatchesPredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
