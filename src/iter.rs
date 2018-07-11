@@ -30,7 +30,7 @@ pub struct InPredicate<T>
 where
     T: PartialEq + fmt::Debug,
 {
-    inner: Vec<T>,
+    inner: reflection::DebugAdapter<Vec<T>>,
 }
 
 impl<T> InPredicate<T>
@@ -61,9 +61,11 @@ where
     /// assert_eq!(true, predicate_fn.eval("c"));
     /// ```
     pub fn sort(self) -> OrdInPredicate<T> {
-        let mut items = self.inner;
+        let mut items = self.inner.debug;
         items.sort();
-        OrdInPredicate { inner: items }
+        OrdInPredicate {
+            inner: reflection::DebugAdapter::new(items),
+        }
     }
 }
 
@@ -72,7 +74,7 @@ where
     T: PartialEq + fmt::Debug,
 {
     fn eval(&self, variable: &T) -> bool {
-        self.inner.contains(variable)
+        self.inner.debug.contains(variable)
     }
 }
 
@@ -81,7 +83,7 @@ where
     T: PartialEq + fmt::Debug + ?Sized,
 {
     fn eval(&self, variable: &T) -> bool {
-        self.inner.contains(&variable)
+        self.inner.debug.contains(&variable)
     }
 }
 
@@ -89,6 +91,10 @@ impl<T> reflection::PredicateReflection for InPredicate<T>
 where
     T: PartialEq + fmt::Debug,
 {
+    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+        let params = vec![reflection::Parameter::new("values", &self.inner)];
+        Box::new(params.into_iter())
+    }
 }
 
 impl<T> fmt::Display for InPredicate<T>
@@ -96,7 +102,7 @@ where
     T: PartialEq + fmt::Debug,
 {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "var in {:?}", self.inner)
+        write!(f, "var in values")
     }
 }
 
@@ -135,7 +141,7 @@ where
     I: IntoIterator<Item = T>,
 {
     InPredicate {
-        inner: Vec::from_iter(iter),
+        inner: reflection::DebugAdapter::new(Vec::from_iter(iter)),
     }
 }
 
@@ -153,7 +159,7 @@ pub struct OrdInPredicate<T>
 where
     T: Ord + fmt::Debug,
 {
-    inner: Vec<T>,
+    inner: reflection::DebugAdapter<Vec<T>>,
 }
 
 impl<T> Predicate<T> for OrdInPredicate<T>
@@ -161,7 +167,7 @@ where
     T: Ord + fmt::Debug,
 {
     fn eval(&self, variable: &T) -> bool {
-        self.inner.binary_search(variable).is_ok()
+        self.inner.debug.binary_search(variable).is_ok()
     }
 }
 
@@ -170,7 +176,7 @@ where
     T: Ord + fmt::Debug + ?Sized,
 {
     fn eval(&self, variable: &T) -> bool {
-        self.inner.binary_search(&variable).is_ok()
+        self.inner.debug.binary_search(&variable).is_ok()
     }
 }
 
@@ -178,6 +184,10 @@ impl<T> reflection::PredicateReflection for OrdInPredicate<T>
 where
     T: Ord + fmt::Debug,
 {
+    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+        let params = vec![reflection::Parameter::new("values", &self.inner)];
+        Box::new(params.into_iter())
+    }
 }
 
 impl<T> fmt::Display for OrdInPredicate<T>
@@ -185,7 +195,7 @@ where
     T: Ord + fmt::Debug,
 {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "var in {:?}", self.inner)
+        write!(f, "var in values")
     }
 }
 
@@ -203,7 +213,7 @@ pub struct HashableInPredicate<T>
 where
     T: Hash + Eq + fmt::Debug,
 {
-    inner: HashSet<T>,
+    inner: reflection::DebugAdapter<HashSet<T>>,
 }
 
 impl<T> Predicate<T> for HashableInPredicate<T>
@@ -211,7 +221,7 @@ where
     T: Hash + Eq + fmt::Debug,
 {
     fn eval(&self, variable: &T) -> bool {
-        self.inner.contains(variable)
+        self.inner.debug.contains(variable)
     }
 }
 
@@ -220,7 +230,7 @@ where
     T: Hash + Eq + fmt::Debug + ?Sized,
 {
     fn eval(&self, variable: &T) -> bool {
-        self.inner.contains(&variable)
+        self.inner.debug.contains(&variable)
     }
 }
 
@@ -228,6 +238,10 @@ impl<T> reflection::PredicateReflection for HashableInPredicate<T>
 where
     T: Hash + Eq + fmt::Debug,
 {
+    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+        let params = vec![reflection::Parameter::new("values", &self.inner)];
+        Box::new(params.into_iter())
+    }
 }
 
 impl<T> fmt::Display for HashableInPredicate<T>
@@ -235,7 +249,7 @@ where
     T: Hash + Eq + fmt::Debug,
 {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "var in {:?}", self.inner)
+        write!(f, "var in values")
     }
 }
 
@@ -268,6 +282,6 @@ where
     I: IntoIterator<Item = T>,
 {
     HashableInPredicate {
-        inner: HashSet::from_iter(iter),
+        inner: reflection::DebugAdapter::new(HashSet::from_iter(iter)),
     }
 }

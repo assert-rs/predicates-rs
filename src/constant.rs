@@ -29,7 +29,12 @@ impl<Item> Predicate<Item> for BooleanPredicate<Item> {
     }
 }
 
-impl<Item> reflection::PredicateReflection for BooleanPredicate<Item> {}
+impl<Item> reflection::PredicateReflection for BooleanPredicate<Item> {
+    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+        let params = vec![reflection::Parameter::new("value", &self.retval)];
+        Box::new(params.into_iter())
+    }
+}
 
 impl<Item> fmt::Display for BooleanPredicate<Item> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

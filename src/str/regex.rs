@@ -70,11 +70,16 @@ impl Predicate<str> for RegexMatchesPredicate {
     }
 }
 
-impl reflection::PredicateReflection for RegexMatchesPredicate {}
+impl reflection::PredicateReflection for RegexMatchesPredicate {
+    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+        let params = vec![reflection::Parameter::new("count", &self.count)];
+        Box::new(params.into_iter())
+    }
+}
 
 impl fmt::Display for RegexMatchesPredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "var.is_match({}).count({})", self.re, self.count)
+        write!(f, "var.is_match({})", self.re)
     }
 }
 

@@ -87,15 +87,19 @@ impl Predicate<f64> for IsClosePredicate {
     }
 }
 
-impl reflection::PredicateReflection for IsClosePredicate {}
+impl reflection::PredicateReflection for IsClosePredicate {
+    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+        let params = vec![
+            reflection::Parameter::new("epsilon", &self.epsilon),
+            reflection::Parameter::new("ulps", &self.ulps),
+        ];
+        Box::new(params.into_iter())
+    }
+}
 
 impl fmt::Display for IsClosePredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(
-            f,
-            "var ~= {} +/- {} ({})",
-            self.target, self.epsilon, self.ulps
-        )
+        write!(f, "var ~= {}", self.target)
     }
 }
 
