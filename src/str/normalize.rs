@@ -6,6 +6,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+use reflection;
 use std::fmt;
 use Predicate;
 
@@ -23,12 +24,19 @@ where
     pub(crate) p: P,
 }
 
+impl<P> reflection::PredicateReflection for NormalizedPredicate<P>
+where
+    P: Predicate<str>,
+{
+}
+
 impl<P> Predicate<str> for NormalizedPredicate<P>
 where
     P: Predicate<str>,
 {
     fn eval(&self, variable: &str) -> bool {
-        self.p.eval(&String::from_iter(normalized(variable.chars())))
+        self.p
+            .eval(&String::from_iter(normalized(variable.chars())))
     }
 }
 

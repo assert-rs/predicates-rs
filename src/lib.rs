@@ -69,6 +69,7 @@
 //!         *variable == 42
 //!     }
 //! }
+//! impl predicates::reflection::PredicateReflection for IsTheAnswer {}
 //! impl fmt::Display for IsTheAnswer {
 //!     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 //!         write!(f, "var.is_the_answer()")
@@ -103,9 +104,10 @@ extern crate regex;
 pub mod prelude;
 
 mod core;
-pub use core::Predicate;
+pub use core::*;
 mod boxed;
-pub use boxed::BoxPredicate;
+pub use boxed::*;
+pub mod reflection;
 
 // core predicates
 pub mod constant;

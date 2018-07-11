@@ -11,6 +11,7 @@ use std::fmt;
 use float_cmp::ApproxEq;
 use float_cmp::Ulps;
 
+use reflection;
 use Predicate;
 
 /// Predicate that ensures two numbers are "close" enough, understanding that rounding errors
@@ -85,6 +86,8 @@ impl Predicate<f64> for IsClosePredicate {
         variable.approx_eq(&self.target, self.epsilon, self.ulps)
     }
 }
+
+impl reflection::PredicateReflection for IsClosePredicate {}
 
 impl fmt::Display for IsClosePredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

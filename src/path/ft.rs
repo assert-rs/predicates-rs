@@ -11,6 +11,7 @@ use std::fs;
 use std::io;
 use std::path;
 
+use reflection;
 use Predicate;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -93,6 +94,8 @@ impl Predicate<path::Path> for FileTypePredicate {
             .unwrap_or(false)
     }
 }
+
+impl reflection::PredicateReflection for FileTypePredicate {}
 
 impl fmt::Display for FileTypePredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

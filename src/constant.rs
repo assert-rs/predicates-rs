@@ -11,6 +11,7 @@
 use std::fmt;
 use std::marker::PhantomData;
 
+use reflection;
 use Predicate;
 
 /// Predicate that always returns a constant (boolean) result.
@@ -27,6 +28,8 @@ impl<Item> Predicate<Item> for BooleanPredicate<Item> {
         self.retval
     }
 }
+
+impl<Item> reflection::PredicateReflection for BooleanPredicate<Item> {}
 
 impl<Item> fmt::Display for BooleanPredicate<Item> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

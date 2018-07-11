@@ -10,6 +10,7 @@ use std::ffi;
 use std::fmt;
 use std::str;
 
+use reflection;
 use Predicate;
 #[cfg(feature = "normalize-line-endings")]
 use str::normalize::NormalizedPredicate;
@@ -32,6 +33,12 @@ where
     fn eval(&self, variable: &str) -> bool {
         self.p.eval(variable.trim())
     }
+}
+
+impl<P> reflection::PredicateReflection for TrimPredicate<P>
+where
+    P: Predicate<str>,
+{
 }
 
 impl<P> fmt::Display for TrimPredicate<P>
@@ -72,6 +79,12 @@ where
             .map(|s| self.p.eval(s))
             .unwrap_or(false)
     }
+}
+
+impl<P> reflection::PredicateReflection for Utf8Predicate<P>
+where
+    P: Predicate<str>,
+{
 }
 
 impl<P> fmt::Display for Utf8Predicate<P>

@@ -11,6 +11,7 @@ use std::fmt;
 
 use difference;
 
+use reflection;
 use Predicate;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -91,6 +92,8 @@ impl Predicate<str> for DifferencePredicate {
         self.op.eval(self.distance, change.distance)
     }
 }
+
+impl reflection::PredicateReflection for DifferencePredicate {}
 
 impl fmt::Display for DifferencePredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

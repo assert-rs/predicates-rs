@@ -6,7 +6,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-use std::fmt;
+use reflection;
 
 /// Trait for generically evaluating a type against a dynamically created
 /// predicate function.
@@ -15,7 +15,7 @@ use std::fmt;
 /// mean that the evaluated item is in some sort of pre-defined set.  This is
 /// different from `Ord` and `Eq` in that an `item` will almost never be the
 /// same type as the implementing `Predicate` type.
-pub trait Predicate<Item: ?Sized>: fmt::Display {
+pub trait Predicate<Item: ?Sized>: reflection::PredicateReflection {
     /// Execute this `Predicate` against `variable`, returning the resulting
     /// boolean.
     fn eval(&self, variable: &Item) -> bool;

@@ -11,6 +11,7 @@ use std::fs;
 use std::io::{self, Read};
 use std::path;
 
+use reflection;
 use Predicate;
 
 fn read_file(path: &path::Path) -> io::Result<Vec<u8>> {
@@ -66,6 +67,8 @@ impl Predicate<[u8]> for BinaryFilePredicate {
     }
 }
 
+impl reflection::PredicateReflection for BinaryFilePredicate {}
+
 impl fmt::Display for BinaryFilePredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "var is {}", self.path.display())
@@ -119,6 +122,8 @@ impl Predicate<str> for StrFilePredicate {
         self.content == actual
     }
 }
+
+impl reflection::PredicateReflection for StrFilePredicate {}
 
 impl fmt::Display for StrFilePredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

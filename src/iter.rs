@@ -13,6 +13,7 @@ use std::fmt;
 use std::hash::Hash;
 use std::iter::FromIterator;
 
+use reflection;
 use Predicate;
 
 /// Predicate that returns `true` if `variable` is a member of the pre-defined
@@ -82,6 +83,12 @@ where
     fn eval(&self, variable: &T) -> bool {
         self.inner.contains(&variable)
     }
+}
+
+impl<T> reflection::PredicateReflection for InPredicate<T>
+where
+    T: PartialEq + fmt::Debug,
+{
 }
 
 impl<T> fmt::Display for InPredicate<T>
@@ -167,6 +174,12 @@ where
     }
 }
 
+impl<T> reflection::PredicateReflection for OrdInPredicate<T>
+where
+    T: Ord + fmt::Debug,
+{
+}
+
 impl<T> fmt::Display for OrdInPredicate<T>
 where
     T: Ord + fmt::Debug,
@@ -209,6 +222,12 @@ where
     fn eval(&self, variable: &T) -> bool {
         self.inner.contains(&variable)
     }
+}
+
+impl<T> reflection::PredicateReflection for HashableInPredicate<T>
+where
+    T: Hash + Eq + fmt::Debug,
+{
 }
 
 impl<T> fmt::Display for HashableInPredicate<T>

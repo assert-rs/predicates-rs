@@ -11,6 +11,7 @@
 use std::fmt;
 use std::marker::PhantomData;
 
+use reflection;
 use Predicate;
 
 /// Predicate that wraps a function over a reference that returns a `bool`.
@@ -61,6 +62,13 @@ where
     fn eval(&self, variable: &T) -> bool {
         (self.function)(variable)
     }
+}
+
+impl<F, T> reflection::PredicateReflection for FnPredicate<F, T>
+where
+    F: Fn(&T) -> bool,
+    T: ?Sized,
+{
 }
 
 impl<F, T> fmt::Display for FnPredicate<F, T>
