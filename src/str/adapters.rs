@@ -39,6 +39,10 @@ impl<P> reflection::PredicateReflection for TrimPredicate<P>
 where
     P: Predicate<str>,
 {
+    fn children<'a>(&'a self) -> Box<Iterator<Item = reflection::Child<'a>> + 'a> {
+        let params = vec![reflection::Child::new("predicate", &self.p)];
+        Box::new(params.into_iter())
+    }
 }
 
 impl<P> fmt::Display for TrimPredicate<P>
@@ -85,6 +89,10 @@ impl<P> reflection::PredicateReflection for Utf8Predicate<P>
 where
     P: Predicate<str>,
 {
+    fn children<'a>(&'a self) -> Box<Iterator<Item = reflection::Child<'a>> + 'a> {
+        let params = vec![reflection::Child::new("predicate", &self.p)];
+        Box::new(params.into_iter())
+    }
 }
 
 impl<P> fmt::Display for Utf8Predicate<P>

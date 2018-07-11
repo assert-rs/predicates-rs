@@ -95,3 +95,38 @@ impl<'a> fmt::Debug for Child<'a> {
         write!(f, "({:?}, {})", self.0, self.1)
     }
 }
+
+#[derive(Clone, PartialEq, Eq)]
+pub(crate) struct DebugAdapter<T>
+where
+    T: fmt::Debug,
+{
+    pub(crate) debug: T,
+}
+
+impl<T> DebugAdapter<T>
+where
+    T: fmt::Debug,
+{
+    pub fn new(debug: T) -> Self {
+        Self { debug }
+    }
+}
+
+impl<T> fmt::Display for DebugAdapter<T>
+where
+    T: fmt::Debug,
+{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:#?}", self.debug)
+    }
+}
+
+impl<T> fmt::Debug for DebugAdapter<T>
+where
+    T: fmt::Debug,
+{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        self.debug.fmt(f)
+    }
+}

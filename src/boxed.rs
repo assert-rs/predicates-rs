@@ -45,6 +45,13 @@ impl<Item> reflection::PredicateReflection for BoxPredicate<Item>
 where
     Item: ?Sized,
 {
+    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+        self.0.parameters()
+    }
+
+    fn children<'a>(&'a self) -> Box<Iterator<Item = reflection::Child<'a>> + 'a> {
+        self.0.children()
+    }
 }
 
 impl<Item> fmt::Display for BoxPredicate<Item>

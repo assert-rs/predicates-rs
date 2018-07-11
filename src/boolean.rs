@@ -62,6 +62,13 @@ where
     M2: Predicate<Item>,
     Item: ?Sized,
 {
+    fn children<'a>(&'a self) -> Box<Iterator<Item = reflection::Child<'a>> + 'a> {
+        let params = vec![
+            reflection::Child::new("left", &self.a),
+            reflection::Child::new("right", &self.b),
+        ];
+        Box::new(params.into_iter())
+    }
 }
 
 impl<M1, M2, Item> fmt::Display for AndPredicate<M1, M2, Item>
@@ -123,6 +130,13 @@ where
     M2: Predicate<Item>,
     Item: ?Sized,
 {
+    fn children<'a>(&'a self) -> Box<Iterator<Item = reflection::Child<'a>> + 'a> {
+        let params = vec![
+            reflection::Child::new("left", &self.a),
+            reflection::Child::new("right", &self.b),
+        ];
+        Box::new(params.into_iter())
+    }
 }
 
 impl<M1, M2, Item> fmt::Display for OrPredicate<M1, M2, Item>
@@ -178,6 +192,10 @@ where
     M: Predicate<Item>,
     Item: ?Sized,
 {
+    fn children<'a>(&'a self) -> Box<Iterator<Item = reflection::Child<'a>> + 'a> {
+        let params = vec![reflection::Child::new("predicate", &self.inner)];
+        Box::new(params.into_iter())
+    }
 }
 
 impl<M, Item> fmt::Display for NotPredicate<M, Item>

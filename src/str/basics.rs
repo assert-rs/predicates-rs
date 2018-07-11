@@ -187,11 +187,16 @@ impl Predicate<str> for MatchesPredicate {
     }
 }
 
-impl reflection::PredicateReflection for MatchesPredicate {}
+impl reflection::PredicateReflection for MatchesPredicate {
+    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+        let params = vec![reflection::Parameter::new("count", &self.count)];
+        Box::new(params.into_iter())
+    }
+}
 
 impl fmt::Display for MatchesPredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "var.contains({:?}, {})", self.pattern, self.count)
+        write!(f, "var.contains({})", self.pattern)
     }
 }
 
