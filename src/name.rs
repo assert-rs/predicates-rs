@@ -36,6 +36,10 @@ where
     fn eval(&self, item: &Item) -> bool {
         self.inner.eval(item)
     }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &Item) -> Option<reflection::Case<'a>> {
+        self.inner.find_case(expected, variable)
+    }
 }
 
 impl<M, Item> reflection::PredicateReflection for NamePredicate<M, Item>

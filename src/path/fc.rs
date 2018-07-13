@@ -67,6 +67,24 @@ where
     fn eval(&self, path: &path::Path) -> bool {
         self.eval(path).unwrap_or(false)
     }
+
+    fn find_case<'a>(
+        &'a self,
+        expected: bool,
+        variable: &path::Path,
+    ) -> Option<reflection::Case<'a>> {
+        let buffer = read_file(variable);
+        match (expected, buffer) {
+            (_, Ok(buffer)) => self.p
+                .find_case(expected, &buffer)
+                .map(|child| reflection::Case::new(Some(self), expected).add_child(child)),
+            (true, Err(_)) => None,
+            (false, Err(err)) => Some(
+                reflection::Case::new(Some(self), false)
+                    .add_product(reflection::Product::new("error", err)),
+            ),
+        }
+    }
 }
 
 /// `Predicate` extension adapting a `slice` Predicate.

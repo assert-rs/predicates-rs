@@ -85,6 +85,25 @@ impl Predicate<f64> for IsClosePredicate {
     fn eval(&self, variable: &f64) -> bool {
         variable.approx_eq(&self.target, self.epsilon, self.ulps)
     }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &f64) -> Option<reflection::Case<'a>> {
+        let actual = self.eval(variable);
+        if expected == actual {
+            Some(
+                reflection::Case::new(Some(self), actual)
+                    .add_product(reflection::Product::new(
+                        "actual epsilon",
+                        (variable - self.target).abs(),
+                    ))
+                    .add_product(reflection::Product::new(
+                        "actual ulps",
+                        variable.ulps(&self.target).abs(),
+                    )),
+            )
+        } else {
+            None
+        }
+    }
 }
 
 impl reflection::PredicateReflection for IsClosePredicate {

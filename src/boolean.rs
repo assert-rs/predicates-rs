@@ -54,6 +54,24 @@ where
     fn eval(&self, item: &Item) -> bool {
         self.a.eval(item) && self.b.eval(item)
     }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &Item) -> Option<reflection::Case<'a>> {
+        let child_a = self.a.find_case(expected, variable);
+        match (expected, child_a) {
+            (true, Some(child_a)) => self.b.find_case(expected, variable).map(|child_b| {
+                reflection::Case::new(Some(self), expected)
+                    .add_child(child_a)
+                    .add_child(child_b)
+            }),
+            (true, None) => None,
+            (false, Some(child_a)) => {
+                Some(reflection::Case::new(Some(self), expected).add_child(child_a))
+            }
+            (false, None) => self.b
+                .find_case(expected, variable)
+                .map(|child_b| reflection::Case::new(Some(self), expected).add_child(child_b)),
+        }
+    }
 }
 
 impl<M1, M2, Item> reflection::PredicateReflection for AndPredicate<M1, M2, Item>
@@ -79,6 +97,91 @@ where
 {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "({} && {})", self.a, self.b)
+    }
+}
+
+#[cfg(test)]
+mod test_and {
+    use prelude::*;
+
+    #[test]
+    fn find_case_true() {
+        assert!(
+            predicate::always()
+                .and(predicate::always())
+                .find_case(true, &5)
+                .is_some()
+        );
+    }
+
+    #[test]
+    fn find_case_true_left_fail() {
+        assert!(
+            predicate::never()
+                .and(predicate::always())
+                .find_case(true, &5)
+                .is_none()
+        );
+    }
+
+    #[test]
+    fn find_case_true_right_fail() {
+        assert!(
+            predicate::always()
+                .and(predicate::never())
+                .find_case(true, &5)
+                .is_none()
+        );
+    }
+
+    #[test]
+    fn find_case_true_fails() {
+        assert!(
+            predicate::never()
+                .and(predicate::never())
+                .find_case(true, &5)
+                .is_none()
+        );
+    }
+
+    #[test]
+    fn find_case_false() {
+        assert!(
+            predicate::never()
+                .and(predicate::never())
+                .find_case(false, &5)
+                .is_some()
+        );
+    }
+
+    #[test]
+    fn find_case_false_fails() {
+        assert!(
+            predicate::always()
+                .and(predicate::always())
+                .find_case(false, &5)
+                .is_none()
+        );
+    }
+
+    #[test]
+    fn find_case_false_left_fail() {
+        assert!(
+            predicate::never()
+                .and(predicate::always())
+                .find_case(false, &5)
+                .is_some()
+        );
+    }
+
+    #[test]
+    fn find_case_false_right_fail() {
+        assert!(
+            predicate::always()
+                .and(predicate::never())
+                .find_case(false, &5)
+                .is_some()
+        );
     }
 }
 
@@ -122,6 +225,24 @@ where
     fn eval(&self, item: &Item) -> bool {
         self.a.eval(item) || self.b.eval(item)
     }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &Item) -> Option<reflection::Case<'a>> {
+        let child_a = self.a.find_case(expected, variable);
+        match (expected, child_a) {
+            (true, Some(child_a)) => {
+                Some(reflection::Case::new(Some(self), expected).add_child(child_a))
+            }
+            (true, None) => self.b
+                .find_case(expected, variable)
+                .map(|child_b| reflection::Case::new(Some(self), expected).add_child(child_b)),
+            (false, Some(child_a)) => self.b.find_case(expected, variable).map(|child_b| {
+                reflection::Case::new(Some(self), expected)
+                    .add_child(child_a)
+                    .add_child(child_b)
+            }),
+            (false, None) => None,
+        }
+    }
 }
 
 impl<M1, M2, Item> reflection::PredicateReflection for OrPredicate<M1, M2, Item>
@@ -147,6 +268,91 @@ where
 {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "({} || {})", self.a, self.b)
+    }
+}
+
+#[cfg(test)]
+mod test_or {
+    use prelude::*;
+
+    #[test]
+    fn find_case_true() {
+        assert!(
+            predicate::always()
+                .or(predicate::always())
+                .find_case(true, &5)
+                .is_some()
+        );
+    }
+
+    #[test]
+    fn find_case_true_left_fail() {
+        assert!(
+            predicate::never()
+                .or(predicate::always())
+                .find_case(true, &5)
+                .is_some()
+        );
+    }
+
+    #[test]
+    fn find_case_true_right_fail() {
+        assert!(
+            predicate::always()
+                .or(predicate::never())
+                .find_case(true, &5)
+                .is_some()
+        );
+    }
+
+    #[test]
+    fn find_case_true_fails() {
+        assert!(
+            predicate::never()
+                .or(predicate::never())
+                .find_case(true, &5)
+                .is_none()
+        );
+    }
+
+    #[test]
+    fn find_case_false() {
+        assert!(
+            predicate::never()
+                .or(predicate::never())
+                .find_case(false, &5)
+                .is_some()
+        );
+    }
+
+    #[test]
+    fn find_case_false_fails() {
+        assert!(
+            predicate::always()
+                .or(predicate::always())
+                .find_case(false, &5)
+                .is_none()
+        );
+    }
+
+    #[test]
+    fn find_case_false_left_fail() {
+        assert!(
+            predicate::never()
+                .or(predicate::always())
+                .find_case(false, &5)
+                .is_none()
+        );
+    }
+
+    #[test]
+    fn find_case_false_right_fail() {
+        assert!(
+            predicate::always()
+                .or(predicate::never())
+                .find_case(false, &5)
+                .is_none()
+        );
     }
 }
 
@@ -184,6 +390,12 @@ where
 {
     fn eval(&self, item: &Item) -> bool {
         !self.inner.eval(item)
+    }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &Item) -> Option<reflection::Case<'a>> {
+        self.inner
+            .find_case(!expected, variable)
+            .map(|child| reflection::Case::new(Some(self), expected).add_child(child))
     }
 }
 

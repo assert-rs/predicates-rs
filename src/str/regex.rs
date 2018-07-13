@@ -68,6 +68,19 @@ impl Predicate<str> for RegexMatchesPredicate {
     fn eval(&self, variable: &str) -> bool {
         self.re.find_iter(variable).count() == self.count
     }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
+        let actual_count = self.re.find_iter(variable).count();
+        let result = self.count == actual_count;
+        if result == expected {
+            Some(
+                reflection::Case::new(Some(self), result)
+                    .add_product(reflection::Product::new("actual count", actual_count)),
+            )
+        } else {
+            None
+        }
+    }
 }
 
 impl reflection::PredicateReflection for RegexMatchesPredicate {

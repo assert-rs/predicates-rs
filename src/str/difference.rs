@@ -91,6 +91,20 @@ impl Predicate<str> for DifferencePredicate {
         let change = difference::Changeset::new(&self.orig, edit, &self.split);
         self.op.eval(self.distance, change.distance)
     }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
+        let change = difference::Changeset::new(&self.orig, variable, &self.split);
+        let result = self.op.eval(self.distance, change.distance);
+        if result == expected {
+            Some(
+                reflection::Case::new(Some(self), result)
+                    .add_product(reflection::Product::new("actual distance", change.distance))
+                    .add_product(reflection::Product::new("diff", change)),
+            )
+        } else {
+            None
+        }
+    }
 }
 
 impl reflection::PredicateReflection for DifferencePredicate {

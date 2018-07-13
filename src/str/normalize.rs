@@ -42,6 +42,11 @@ where
         self.p
             .eval(&String::from_iter(normalized(variable.chars())))
     }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
+        let variable = String::from_iter(normalized(variable.chars()));
+        self.p.find_case(expected, &variable)
+    }
 }
 
 impl<P> fmt::Display for NormalizedPredicate<P>

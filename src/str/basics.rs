@@ -185,6 +185,19 @@ impl Predicate<str> for MatchesPredicate {
     fn eval(&self, variable: &str) -> bool {
         variable.matches(&self.pattern).count() == self.count
     }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
+        let actual_count = variable.matches(&self.pattern).count();
+        let result = self.count == actual_count;
+        if result == expected {
+            Some(
+                reflection::Case::new(Some(self), result)
+                    .add_product(reflection::Product::new("actual count", actual_count)),
+            )
+        } else {
+            None
+        }
+    }
 }
 
 impl reflection::PredicateReflection for MatchesPredicate {
