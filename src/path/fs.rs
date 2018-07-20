@@ -44,6 +44,8 @@ impl BinaryFilePredicate {
     /// assert_eq!(true, predicate_file.eval(Path::new("Cargo.toml")));
     /// assert_eq!(false, predicate_file.eval(Path::new("Cargo.lock")));
     /// assert_eq!(false, predicate_file.eval(Path::new("src")));
+    ///
+    /// assert_eq!(false, predicate_file.eval("Not a real Cargo.toml file content"));
     /// ```
     pub fn utf8(self) -> Option<StrFilePredicate> {
         let path = self.path;
@@ -55,6 +57,12 @@ impl BinaryFilePredicate {
 impl Predicate<path::Path> for BinaryFilePredicate {
     fn eval(&self, path: &path::Path) -> bool {
         self.eval(path).unwrap_or(false)
+    }
+}
+
+impl Predicate<[u8]> for BinaryFilePredicate {
+    fn eval(&self, actual: &[u8]) -> bool {
+        self.content == actual
     }
 }
 
@@ -100,14 +108,20 @@ impl StrFilePredicate {
     }
 }
 
-impl fmt::Display for StrFilePredicate {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "var is {}", self.path.display())
-    }
-}
-
 impl Predicate<path::Path> for StrFilePredicate {
     fn eval(&self, path: &path::Path) -> bool {
         self.eval(path).unwrap_or(false)
+    }
+}
+
+impl Predicate<str> for StrFilePredicate {
+    fn eval(&self, actual: &str) -> bool {
+        self.content == actual
+    }
+}
+
+impl fmt::Display for StrFilePredicate {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "var is {}", self.path.display())
     }
 }
