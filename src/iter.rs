@@ -13,6 +13,7 @@ use std::fmt;
 use std::hash::Hash;
 use std::iter::FromIterator;
 
+use core;
 use reflection;
 use Predicate;
 
@@ -76,6 +77,10 @@ where
     fn eval(&self, variable: &T) -> bool {
         self.inner.debug.contains(variable)
     }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &T) -> Option<reflection::Case<'a>> {
+        core::default_find_case(self, expected, variable)
+    }
 }
 
 impl<'a, T> Predicate<T> for InPredicate<&'a T>
@@ -84,6 +89,10 @@ where
 {
     fn eval(&self, variable: &T) -> bool {
         self.inner.debug.contains(&variable)
+    }
+
+    fn find_case<'b>(&'b self, expected: bool, variable: &T) -> Option<reflection::Case<'b>> {
+        core::default_find_case(self, expected, variable)
     }
 }
 
@@ -169,6 +178,10 @@ where
     fn eval(&self, variable: &T) -> bool {
         self.inner.debug.binary_search(variable).is_ok()
     }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &T) -> Option<reflection::Case<'a>> {
+        core::default_find_case(self, expected, variable)
+    }
 }
 
 impl<'a, T> Predicate<T> for OrdInPredicate<&'a T>
@@ -177,6 +190,10 @@ where
 {
     fn eval(&self, variable: &T) -> bool {
         self.inner.debug.binary_search(&variable).is_ok()
+    }
+
+    fn find_case<'b>(&'b self, expected: bool, variable: &T) -> Option<reflection::Case<'b>> {
+        core::default_find_case(self, expected, variable)
     }
 }
 
@@ -223,6 +240,10 @@ where
     fn eval(&self, variable: &T) -> bool {
         self.inner.debug.contains(variable)
     }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &T) -> Option<reflection::Case<'a>> {
+        core::default_find_case(self, expected, variable)
+    }
 }
 
 impl<'a, T> Predicate<T> for HashableInPredicate<&'a T>
@@ -231,6 +252,10 @@ where
 {
     fn eval(&self, variable: &T) -> bool {
         self.inner.debug.contains(&variable)
+    }
+
+    fn find_case<'b>(&'b self, expected: bool, variable: &T) -> Option<reflection::Case<'b>> {
+        core::default_find_case(self, expected, variable)
     }
 }
 

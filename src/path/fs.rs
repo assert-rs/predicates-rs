@@ -11,6 +11,7 @@ use std::fs;
 use std::io::{self, Read};
 use std::path;
 
+use core;
 use reflection;
 use Predicate;
 
@@ -59,11 +60,23 @@ impl Predicate<path::Path> for BinaryFilePredicate {
     fn eval(&self, path: &path::Path) -> bool {
         self.eval(path).unwrap_or(false)
     }
+
+    fn find_case<'a>(
+        &'a self,
+        expected: bool,
+        variable: &path::Path,
+    ) -> Option<reflection::Case<'a>> {
+        core::default_find_case(self, expected, variable)
+    }
 }
 
 impl Predicate<[u8]> for BinaryFilePredicate {
     fn eval(&self, actual: &[u8]) -> bool {
         self.content.debug == actual
+    }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &[u8]) -> Option<reflection::Case<'a>> {
+        core::default_find_case(self, expected, variable)
     }
 }
 
@@ -120,11 +133,23 @@ impl Predicate<path::Path> for StrFilePredicate {
     fn eval(&self, path: &path::Path) -> bool {
         self.eval(path).unwrap_or(false)
     }
+
+    fn find_case<'a>(
+        &'a self,
+        expected: bool,
+        variable: &path::Path,
+    ) -> Option<reflection::Case<'a>> {
+        core::default_find_case(self, expected, variable)
+    }
 }
 
 impl Predicate<str> for StrFilePredicate {
     fn eval(&self, actual: &str) -> bool {
         self.content == actual
+    }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
+        core::default_find_case(self, expected, variable)
     }
 }
 

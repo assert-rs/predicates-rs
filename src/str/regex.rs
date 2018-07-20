@@ -10,6 +10,7 @@ use std::fmt;
 
 use regex;
 
+use core;
 use reflection;
 use Predicate;
 
@@ -44,6 +45,10 @@ impl RegexPredicate {
 impl Predicate<str> for RegexPredicate {
     fn eval(&self, variable: &str) -> bool {
         self.re.is_match(variable)
+    }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
+        core::default_find_case(self, expected, variable)
     }
 }
 

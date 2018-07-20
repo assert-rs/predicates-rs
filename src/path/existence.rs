@@ -9,6 +9,7 @@
 use std::fmt;
 use std::path;
 
+use core;
 use reflection;
 use Predicate;
 
@@ -23,6 +24,14 @@ pub struct ExistencePredicate {
 impl Predicate<path::Path> for ExistencePredicate {
     fn eval(&self, path: &path::Path) -> bool {
         path.exists() == self.exists
+    }
+
+    fn find_case<'a>(
+        &'a self,
+        expected: bool,
+        variable: &path::Path,
+    ) -> Option<reflection::Case<'a>> {
+        core::default_find_case(self, expected, variable)
     }
 }
 

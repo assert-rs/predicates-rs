@@ -21,15 +21,29 @@ pub trait Predicate<Item: ?Sized>: reflection::PredicateReflection {
     fn eval(&self, variable: &Item) -> bool;
 
     /// Find a case that proves this predicate as `expected` when run against `variable`.
-    fn find_case<'a>(&'a self, expected: bool, variable: &Item) -> Option<reflection::Case<'a>>
-    where
-        Self: Sized,
-    {
+    fn find_case<'a>(&'a self, expected: bool, variable: &Item) -> Option<reflection::Case<'a>> {
         let actual = self.eval(variable);
         if expected == actual {
-            Some(reflection::Case::new(Some(self), actual))
+            Some(reflection::Case::new(None, actual))
         } else {
             None
         }
+    }
+}
+
+pub(crate) fn default_find_case<'a, P, Item>(
+    pred: &'a P,
+    expected: bool,
+    variable: &Item,
+) -> Option<reflection::Case<'a>>
+where
+    P: Predicate<Item>,
+    Item: ?Sized,
+{
+    let actual = pred.eval(variable);
+    if expected == actual {
+        Some(reflection::Case::new(Some(pred), actual))
+    } else {
+        None
     }
 }

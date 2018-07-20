@@ -10,6 +10,7 @@
 
 use std::fmt;
 
+use core;
 use reflection;
 use Predicate;
 
@@ -52,6 +53,10 @@ where
             EqOps::NotEqual => variable.ne(&self.constant),
         }
     }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &T) -> Option<reflection::Case<'a>> {
+        core::default_find_case(self, expected, variable)
+    }
 }
 
 impl<'a, T> Predicate<T> for EqPredicate<&'a T>
@@ -63,6 +68,10 @@ where
             EqOps::Equal => variable.eq(self.constant),
             EqOps::NotEqual => variable.ne(self.constant),
         }
+    }
+
+    fn find_case<'b>(&'b self, expected: bool, variable: &T) -> Option<reflection::Case<'b>> {
+        core::default_find_case(self, expected, variable)
     }
 }
 
@@ -174,6 +183,10 @@ where
             OrdOps::GreaterThan => variable.gt(&self.constant),
         }
     }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &T) -> Option<reflection::Case<'a>> {
+        core::default_find_case(self, expected, variable)
+    }
 }
 
 impl<'a, T> Predicate<T> for OrdPredicate<&'a T>
@@ -187,6 +200,10 @@ where
             OrdOps::GreaterThanOrEqual => variable.ge(self.constant),
             OrdOps::GreaterThan => variable.gt(self.constant),
         }
+    }
+
+    fn find_case<'b>(&'b self, expected: bool, variable: &T) -> Option<reflection::Case<'b>> {
+        core::default_find_case(self, expected, variable)
     }
 }
 

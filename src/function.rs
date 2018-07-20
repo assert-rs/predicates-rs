@@ -11,6 +11,7 @@
 use std::fmt;
 use std::marker::PhantomData;
 
+use core;
 use reflection;
 use Predicate;
 
@@ -61,6 +62,10 @@ where
 {
     fn eval(&self, variable: &T) -> bool {
         (self.function)(variable)
+    }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &T) -> Option<reflection::Case<'a>> {
+        core::default_find_case(self, expected, variable)
     }
 }
 

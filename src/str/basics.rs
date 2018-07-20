@@ -8,6 +8,7 @@
 
 use std::fmt;
 
+use core;
 use reflection;
 use Predicate;
 
@@ -20,6 +21,10 @@ pub struct IsEmptyPredicate {}
 impl Predicate<str> for IsEmptyPredicate {
     fn eval(&self, variable: &str) -> bool {
         variable.is_empty()
+    }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
+        core::default_find_case(self, expected, variable)
     }
 }
 
@@ -57,6 +62,10 @@ pub struct StartsWithPredicate {
 impl Predicate<str> for StartsWithPredicate {
     fn eval(&self, variable: &str) -> bool {
         variable.starts_with(&self.pattern)
+    }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
+        core::default_find_case(self, expected, variable)
     }
 }
 
@@ -99,6 +108,10 @@ pub struct EndsWithPredicate {
 impl Predicate<str> for EndsWithPredicate {
     fn eval(&self, variable: &str) -> bool {
         variable.ends_with(&self.pattern)
+    }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
+        core::default_find_case(self, expected, variable)
     }
 }
 
@@ -161,6 +174,10 @@ impl ContainsPredicate {
 impl Predicate<str> for ContainsPredicate {
     fn eval(&self, variable: &str) -> bool {
         variable.contains(&self.pattern)
+    }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
+        core::default_find_case(self, expected, variable)
     }
 }
 
