@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - Unreleased
 
+## [0.5.2] - 2018-07-20
+### Added
+* **path:**  support file-based str predicates ([4b430532](https://github.com/assert-rs/predicates-rs/commit/4b430532f7cd660bd813863871ede6f108e7be67), closes [#56](https://github.com/assert-rs/predicates-rs/issues/56))
+*   Expand trait coverage ([33972a7d](https://github.com/assert-rs/predicates-rs/commit/33972a7d0c92eb7f7c7e95af4bb35bea0ac810ab))
+
 ## [0.5.1] - 2018-06-05
 ### Added
 *   Fix eq for str ([7650e9e6](https://github.com/assert-rs/predicates-rs/commit/7650e9e6d43f2ddd047ad8defa0c724b31ebd1c4))
@@ -82,7 +87,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Continuous integration with Travis (Linux) and AppVeyor (Windows)
 - Basic README
 
-[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v0.5.1...HEAD
+[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v0.5.2...HEAD
+[0.5.2]: https://github.com/assert-rs/predicates-rs/compare/v0.5.1...v0.5.2
 [0.5.1]: https://github.com/assert-rs/predicates-rs/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/assert-rs/predicates-rs/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/assert-rs/predicates-rs/compare/v0.3.0...v0.4.0
