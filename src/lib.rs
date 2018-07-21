@@ -100,6 +100,8 @@ extern crate float_cmp;
 extern crate normalize_line_endings;
 #[cfg(feature = "regex")]
 extern crate regex;
+#[cfg(feature = "treeline")]
+extern crate treeline;
 
 pub mod prelude;
 
@@ -123,3 +125,5 @@ pub mod boolean;
 pub mod float;
 pub mod path;
 pub mod str;
+#[cfg(feature = "tree")]
+pub mod tree;
