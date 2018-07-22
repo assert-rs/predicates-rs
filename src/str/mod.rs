@@ -19,6 +19,10 @@ pub use self::adapters::*;
 mod difference;
 #[cfg(feature = "difference")]
 pub use self::difference::{diff, similar, DifferencePredicate};
+#[cfg(feature = "normalize-line-endings")]
+mod normalize;
+#[cfg(feature = "normalize-line-endings")]
+pub use self::normalize::NormalizedPredicate;
 
 #[cfg(feature = "regex")]
 mod regex;

@@ -1,8 +1,18 @@
+// Copyright (c) 2018 The predicates-rs Project Developers.
+//
+// Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
+// http://www.apache.org/license/LICENSE-2.0> or the MIT license
+// <LICENSE-MIT or http://opensource.org/licenses/MIT>, at your
+// option. This file may not be copied, modified, or distributed
+// except according to those terms.
+
 use std::ffi;
 use std::fmt;
 use std::str;
 
 use Predicate;
+#[cfg(feature = "normalize-line-endings")]
+use str::normalize::NormalizedPredicate;
 
 /// Predicate adaper that trims the variable being tested.
 ///
@@ -111,6 +121,27 @@ where
     fn from_utf8(self) -> Utf8Predicate<Self> {
         Utf8Predicate { p: self }
     }
+
+    /// Returns a `NormalizedPredicate` that ensures
+    ///  the newlines within the data passed to `Self` is normalised.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use predicates::prelude::*;
+    /// 
+    /// let predicate_fn = predicate::eq("Hello World!\n").normalize();
+    /// assert_eq!(true, predicate_fn.eval("Hello World!\n"));
+    /// assert_eq!(true, predicate_fn.eval("Hello World!\r"));
+    /// assert_eq!(true, predicate_fn.eval("Hello World!\r\n"));
+    /// assert_eq!(false, predicate_fn.eval("Goodbye"));
+    /// ```
+    ///
+    #[cfg(feature = "normalize-line-endings")]
+    fn normalize(self) -> NormalizedPredicate<Self> {
+        NormalizedPredicate { p: self }
+    }
+
 }
 
 impl<P> PredicateStrExt for P
