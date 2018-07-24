@@ -11,6 +11,7 @@
 
 use std::fmt;
 
+use reflection;
 use Predicate;
 
 /// `Predicate` that wraps another `Predicate` as a trait object, allowing
@@ -37,6 +38,19 @@ where
 {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         f.debug_struct("BoxPredicate").finish()
+    }
+}
+
+impl<Item> reflection::PredicateReflection for BoxPredicate<Item>
+where
+    Item: ?Sized,
+{
+    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+        self.0.parameters()
+    }
+
+    fn children<'a>(&'a self) -> Box<Iterator<Item = reflection::Child<'a>> + 'a> {
+        self.0.children()
     }
 }
 

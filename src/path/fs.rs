@@ -11,6 +11,7 @@ use std::fs;
 use std::io::{self, Read};
 use std::path;
 
+use reflection;
 use Predicate;
 
 fn read_file(path: &path::Path) -> io::Result<Vec<u8>> {
@@ -23,13 +24,13 @@ fn read_file(path: &path::Path) -> io::Result<Vec<u8>> {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct BinaryFilePredicate {
     path: path::PathBuf,
-    content: Vec<u8>,
+    content: reflection::DebugAdapter<Vec<u8>>,
 }
 
 impl BinaryFilePredicate {
     fn eval(&self, path: &path::Path) -> io::Result<bool> {
         let content = read_file(path)?;
-        Ok(self.content == content)
+        Ok(self.content.debug == content)
     }
 
     /// Creates a new `Predicate` that ensures complete equality
@@ -49,7 +50,7 @@ impl BinaryFilePredicate {
     /// ```
     pub fn utf8(self) -> Option<StrFilePredicate> {
         let path = self.path;
-        let content = String::from_utf8(self.content).ok()?;
+        let content = String::from_utf8(self.content.debug).ok()?;
         Some(StrFilePredicate { path, content })
     }
 }
@@ -62,7 +63,14 @@ impl Predicate<path::Path> for BinaryFilePredicate {
 
 impl Predicate<[u8]> for BinaryFilePredicate {
     fn eval(&self, actual: &[u8]) -> bool {
-        self.content == actual
+        self.content.debug == actual
+    }
+}
+
+impl reflection::PredicateReflection for BinaryFilePredicate {
+    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+        let params = vec![reflection::Parameter::new("content", &self.content)];
+        Box::new(params.into_iter())
     }
 }
 
@@ -86,7 +94,7 @@ impl fmt::Display for BinaryFilePredicate {
 /// assert_eq!(false, predicate_file.eval(Path::new("Cargo.lock")));
 /// ```
 pub fn eq_file(path: &path::Path) -> BinaryFilePredicate {
-    let content = read_file(path).unwrap();
+    let content = reflection::DebugAdapter::new(read_file(path).unwrap());
     BinaryFilePredicate {
         path: path.to_path_buf(),
         content,
@@ -117,6 +125,13 @@ impl Predicate<path::Path> for StrFilePredicate {
 impl Predicate<str> for StrFilePredicate {
     fn eval(&self, actual: &str) -> bool {
         self.content == actual
+    }
+}
+
+impl reflection::PredicateReflection for StrFilePredicate {
+    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+        let params = vec![reflection::Parameter::new("content", &self.content)];
+        Box::new(params.into_iter())
     }
 }
 

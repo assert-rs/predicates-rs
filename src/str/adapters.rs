@@ -2,6 +2,7 @@ use std::ffi;
 use std::fmt;
 use std::str;
 
+use reflection;
 use Predicate;
 
 /// Predicate adaper that trims the variable being tested.
@@ -21,6 +22,16 @@ where
 {
     fn eval(&self, variable: &str) -> bool {
         self.p.eval(variable.trim())
+    }
+}
+
+impl<P> reflection::PredicateReflection for TrimPredicate<P>
+where
+    P: Predicate<str>,
+{
+    fn children<'a>(&'a self) -> Box<Iterator<Item = reflection::Child<'a>> + 'a> {
+        let params = vec![reflection::Child::new("predicate", &self.p)];
+        Box::new(params.into_iter())
     }
 }
 
@@ -61,6 +72,16 @@ where
         str::from_utf8(variable)
             .map(|s| self.p.eval(s))
             .unwrap_or(false)
+    }
+}
+
+impl<P> reflection::PredicateReflection for Utf8Predicate<P>
+where
+    P: Predicate<str>,
+{
+    fn children<'a>(&'a self) -> Box<Iterator<Item = reflection::Child<'a>> + 'a> {
+        let params = vec![reflection::Child::new("predicate", &self.p)];
+        Box::new(params.into_iter())
     }
 }
 

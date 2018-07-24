@@ -11,6 +11,7 @@ use std::fs;
 use std::io::{self, Read};
 use std::path;
 
+use reflection;
 use Predicate;
 
 fn read_file(path: &path::Path) -> io::Result<Vec<u8>> {
@@ -37,6 +38,16 @@ where
     fn eval(&self, path: &path::Path) -> io::Result<bool> {
         let buffer = read_file(path)?;
         Ok(self.p.eval(&buffer))
+    }
+}
+
+impl<P> reflection::PredicateReflection for FileContentPredicate<P>
+where
+    P: Predicate<[u8]>,
+{
+    fn children<'a>(&'a self) -> Box<Iterator<Item = reflection::Child<'a>> + 'a> {
+        let params = vec![reflection::Child::new("predicate", &self.p)];
+        Box::new(params.into_iter())
     }
 }
 

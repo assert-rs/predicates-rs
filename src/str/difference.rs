@@ -11,6 +11,7 @@ use std::fmt;
 
 use difference;
 
+use reflection;
 use Predicate;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -92,11 +93,18 @@ impl Predicate<str> for DifferencePredicate {
     }
 }
 
+impl reflection::PredicateReflection for DifferencePredicate {
+    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+        let params = vec![reflection::Parameter::new("original", &self.orig)];
+        Box::new(params.into_iter())
+    }
+}
+
 impl fmt::Display for DifferencePredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self.op {
-            DistanceOp::Similar => write!(f, "var - {:?} <= {}", self.orig, self.distance),
-            DistanceOp::Different => write!(f, "{} < var - {:?}", self.distance, self.orig),
+            DistanceOp::Similar => write!(f, "var - original <= {}", self.distance),
+            DistanceOp::Different => write!(f, "{} < var - original", self.distance),
         }
     }
 }

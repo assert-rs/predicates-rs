@@ -10,6 +10,7 @@
 
 use std::fmt;
 
+use reflection;
 use Predicate;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -63,6 +64,12 @@ where
             EqOps::NotEqual => variable.ne(self.constant),
         }
     }
+}
+
+impl<T> reflection::PredicateReflection for EqPredicate<T>
+where
+    T: fmt::Debug + PartialEq,
+{
 }
 
 impl<T> fmt::Display for EqPredicate<T>
@@ -181,6 +188,12 @@ where
             OrdOps::GreaterThan => variable.gt(self.constant),
         }
     }
+}
+
+impl<T> reflection::PredicateReflection for OrdPredicate<T>
+where
+    T: fmt::Debug + PartialOrd,
+{
 }
 
 impl<T> fmt::Display for OrdPredicate<T>

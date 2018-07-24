@@ -8,6 +8,7 @@
 
 use std::fmt;
 
+use reflection;
 use Predicate;
 
 /// Predicate that checks for empty strings.
@@ -21,6 +22,8 @@ impl Predicate<str> for IsEmptyPredicate {
         variable.is_empty()
     }
 }
+
+impl reflection::PredicateReflection for IsEmptyPredicate {}
 
 impl fmt::Display for IsEmptyPredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -56,6 +59,8 @@ impl Predicate<str> for StartsWithPredicate {
         variable.starts_with(&self.pattern)
     }
 }
+
+impl reflection::PredicateReflection for StartsWithPredicate {}
 
 impl fmt::Display for StartsWithPredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -96,6 +101,8 @@ impl Predicate<str> for EndsWithPredicate {
         variable.ends_with(&self.pattern)
     }
 }
+
+impl reflection::PredicateReflection for EndsWithPredicate {}
 
 impl fmt::Display for EndsWithPredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -157,6 +164,8 @@ impl Predicate<str> for ContainsPredicate {
     }
 }
 
+impl reflection::PredicateReflection for ContainsPredicate {}
+
 impl fmt::Display for ContainsPredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "var.contains({:?})", self.pattern)
@@ -178,9 +187,16 @@ impl Predicate<str> for MatchesPredicate {
     }
 }
 
+impl reflection::PredicateReflection for MatchesPredicate {
+    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+        let params = vec![reflection::Parameter::new("count", &self.count)];
+        Box::new(params.into_iter())
+    }
+}
+
 impl fmt::Display for MatchesPredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "var.contains({:?}, {})", self.pattern, self.count)
+        write!(f, "var.contains({})", self.pattern)
     }
 }
 

@@ -11,6 +11,7 @@ use std::fs;
 use std::io;
 use std::path;
 
+use reflection;
 use Predicate;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -91,6 +92,13 @@ impl Predicate<path::Path> for FileTypePredicate {
         metadata
             .map(|m| self.ft.eval(m.file_type()))
             .unwrap_or(false)
+    }
+}
+
+impl reflection::PredicateReflection for FileTypePredicate {
+    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+        let params = vec![reflection::Parameter::new("follow", &self.follow)];
+        Box::new(params.into_iter())
     }
 }
 
