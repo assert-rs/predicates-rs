@@ -19,6 +19,7 @@ use Predicate;
 pub struct FnPredicate<F, T>
 where
     F: Fn(&T) -> bool,
+    T: ?Sized,
 {
     function: F,
     name: &'static str,
@@ -28,6 +29,7 @@ where
 impl<F, T> FnPredicate<F, T>
 where
     F: Fn(&T) -> bool,
+    T: ?Sized,
 {
     /// Provide a descriptive name for this function.
     ///
@@ -54,6 +56,7 @@ where
 impl<F, T> Predicate<T> for FnPredicate<F, T>
 where
     F: Fn(&T) -> bool,
+    T: ?Sized,
 {
     fn eval(&self, variable: &T) -> bool {
         (self.function)(variable)
@@ -63,6 +66,7 @@ where
 impl<F, T> fmt::Display for FnPredicate<F, T>
 where
     F: Fn(&T) -> bool,
+    T: ?Sized,
 {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{}(var)", self.name)
@@ -94,10 +98,18 @@ where
 pub fn function<F, T>(function: F) -> FnPredicate<F, T>
 where
     F: Fn(&T) -> bool,
+    T: ?Sized,
 {
     FnPredicate {
         function,
         name: "fn",
         _phantom: PhantomData,
     }
+}
+
+#[test]
+fn str_function() {
+    let f = function(|x: &str| x == "hello");
+    assert!(f.eval(&"hello"));
+    assert!(!f.eval(&"goodbye"));
 }
