@@ -6,6 +6,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+use reflection;
 use std::fmt;
 use Predicate;
 
@@ -23,12 +24,28 @@ where
     pub(crate) p: P,
 }
 
+impl<P> reflection::PredicateReflection for NormalizedPredicate<P>
+where
+    P: Predicate<str>,
+{
+    fn children<'a>(&'a self) -> Box<Iterator<Item = reflection::Child<'a>> + 'a> {
+        let params = vec![reflection::Child::new("predicate", &self.p)];
+        Box::new(params.into_iter())
+    }
+}
+
 impl<P> Predicate<str> for NormalizedPredicate<P>
 where
     P: Predicate<str>,
 {
     fn eval(&self, variable: &str) -> bool {
-        self.p.eval(&String::from_iter(normalized(variable.chars())))
+        self.p
+            .eval(&String::from_iter(normalized(variable.chars())))
+    }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
+        let variable = String::from_iter(normalized(variable.chars()));
+        self.p.find_case(expected, &variable)
     }
 }
 

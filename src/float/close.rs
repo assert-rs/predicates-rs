@@ -11,6 +11,7 @@ use std::fmt;
 use float_cmp::ApproxEq;
 use float_cmp::Ulps;
 
+use reflection;
 use Predicate;
 
 /// Predicate that ensures two numbers are "close" enough, understanding that rounding errors
@@ -84,15 +85,40 @@ impl Predicate<f64> for IsClosePredicate {
     fn eval(&self, variable: &f64) -> bool {
         variable.approx_eq(&self.target, self.epsilon, self.ulps)
     }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &f64) -> Option<reflection::Case<'a>> {
+        let actual = self.eval(variable);
+        if expected == actual {
+            Some(
+                reflection::Case::new(Some(self), actual)
+                    .add_product(reflection::Product::new(
+                        "actual epsilon",
+                        (variable - self.target).abs(),
+                    ))
+                    .add_product(reflection::Product::new(
+                        "actual ulps",
+                        variable.ulps(&self.target).abs(),
+                    )),
+            )
+        } else {
+            None
+        }
+    }
+}
+
+impl reflection::PredicateReflection for IsClosePredicate {
+    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+        let params = vec![
+            reflection::Parameter::new("epsilon", &self.epsilon),
+            reflection::Parameter::new("ulps", &self.ulps),
+        ];
+        Box::new(params.into_iter())
+    }
 }
 
 impl fmt::Display for IsClosePredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(
-            f,
-            "var ~= {} +/- {} ({})",
-            self.target, self.epsilon, self.ulps
-        )
+        write!(f, "var ~= {}", self.target)
     }
 }
 

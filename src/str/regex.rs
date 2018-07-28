@@ -10,6 +10,8 @@ use std::fmt;
 
 use regex;
 
+use core;
+use reflection;
 use Predicate;
 
 /// An error that occurred during parsing or compiling a regular expression.
@@ -44,7 +46,13 @@ impl Predicate<str> for RegexPredicate {
     fn eval(&self, variable: &str) -> bool {
         self.re.is_match(variable)
     }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
+        core::default_find_case(self, expected, variable)
+    }
 }
+
+impl reflection::PredicateReflection for RegexPredicate {}
 
 impl fmt::Display for RegexPredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -65,11 +73,31 @@ impl Predicate<str> for RegexMatchesPredicate {
     fn eval(&self, variable: &str) -> bool {
         self.re.find_iter(variable).count() == self.count
     }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
+        let actual_count = self.re.find_iter(variable).count();
+        let result = self.count == actual_count;
+        if result == expected {
+            Some(
+                reflection::Case::new(Some(self), result)
+                    .add_product(reflection::Product::new("actual count", actual_count)),
+            )
+        } else {
+            None
+        }
+    }
+}
+
+impl reflection::PredicateReflection for RegexMatchesPredicate {
+    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+        let params = vec![reflection::Parameter::new("count", &self.count)];
+        Box::new(params.into_iter())
+    }
 }
 
 impl fmt::Display for RegexMatchesPredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "var.is_match({}).count({})", self.re, self.count)
+        write!(f, "var.is_match({})", self.re)
     }
 }
 

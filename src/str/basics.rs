@@ -8,6 +8,8 @@
 
 use std::fmt;
 
+use core;
+use reflection;
 use Predicate;
 
 /// Predicate that checks for empty strings.
@@ -20,7 +22,13 @@ impl Predicate<str> for IsEmptyPredicate {
     fn eval(&self, variable: &str) -> bool {
         variable.is_empty()
     }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
+        core::default_find_case(self, expected, variable)
+    }
 }
+
+impl reflection::PredicateReflection for IsEmptyPredicate {}
 
 impl fmt::Display for IsEmptyPredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -55,7 +63,13 @@ impl Predicate<str> for StartsWithPredicate {
     fn eval(&self, variable: &str) -> bool {
         variable.starts_with(&self.pattern)
     }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
+        core::default_find_case(self, expected, variable)
+    }
 }
+
+impl reflection::PredicateReflection for StartsWithPredicate {}
 
 impl fmt::Display for StartsWithPredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -95,7 +109,13 @@ impl Predicate<str> for EndsWithPredicate {
     fn eval(&self, variable: &str) -> bool {
         variable.ends_with(&self.pattern)
     }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
+        core::default_find_case(self, expected, variable)
+    }
 }
+
+impl reflection::PredicateReflection for EndsWithPredicate {}
 
 impl fmt::Display for EndsWithPredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -155,7 +175,13 @@ impl Predicate<str> for ContainsPredicate {
     fn eval(&self, variable: &str) -> bool {
         variable.contains(&self.pattern)
     }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
+        core::default_find_case(self, expected, variable)
+    }
 }
+
+impl reflection::PredicateReflection for ContainsPredicate {}
 
 impl fmt::Display for ContainsPredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -176,11 +202,31 @@ impl Predicate<str> for MatchesPredicate {
     fn eval(&self, variable: &str) -> bool {
         variable.matches(&self.pattern).count() == self.count
     }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
+        let actual_count = variable.matches(&self.pattern).count();
+        let result = self.count == actual_count;
+        if result == expected {
+            Some(
+                reflection::Case::new(Some(self), result)
+                    .add_product(reflection::Product::new("actual count", actual_count)),
+            )
+        } else {
+            None
+        }
+    }
+}
+
+impl reflection::PredicateReflection for MatchesPredicate {
+    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+        let params = vec![reflection::Parameter::new("count", &self.count)];
+        Box::new(params.into_iter())
+    }
 }
 
 impl fmt::Display for MatchesPredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "var.contains({:?}, {})", self.pattern, self.count)
+        write!(f, "var.contains({})", self.pattern)
     }
 }
 

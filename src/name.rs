@@ -11,6 +11,7 @@
 use std::fmt;
 use std::marker::PhantomData;
 
+use reflection;
 use Predicate;
 
 /// Augment an existing predicate with a name.
@@ -34,6 +35,21 @@ where
 {
     fn eval(&self, item: &Item) -> bool {
         self.inner.eval(item)
+    }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &Item) -> Option<reflection::Case<'a>> {
+        self.inner.find_case(expected, variable)
+    }
+}
+
+impl<M, Item> reflection::PredicateReflection for NamePredicate<M, Item>
+where
+    M: Predicate<Item>,
+    Item: ?Sized,
+{
+    fn children<'a>(&'a self) -> Box<Iterator<Item = reflection::Child<'a>> + 'a> {
+        let params = vec![reflection::Child::new(self.name, &self.inner)];
+        Box::new(params.into_iter())
     }
 }
 

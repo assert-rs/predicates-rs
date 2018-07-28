@@ -10,6 +10,8 @@
 
 use std::fmt;
 
+use core;
+use reflection;
 use Predicate;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -51,6 +53,10 @@ where
             EqOps::NotEqual => variable.ne(&self.constant),
         }
     }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &T) -> Option<reflection::Case<'a>> {
+        core::default_find_case(self, expected, variable)
+    }
 }
 
 impl<'a, T> Predicate<T> for EqPredicate<&'a T>
@@ -63,6 +69,16 @@ where
             EqOps::NotEqual => variable.ne(self.constant),
         }
     }
+
+    fn find_case<'b>(&'b self, expected: bool, variable: &T) -> Option<reflection::Case<'b>> {
+        core::default_find_case(self, expected, variable)
+    }
+}
+
+impl<T> reflection::PredicateReflection for EqPredicate<T>
+where
+    T: fmt::Debug + PartialEq,
+{
 }
 
 impl<T> fmt::Display for EqPredicate<T>
@@ -167,6 +183,10 @@ where
             OrdOps::GreaterThan => variable.gt(&self.constant),
         }
     }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &T) -> Option<reflection::Case<'a>> {
+        core::default_find_case(self, expected, variable)
+    }
 }
 
 impl<'a, T> Predicate<T> for OrdPredicate<&'a T>
@@ -181,6 +201,16 @@ where
             OrdOps::GreaterThan => variable.gt(self.constant),
         }
     }
+
+    fn find_case<'b>(&'b self, expected: bool, variable: &T) -> Option<reflection::Case<'b>> {
+        core::default_find_case(self, expected, variable)
+    }
+}
+
+impl<T> reflection::PredicateReflection for OrdPredicate<T>
+where
+    T: fmt::Debug + PartialOrd,
+{
 }
 
 impl<T> fmt::Display for OrdPredicate<T>

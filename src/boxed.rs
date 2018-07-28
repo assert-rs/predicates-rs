@@ -11,6 +11,8 @@
 
 use std::fmt;
 
+use core;
+use reflection;
 use Predicate;
 
 /// `Predicate` that wraps another `Predicate` as a trait object, allowing
@@ -40,6 +42,19 @@ where
     }
 }
 
+impl<Item> reflection::PredicateReflection for BoxPredicate<Item>
+where
+    Item: ?Sized,
+{
+    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+        self.0.parameters()
+    }
+
+    fn children<'a>(&'a self) -> Box<Iterator<Item = reflection::Child<'a>> + 'a> {
+        self.0.children()
+    }
+}
+
 impl<Item> fmt::Display for BoxPredicate<Item>
 where
     Item: ?Sized,
@@ -55,6 +70,10 @@ where
 {
     fn eval(&self, variable: &Item) -> bool {
         self.0.eval(variable)
+    }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &Item) -> Option<reflection::Case<'a>> {
+        core::default_find_case(self, expected, variable)
     }
 }
 

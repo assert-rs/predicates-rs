@@ -69,6 +69,7 @@
 //!         *variable == 42
 //!     }
 //! }
+//! impl predicates::reflection::PredicateReflection for IsTheAnswer {}
 //! impl fmt::Display for IsTheAnswer {
 //!     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 //!         write!(f, "var.is_the_answer()")
@@ -99,13 +100,16 @@ extern crate float_cmp;
 extern crate normalize_line_endings;
 #[cfg(feature = "regex")]
 extern crate regex;
+#[cfg(feature = "treeline")]
+extern crate treeline;
 
 pub mod prelude;
 
 mod core;
-pub use core::Predicate;
+pub use core::*;
 mod boxed;
-pub use boxed::BoxPredicate;
+pub use boxed::*;
+pub mod reflection;
 
 // core predicates
 pub mod constant;
@@ -121,3 +125,5 @@ pub mod boolean;
 pub mod float;
 pub mod path;
 pub mod str;
+#[cfg(feature = "tree")]
+pub mod tree;

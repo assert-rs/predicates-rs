@@ -11,6 +11,8 @@
 use std::fmt;
 use std::marker::PhantomData;
 
+use core;
+use reflection;
 use Predicate;
 
 /// Predicate that always returns a constant (boolean) result.
@@ -25,6 +27,17 @@ pub struct BooleanPredicate<Item> {
 impl<Item> Predicate<Item> for BooleanPredicate<Item> {
     fn eval(&self, _variable: &Item) -> bool {
         self.retval
+    }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &Item) -> Option<reflection::Case<'a>> {
+        core::default_find_case(self, expected, variable)
+    }
+}
+
+impl<Item> reflection::PredicateReflection for BooleanPredicate<Item> {
+    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+        let params = vec![reflection::Parameter::new("value", &self.retval)];
+        Box::new(params.into_iter())
     }
 }
 

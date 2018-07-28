@@ -11,6 +11,7 @@ use std::fs;
 use std::io::{self, Read};
 use std::path;
 
+use reflection;
 use Predicate;
 
 fn read_file(path: &path::Path) -> io::Result<Vec<u8>> {
@@ -40,6 +41,16 @@ where
     }
 }
 
+impl<P> reflection::PredicateReflection for FileContentPredicate<P>
+where
+    P: Predicate<[u8]>,
+{
+    fn children<'a>(&'a self) -> Box<Iterator<Item = reflection::Child<'a>> + 'a> {
+        let params = vec![reflection::Child::new("predicate", &self.p)];
+        Box::new(params.into_iter())
+    }
+}
+
 impl<P> fmt::Display for FileContentPredicate<P>
 where
     P: Predicate<[u8]>,
@@ -55,6 +66,24 @@ where
 {
     fn eval(&self, path: &path::Path) -> bool {
         self.eval(path).unwrap_or(false)
+    }
+
+    fn find_case<'a>(
+        &'a self,
+        expected: bool,
+        variable: &path::Path,
+    ) -> Option<reflection::Case<'a>> {
+        let buffer = read_file(variable);
+        match (expected, buffer) {
+            (_, Ok(buffer)) => self.p
+                .find_case(expected, &buffer)
+                .map(|child| reflection::Case::new(Some(self), expected).add_child(child)),
+            (true, Err(_)) => None,
+            (false, Err(err)) => Some(
+                reflection::Case::new(Some(self), false)
+                    .add_product(reflection::Product::new("error", err)),
+            ),
+        }
     }
 }
 

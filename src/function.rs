@@ -11,6 +11,8 @@
 use std::fmt;
 use std::marker::PhantomData;
 
+use core;
+use reflection;
 use Predicate;
 
 /// Predicate that wraps a function over a reference that returns a `bool`.
@@ -61,6 +63,17 @@ where
     fn eval(&self, variable: &T) -> bool {
         (self.function)(variable)
     }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &T) -> Option<reflection::Case<'a>> {
+        core::default_find_case(self, expected, variable)
+    }
+}
+
+impl<F, T> reflection::PredicateReflection for FnPredicate<F, T>
+where
+    F: Fn(&T) -> bool,
+    T: ?Sized,
+{
 }
 
 impl<F, T> fmt::Display for FnPredicate<F, T>

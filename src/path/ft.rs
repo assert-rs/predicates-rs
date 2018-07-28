@@ -11,6 +11,7 @@ use std::fs;
 use std::io;
 use std::path;
 
+use reflection;
 use Predicate;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -21,8 +22,12 @@ enum FileType {
 }
 
 impl FileType {
-    fn from_path(path: &path::Path) -> io::Result<FileType> {
-        let file_type = path.metadata()?.file_type();
+    fn from_path(path: &path::Path, follow: bool) -> io::Result<FileType> {
+        let file_type = if follow {
+            path.metadata()
+        } else {
+            path.symlink_metadata()
+        }?.file_type();
         if file_type.is_dir() {
             return Ok(FileType::Dir);
         }
@@ -75,7 +80,7 @@ impl FileTypePredicate {
     /// Allow to create an `FileTypePredicate` from a `path`
     pub fn from_path(path: &path::Path) -> io::Result<FileTypePredicate> {
         Ok(FileTypePredicate {
-            ft: FileType::from_path(path)?,
+            ft: FileType::from_path(path, true)?,
             follow: true,
         })
     }
@@ -91,6 +96,39 @@ impl Predicate<path::Path> for FileTypePredicate {
         metadata
             .map(|m| self.ft.eval(m.file_type()))
             .unwrap_or(false)
+    }
+
+    fn find_case<'a>(
+        &'a self,
+        expected: bool,
+        variable: &path::Path,
+    ) -> Option<reflection::Case<'a>> {
+        let actual_type = FileType::from_path(variable, self.follow);
+        match (expected, actual_type) {
+            (_, Ok(actual_type)) => {
+                let result = self.ft == actual_type;
+                if result == expected {
+                    Some(
+                        reflection::Case::new(Some(self), result)
+                            .add_product(reflection::Product::new("actual filetype", actual_type)),
+                    )
+                } else {
+                    None
+                }
+            }
+            (true, Err(_)) => None,
+            (false, Err(err)) => Some(
+                reflection::Case::new(Some(self), false)
+                    .add_product(reflection::Product::new("error", err)),
+            ),
+        }
+    }
+}
+
+impl reflection::PredicateReflection for FileTypePredicate {
+    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+        let params = vec![reflection::Parameter::new("follow", &self.follow)];
+        Box::new(params.into_iter())
     }
 }
 

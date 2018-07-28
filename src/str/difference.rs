@@ -11,6 +11,7 @@ use std::fmt;
 
 use difference;
 
+use reflection;
 use Predicate;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -90,13 +91,34 @@ impl Predicate<str> for DifferencePredicate {
         let change = difference::Changeset::new(&self.orig, edit, &self.split);
         self.op.eval(self.distance, change.distance)
     }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
+        let change = difference::Changeset::new(&self.orig, variable, &self.split);
+        let result = self.op.eval(self.distance, change.distance);
+        if result == expected {
+            Some(
+                reflection::Case::new(Some(self), result)
+                    .add_product(reflection::Product::new("actual distance", change.distance))
+                    .add_product(reflection::Product::new("diff", change)),
+            )
+        } else {
+            None
+        }
+    }
+}
+
+impl reflection::PredicateReflection for DifferencePredicate {
+    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+        let params = vec![reflection::Parameter::new("original", &self.orig)];
+        Box::new(params.into_iter())
+    }
 }
 
 impl fmt::Display for DifferencePredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self.op {
-            DistanceOp::Similar => write!(f, "var - {:?} <= {}", self.orig, self.distance),
-            DistanceOp::Different => write!(f, "{} < var - {:?}", self.distance, self.orig),
+            DistanceOp::Similar => write!(f, "var - original <= {}", self.distance),
+            DistanceOp::Different => write!(f, "{} < var - original", self.distance),
         }
     }
 }
