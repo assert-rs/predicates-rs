@@ -95,6 +95,8 @@
 extern crate difference;
 #[cfg(feature = "float-cmp")]
 extern crate float_cmp;
+#[cfg(feature = "normalize-line-endings")]
+extern crate normalize_line_endings;
 #[cfg(feature = "regex")]
 extern crate regex;
 
