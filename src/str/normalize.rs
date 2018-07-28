@@ -28,6 +28,10 @@ impl<P> reflection::PredicateReflection for NormalizedPredicate<P>
 where
     P: Predicate<str>,
 {
+    fn children<'a>(&'a self) -> Box<Iterator<Item = reflection::Child<'a>> + 'a> {
+        let params = vec![reflection::Child::new("predicate", &self.p)];
+        Box::new(params.into_iter())
+    }
 }
 
 impl<P> Predicate<str> for NormalizedPredicate<P>
