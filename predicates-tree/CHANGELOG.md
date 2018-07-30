@@ -6,4 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - Unreleased
 
-[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v0.5.2...HEAD
+## [0.9.0] - 2018-07-30
+### Added
+- Support for rendering a predicate as a tree.
+
+[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v0.9.0...HEAD
+[0.9.0]: https://github.com/assert-rs/predicates-rs/compare/v0.5.2...v0.9.0

@@ -24,7 +24,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! predicates = "0.5"
+//! predicates = "0.9"
 //! ```
 //!
 //! ## Examples

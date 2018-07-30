@@ -6,58 +6,70 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - Unreleased
 
+## [0.9.0] - 2018-07-30
+### Added
+- Support `?Sized` types for `FnPredicate`.
+- Add `str_pred.normalize()` predicate.
+- Add reflection to `Predicate`.
+- Add support for predicates returning why they failed (`find_case`) which can
+  be combined with the new `predicates-tree` crate.
+- Split out `predicates-core` for reducing ecosystem breaking changes.
+
+### Changed
+- Predicates must also implement `PredicateReflection`
+
 ## [0.5.2] - 2018-07-20
 ### Added
-* **path:**  support file-based str predicates ([4b430532](https://github.com/assert-rs/predicates-rs/commit/4b430532f7cd660bd813863871ede6f108e7be67), closes [#56](https://github.com/assert-rs/predicates-rs/issues/56))
-*   Expand trait coverage ([33972a7d](https://github.com/assert-rs/predicates-rs/commit/33972a7d0c92eb7f7c7e95af4bb35bea0ac810ab))
+- **path:**  support file-based str predicates ([4b430532](https://github.com/assert-rs/predicates-rs/commit/4b430532f7cd660bd813863871ede6f108e7be67), closes [#56](https://github.com/assert-rs/predicates-rs/issues/56))
+-   Expand trait coverage ([33972a7d](https://github.com/assert-rs/predicates-rs/commit/33972a7d0c92eb7f7c7e95af4bb35bea0ac810ab))
 
 ## [0.5.1] - 2018-06-05
 ### Added
-*   Fix eq for str ([7650e9e6](https://github.com/assert-rs/predicates-rs/commit/7650e9e6d43f2ddd047ad8defa0c724b31ebd1c4))
+-   Fix eq for str ([7650e9e6](https://github.com/assert-rs/predicates-rs/commit/7650e9e6d43f2ddd047ad8defa0c724b31ebd1c4))
 
 ## [0.5.0] - 2018-05-30
 ### Added
-* **trait:**
-  *  Allow naming `Predicate` expressions
-* **str:**
-  *  Add regex repetition count, closes #27
-  *  from_utf8 adapter, closes #21
-  *  Trimming predicate decorator
-* **path:**
-  * `eq_file` predicate to test a file-under-test with a fixture, closes #32.
-    * `eq_file(...).utf()` adapter to do string comparisons with the fixture
-  * Add a `from_file_path` extension method to `Predicate<[u8]>` that turns it into a `Predicate<Path>`, closes #31.
+- **trait:**
+  -  Allow naming `Predicate` expressions
+- **str:**
+  -  Add regex repetition count, closes #27
+  -  from_utf8 adapter, closes #21
+  -  Trimming predicate decorator
+- **path:**
+  - `eq_file` predicate to test a file-under-test with a fixture, closes #32.
+    - `eq_file(...).utf()` adapter to do string comparisons with the fixture
+  - Add a `from_file_path` extension method to `Predicate<[u8]>` that turns it into a `Predicate<Path>`, closes #31.
 
 ### Breaking Changes
-* **trait:**
-  *  All `Predicate`s are now `Display` ([05216708](https://github.com/assert-rs/predicates-rs/commit/05216708359544f2c5f3a256f50c012f521c39a6), breaks [#](https://github.com/assert-rs/predicates-rs/issues/))
-  *  Decouple boxing from trait ([f981fac3](https://github.com/assert-rs/predicates-rs/commit/f981fac39271746162365f3c577cffac730e1d97), breaks [#](https://github.com/assert-rs/predicates-rs/issues/))
-  *  Decouple boolean logic from trait ([88b72f9e](https://github.com/assert-rs/predicates-rs/commit/88b72f9ef58a86f2af68c0510d99326f5e644f76), breaks [#](https://github.com/assert-rs/predicates-rs/issues/))
+- **trait:**
+  -  All `Predicate`s are now `Display` ([05216708](https://github.com/assert-rs/predicates-rs/commit/05216708359544f2c5f3a256f50c012f521c39a6), breaks [#](https://github.com/assert-rs/predicates-rs/issues/))
+  -  Decouple boxing from trait ([f981fac3](https://github.com/assert-rs/predicates-rs/commit/f981fac39271746162365f3c577cffac730e1d97), breaks [#](https://github.com/assert-rs/predicates-rs/issues/))
+  -  Decouple boolean logic from trait ([88b72f9e](https://github.com/assert-rs/predicates-rs/commit/88b72f9ef58a86f2af68c0510d99326f5e644f76), breaks [#](https://github.com/assert-rs/predicates-rs/issues/))
 
 ## [0.4.0] - 2018-05-10
 ### Added
-* Define oldest supported version of Rust as 1.22.
-* CI that ensures
-  * works on Windows and Linux
-  * works on 1.22 to nightly
-* **float:** `is_close` Predicate (see #11).
-* **path:**
-  *  File type predicates: `is_file`, `is_dir`, `is_symlink` (see #8).
-  *  Existence predicate: `exists`, `missing` (see #8).
-* **str:**
-  *  Basic string predicates: `is_empty`, `starts_with`, `ends_with`, and `contains` with optional count (see #25).
-  *  Regex predicate (see #12).
-  *  Edit-distance predicate (see #9).
+- Define oldest supported version of Rust as 1.22.
+- CI that ensures
+  - works on Windows and Linux
+  - works on 1.22 to nightly
+- **float:** `is_close` Predicate (see #11).
+- **path:**
+  -  File type predicates: `is_file`, `is_dir`, `is_symlink` (see #8).
+  -  Existence predicate: `exists`, `missing` (see #8).
+- **str:**
+  -  Basic string predicates: `is_empty`, `starts_with`, `ends_with`, and `contains` with optional count (see #25).
+  -  Regex predicate (see #12).
+  -  Edit-distance predicate (see #9).
 
 ### Changed
-* Clearly delineate API from prelude (see #17).
-* Switch `Predicate` trait from Associated Types to Generics.
-* **iter:**
-  *  Renamed `set` predicates as `iter` predicates to clarify the intent from some implementation.
-  *  Remove ambiguity of predicate factories (see #24):
-    * `contains` -> `in_iter`
-    * `contains_hashable` -> `in_hash`
-  * Turned `contains_ord` into a specialization of `in_iter` by adding a `sort` method.
+- Clearly delineate API from prelude (see #17).
+- Switch `Predicate` trait from Associated Types to Generics.
+- **iter:**
+  -  Renamed `set` predicates as `iter` predicates to clarify the intent from some implementation.
+  -  Remove ambiguity of predicate factories (see #24):
+    - `contains` -> `in_iter`
+    - `contains_hashable` -> `in_hash`
+  - Turned `contains_ord` into a specialization of `in_iter` by adding a `sort` method.
 
 ## [0.3.0] - 2017-06-26
 ### Added
@@ -87,7 +99,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Continuous integration with Travis (Linux) and AppVeyor (Windows)
 - Basic README
 
-[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v0.5.2...HEAD
+[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v0.9.0...HEAD
+[0.9.0]: https://github.com/assert-rs/predicates-rs/compare/v0.5.2...v0.9.0
 [0.5.2]: https://github.com/assert-rs/predicates-rs/compare/v0.5.1...v0.5.2
 [0.5.1]: https://github.com/assert-rs/predicates-rs/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/assert-rs/predicates-rs/compare/v0.4.0...v0.5.0
