@@ -10,10 +10,10 @@
 
 pub use boolean::PredicateBooleanExt;
 pub use boxed::PredicateBoxExt;
-pub use core::Predicate;
 pub use name::PredicateNameExt;
 pub use path::PredicateFileContentExt;
 pub use str::PredicateStrExt;
+pub use Predicate;
 
 /// Predicate factories
 pub mod predicate {

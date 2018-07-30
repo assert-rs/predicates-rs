@@ -11,8 +11,8 @@
 use std::fmt;
 use std::marker::PhantomData;
 
-use core;
 use reflection;
+use utils;
 use Predicate;
 
 /// Predicate that always returns a constant (boolean) result.
@@ -30,7 +30,7 @@ impl<Item> Predicate<Item> for BooleanPredicate<Item> {
     }
 
     fn find_case<'a>(&'a self, expected: bool, variable: &Item) -> Option<reflection::Case<'a>> {
-        core::default_find_case(self, expected, variable)
+        utils::default_find_case(self, expected, variable)
     }
 }
 

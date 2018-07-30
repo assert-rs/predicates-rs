@@ -13,8 +13,8 @@ use std::fmt;
 use std::hash::Hash;
 use std::iter::FromIterator;
 
-use core;
 use reflection;
+use utils;
 use Predicate;
 
 /// Predicate that returns `true` if `variable` is a member of the pre-defined
@@ -31,7 +31,7 @@ pub struct InPredicate<T>
 where
     T: PartialEq + fmt::Debug,
 {
-    inner: reflection::DebugAdapter<Vec<T>>,
+    inner: utils::DebugAdapter<Vec<T>>,
 }
 
 impl<T> InPredicate<T>
@@ -65,7 +65,7 @@ where
         let mut items = self.inner.debug;
         items.sort();
         OrdInPredicate {
-            inner: reflection::DebugAdapter::new(items),
+            inner: utils::DebugAdapter::new(items),
         }
     }
 }
@@ -79,7 +79,7 @@ where
     }
 
     fn find_case<'a>(&'a self, expected: bool, variable: &T) -> Option<reflection::Case<'a>> {
-        core::default_find_case(self, expected, variable)
+        utils::default_find_case(self, expected, variable)
     }
 }
 
@@ -92,7 +92,7 @@ where
     }
 
     fn find_case<'b>(&'b self, expected: bool, variable: &T) -> Option<reflection::Case<'b>> {
-        core::default_find_case(self, expected, variable)
+        utils::default_find_case(self, expected, variable)
     }
 }
 
@@ -150,7 +150,7 @@ where
     I: IntoIterator<Item = T>,
 {
     InPredicate {
-        inner: reflection::DebugAdapter::new(Vec::from_iter(iter)),
+        inner: utils::DebugAdapter::new(Vec::from_iter(iter)),
     }
 }
 
@@ -168,7 +168,7 @@ pub struct OrdInPredicate<T>
 where
     T: Ord + fmt::Debug,
 {
-    inner: reflection::DebugAdapter<Vec<T>>,
+    inner: utils::DebugAdapter<Vec<T>>,
 }
 
 impl<T> Predicate<T> for OrdInPredicate<T>
@@ -180,7 +180,7 @@ where
     }
 
     fn find_case<'a>(&'a self, expected: bool, variable: &T) -> Option<reflection::Case<'a>> {
-        core::default_find_case(self, expected, variable)
+        utils::default_find_case(self, expected, variable)
     }
 }
 
@@ -193,7 +193,7 @@ where
     }
 
     fn find_case<'b>(&'b self, expected: bool, variable: &T) -> Option<reflection::Case<'b>> {
-        core::default_find_case(self, expected, variable)
+        utils::default_find_case(self, expected, variable)
     }
 }
 
@@ -230,7 +230,7 @@ pub struct HashableInPredicate<T>
 where
     T: Hash + Eq + fmt::Debug,
 {
-    inner: reflection::DebugAdapter<HashSet<T>>,
+    inner: utils::DebugAdapter<HashSet<T>>,
 }
 
 impl<T> Predicate<T> for HashableInPredicate<T>
@@ -242,7 +242,7 @@ where
     }
 
     fn find_case<'a>(&'a self, expected: bool, variable: &T) -> Option<reflection::Case<'a>> {
-        core::default_find_case(self, expected, variable)
+        utils::default_find_case(self, expected, variable)
     }
 }
 
@@ -255,7 +255,7 @@ where
     }
 
     fn find_case<'b>(&'b self, expected: bool, variable: &T) -> Option<reflection::Case<'b>> {
-        core::default_find_case(self, expected, variable)
+        utils::default_find_case(self, expected, variable)
     }
 }
 
@@ -307,6 +307,6 @@ where
     I: IntoIterator<Item = T>,
 {
     HashableInPredicate {
-        inner: reflection::DebugAdapter::new(HashSet::from_iter(iter)),
+        inner: utils::DebugAdapter::new(HashSet::from_iter(iter)),
     }
 }

@@ -9,8 +9,8 @@
 use std::fmt;
 use std::path;
 
-use core;
 use reflection;
+use utils;
 use Predicate;
 
 /// Predicate that checks if a file is present
@@ -31,7 +31,7 @@ impl Predicate<path::Path> for ExistencePredicate {
         expected: bool,
         variable: &path::Path,
     ) -> Option<reflection::Case<'a>> {
-        core::default_find_case(self, expected, variable)
+        utils::default_find_case(self, expected, variable)
     }
 }
 

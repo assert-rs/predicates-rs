@@ -18,8 +18,8 @@ install:
 - cargo -V
 
 test_script:
-  - cargo check --verbose
-  - cargo test --verbose
+  - cargo check --all --verbose
+  - cargo test --all --verbose
 
 cache:
 - C:\Users\appveyor\.cargo\registry

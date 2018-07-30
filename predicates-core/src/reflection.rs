@@ -30,9 +30,9 @@ pub trait PredicateReflection: fmt::Display {
 /// A view of a `Predicate` parameter, provided by reflection.
 ///
 /// ```rust
-/// use predicates;
+/// use predicates_core;
 ///
-/// let param = predicates::reflection::Parameter::new("key", &10);
+/// let param = predicates_core::reflection::Parameter::new("key", &10);
 /// println!("{}", param);
 /// ```
 pub struct Parameter<'a>(&'a str, &'a fmt::Display);
@@ -213,11 +213,11 @@ impl<'a> Iterator for CaseChildren<'a> {
 /// A by-product of a predicate evaluation.
 ///
 /// ```rust
-/// use predicates;
+/// use predicates_core;
 ///
-/// let product = predicates::reflection::Product::new("key", "value");
+/// let product = predicates_core::reflection::Product::new("key", "value");
 /// println!("{}", product);
-/// let product = predicates::reflection::Product::new(format!("key-{}", 5), 30);
+/// let product = predicates_core::reflection::Product::new(format!("key-{}", 5), 30);
 /// println!("{}", product);
 /// ```
 pub struct Product(borrow::Cow<'static, str>, Box<fmt::Display>);
@@ -255,40 +255,5 @@ impl<'a> fmt::Display for Product {
 impl<'a> fmt::Debug for Product {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "({:?}, {})", self.0, self.1)
-    }
-}
-
-#[derive(Clone, PartialEq, Eq)]
-pub(crate) struct DebugAdapter<T>
-where
-    T: fmt::Debug,
-{
-    pub(crate) debug: T,
-}
-
-impl<T> DebugAdapter<T>
-where
-    T: fmt::Debug,
-{
-    pub fn new(debug: T) -> Self {
-        Self { debug }
-    }
-}
-
-impl<T> fmt::Display for DebugAdapter<T>
-where
-    T: fmt::Debug,
-{
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{:#?}", self.debug)
-    }
-}
-
-impl<T> fmt::Debug for DebugAdapter<T>
-where
-    T: fmt::Debug,
-{
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        self.debug.fmt(f)
     }
 }

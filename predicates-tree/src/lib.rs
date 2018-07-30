@@ -8,11 +8,12 @@
 
 //! Render `Case` as a tree.
 
+extern crate predicates_core;
+extern crate treeline;
+
 use std::fmt;
 
-use treeline;
-
-use reflection;
+use predicates_core::reflection;
 
 /// Render `Self` as a displayable tree.
 pub trait CaseTreeExt {

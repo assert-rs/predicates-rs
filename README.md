@@ -1,6 +1,6 @@
 # predicates-rs
 
-> This library is an implementation of **boolean-valued predicate functions** in Rust.
+> An implementation of **boolean-valued predicate functions** in Rust.
 
 [![Build Status](https://travis-ci.org/assert-rs/predicates-rs.svg?branch=master)](https://travis-ci.org/assert-rs/predicates-rs)
 [![Build status](https://ci.appveyor.com/api/projects/status/enru6k55xme867u6?svg=true)](https://ci.appveyor.com/project/epage/predicates-rs)
@@ -17,7 +17,7 @@ First, add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-predicates = "0.5"
+predicates = "0.9"
 ```
 
 Next, add this to your crate:

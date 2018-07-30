@@ -10,8 +10,8 @@ use std::fmt;
 
 use regex;
 
-use core;
 use reflection;
+use utils;
 use Predicate;
 
 /// An error that occurred during parsing or compiling a regular expression.
@@ -48,7 +48,7 @@ impl Predicate<str> for RegexPredicate {
     }
 
     fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
-        core::default_find_case(self, expected, variable)
+        utils::default_find_case(self, expected, variable)
     }
 }
 
