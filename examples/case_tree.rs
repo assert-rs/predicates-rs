@@ -1,7 +1,8 @@
 extern crate predicates;
+extern crate predicates_tree;
 
 use predicates::prelude::*;
-use predicates::tree::CaseTreeExt;
+use predicates_tree::CaseTreeExt;
 
 fn main() {
     let pred = predicate::ne(5).not().and(predicate::ge(5));

@@ -10,8 +10,8 @@
 
 use std::fmt;
 
-use core;
 use reflection;
+use utils;
 use Predicate;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -55,7 +55,7 @@ where
     }
 
     fn find_case<'a>(&'a self, expected: bool, variable: &T) -> Option<reflection::Case<'a>> {
-        core::default_find_case(self, expected, variable)
+        utils::default_find_case(self, expected, variable)
     }
 }
 
@@ -71,7 +71,7 @@ where
     }
 
     fn find_case<'b>(&'b self, expected: bool, variable: &T) -> Option<reflection::Case<'b>> {
-        core::default_find_case(self, expected, variable)
+        utils::default_find_case(self, expected, variable)
     }
 }
 
@@ -185,7 +185,7 @@ where
     }
 
     fn find_case<'a>(&'a self, expected: bool, variable: &T) -> Option<reflection::Case<'a>> {
-        core::default_find_case(self, expected, variable)
+        utils::default_find_case(self, expected, variable)
     }
 }
 
@@ -203,7 +203,7 @@ where
     }
 
     fn find_case<'b>(&'b self, expected: bool, variable: &T) -> Option<reflection::Case<'b>> {
-        core::default_find_case(self, expected, variable)
+        utils::default_find_case(self, expected, variable)
     }
 }
 

@@ -8,8 +8,8 @@
 
 use std::fmt;
 
-use core;
 use reflection;
+use utils;
 use Predicate;
 
 /// Predicate that checks for empty strings.
@@ -24,7 +24,7 @@ impl Predicate<str> for IsEmptyPredicate {
     }
 
     fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
-        core::default_find_case(self, expected, variable)
+        utils::default_find_case(self, expected, variable)
     }
 }
 
@@ -65,7 +65,7 @@ impl Predicate<str> for StartsWithPredicate {
     }
 
     fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
-        core::default_find_case(self, expected, variable)
+        utils::default_find_case(self, expected, variable)
     }
 }
 
@@ -111,7 +111,7 @@ impl Predicate<str> for EndsWithPredicate {
     }
 
     fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
-        core::default_find_case(self, expected, variable)
+        utils::default_find_case(self, expected, variable)
     }
 }
 
@@ -177,7 +177,7 @@ impl Predicate<str> for ContainsPredicate {
     }
 
     fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
-        core::default_find_case(self, expected, variable)
+        utils::default_find_case(self, expected, variable)
     }
 }
 

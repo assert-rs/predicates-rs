@@ -11,8 +11,8 @@
 
 use std::fmt;
 
-use core;
 use reflection;
+use utils;
 use Predicate;
 
 /// `Predicate` that wraps another `Predicate` as a trait object, allowing
@@ -73,7 +73,7 @@ where
     }
 
     fn find_case<'a>(&'a self, expected: bool, variable: &Item) -> Option<reflection::Case<'a>> {
-        core::default_find_case(self, expected, variable)
+        utils::default_find_case(self, expected, variable)
     }
 }
 

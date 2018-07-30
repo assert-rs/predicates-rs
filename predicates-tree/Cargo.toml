@@ -1,0 +1,22 @@
+[package]
+name = "predicates-tree"
+version = "0.9.0"
+authors = ["Nick Stevens <nick@bitcurry.com>"]
+license = "MIT/Apache-2.0"
+readme = "README.md"
+keywords = ["predicate", "boolean", "combinatorial", "match", "logic"]
+repository = "https://github.com/assert-rs/predicates-rs/tree/master/predicates-tree"
+homepage = "https://github.com/assert-rs/predicates-rs/tree/master/predicates-tree"
+documentation = "https://docs.rs/predicates-tree"
+description = """
+Render boolean-valued predicate functions results as a tree.
+"""
+categories = ["data-structures", "rust-patterns"]
+
+[badges]
+travis-ci = { repository = "assert-rs/predicates-rs" }
+appveyor = { repository = "assert-rs/predicates-rs" }
+
+[dependencies]
+predicates-core = { version = "0.9", path = "../predicates-core" }
+treeline = "0.1"
