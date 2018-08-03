@@ -104,12 +104,13 @@ impl fmt::Display for BinaryFilePredicate {
 /// let predicate_file = predicate::path::eq_file(Path::new("Cargo.toml"));
 /// assert_eq!(true, predicate_file.eval(Path::new("Cargo.toml")));
 /// assert_eq!(false, predicate_file.eval(Path::new("src")));
-/// assert_eq!(false, predicate_file.eval(Path::new("Cargo.lock")));
+/// assert_eq!(false, predicate_file.eval(Path::new("src")));
 /// ```
-pub fn eq_file(path: &path::Path) -> BinaryFilePredicate {
-    let content = utils::DebugAdapter::new(read_file(path).unwrap());
+pub fn eq_file<P: Into<path::PathBuf>>(path: P) -> BinaryFilePredicate {
+    let path = path.into();
+    let content = utils::DebugAdapter::new(read_file(&path).unwrap());
     BinaryFilePredicate {
-        path: path.to_path_buf(),
+        path,
         content,
     }
 }
