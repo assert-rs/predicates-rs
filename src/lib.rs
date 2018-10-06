@@ -162,6 +162,7 @@
 //! - [`path_pred = bytes_pred.from_file_path`]: Specified path's contents must equal the `bytes_pred`.
 //!
 //! [prelude]: prelude/index.html
+//! [`DifferencePredicate`]: https://docs.rs/predicates/0.9.1/predicates/str/struct.DifferencePredicate.html
 //! [`bytes_pred = str_pred.from_utf8()`]: prelude/trait.PredicateStrExt.html#method.from_utf8
 //! [`path_pred = bytes_pred.from_file_path`]: prelude/trait.PredicateFileContentExt.html#method.from_file_path
 //! [`path_pred = predicate::path::eq_file`]: prelude/predicate/path/fn.eq_file.html
