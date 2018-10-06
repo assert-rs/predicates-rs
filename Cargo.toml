@@ -21,7 +21,7 @@ travis-ci = { repository = "assert-rs/predicates-rs" }
 appveyor = { repository = "assert-rs/predicates-rs" }
 
 [dependencies]
-predicates-core = { version = "0.9", path = "predicates-core" }
+predicates-core = { version = "1.0", path = "predicates-core" }
 difference = { version = "2.0", optional = true }
 normalize-line-endings = { version = "0.2.2", optional = true }
 regex = { version="1.0", optional = true }
