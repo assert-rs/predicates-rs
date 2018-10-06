@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - Unreleased
 
+## [1.0.0] - 2018-10-06
+
 ## [0.9.1] - 2018-10-05
 ### Added
 - Created a predicate selection guide.
@@ -103,7 +105,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Continuous integration with Travis (Linux) and AppVeyor (Windows)
 - Basic README
 
-[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v0.9.1...HEAD
+[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/assert-rs/predicates-rs/compare/v0.9.1...v1.0.0
 [0.9.1]: https://github.com/assert-rs/predicates-rs/compare/v0.9.0...v0.9.1
 [0.9.0]: https://github.com/assert-rs/predicates-rs/compare/v0.5.2...v0.9.0
 [0.5.2]: https://github.com/assert-rs/predicates-rs/compare/v0.5.1...v0.5.2
