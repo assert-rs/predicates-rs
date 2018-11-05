@@ -3,7 +3,7 @@ environment:
     TARGET: x86_64-pc-windows-msvc
     CHANNEL: stable
   matrix:
-  - CHANNEL: 1.22.0 # oldest supported version
+  - CHANNEL: 1.24.1 # oldest supported version
   - CHANNEL: stable
   - CHANNEL: beta
   - CHANNEL: nightly
