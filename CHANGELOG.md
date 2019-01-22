@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased] - Unreleased
 
 ## [1.0.0] - 2018-10-06
+### Changed
+- BooleanPredicate is no longer generic, and is always Send and Sync.
 
 ## [0.9.1] - 2018-10-05
 ### Added

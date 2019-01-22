@@ -9,7 +9,6 @@
 //! Definition of a constant (always true or always false) `Predicate`.
 
 use std::fmt;
-use std::marker::PhantomData;
 
 use reflection;
 use utils;
@@ -19,12 +18,11 @@ use Predicate;
 ///
 /// This is created by the `predicate::always` and `predicate::never` functions.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct BooleanPredicate<Item> {
+pub struct BooleanPredicate {
     retval: bool,
-    _phantom: PhantomData<Item>,
 }
 
-impl<Item> Predicate<Item> for BooleanPredicate<Item> {
+impl<Item> Predicate<Item> for BooleanPredicate {
     fn eval(&self, _variable: &Item) -> bool {
         self.retval
     }
@@ -34,14 +32,14 @@ impl<Item> Predicate<Item> for BooleanPredicate<Item> {
     }
 }
 
-impl<Item> reflection::PredicateReflection for BooleanPredicate<Item> {
+impl reflection::PredicateReflection for BooleanPredicate {
     fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
         let params = vec![reflection::Parameter::new("value", &self.retval)];
         Box::new(params.into_iter())
     }
 }
 
-impl<Item> fmt::Display for BooleanPredicate<Item> {
+impl fmt::Display for BooleanPredicate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{}", self.retval)
     }
@@ -61,10 +59,9 @@ impl<Item> fmt::Display for BooleanPredicate<Item> {
 /// // Won't work - Predicates can only operate on a single type
 /// // assert_eq!(true, predicate_fn.eval("hello"))
 /// ```
-pub fn always<Item>() -> BooleanPredicate<Item> {
+pub fn always() -> BooleanPredicate {
     BooleanPredicate {
         retval: true,
-        _phantom: PhantomData,
     }
 }
 
@@ -82,9 +79,8 @@ pub fn always<Item>() -> BooleanPredicate<Item> {
 /// // Won't work - Predicates can only operate on a single type
 /// // assert_eq!(false, predicate_fn.eval("hello"))
 /// ```
-pub fn never<Item>() -> BooleanPredicate<Item> {
+pub fn never() -> BooleanPredicate {
     BooleanPredicate {
         retval: false,
-        _phantom: PhantomData,
     }
 }
