@@ -6,9 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - Unreleased
 
-## [1.0.0] - 2018-10-06
+## [1.0.1] - 2019-04-22
 ### Changed
 - BooleanPredicate is no longer generic, and is always Send and Sync.
+
+## [1.0.0] - 2018-10-06
 
 ## [0.9.1] - 2018-10-05
 ### Added
@@ -107,7 +109,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Continuous integration with Travis (Linux) and AppVeyor (Windows)
 - Basic README
 
-[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/assert-rs/predicates-rs/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/assert-rs/predicates-rs/compare/v0.9.1...v1.0.0
 [0.9.1]: https://github.com/assert-rs/predicates-rs/compare/v0.9.0...v0.9.1
 [0.9.0]: https://github.com/assert-rs/predicates-rs/compare/v0.5.2...v0.9.0
