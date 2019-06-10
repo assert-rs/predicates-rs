@@ -9,6 +9,7 @@
 use std::fmt;
 
 use float_cmp::ApproxEq;
+use float_cmp::F64Margin;
 use float_cmp::Ulps;
 
 use reflection;
@@ -83,7 +84,10 @@ impl IsClosePredicate {
 
 impl Predicate<f64> for IsClosePredicate {
     fn eval(&self, variable: &f64) -> bool {
-        variable.approx_eq(&self.target, self.epsilon, self.ulps)
+        variable.approx_eq(self.target, F64Margin {
+          epsilon: self.epsilon as f64,
+          ulps: self.ulps as i64
+        })
     }
 
     fn find_case<'a>(&'a self, expected: bool, variable: &f64) -> Option<reflection::Case<'a>> {
