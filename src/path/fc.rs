@@ -75,7 +75,8 @@ where
     ) -> Option<reflection::Case<'a>> {
         let buffer = read_file(variable);
         match (expected, buffer) {
-            (_, Ok(buffer)) => self.p
+            (_, Ok(buffer)) => self
+                .p
                 .find_case(expected, &buffer)
                 .map(|child| reflection::Case::new(Some(self), expected).add_child(child)),
             (true, Err(_)) => None,
@@ -110,8 +111,4 @@ where
     }
 }
 
-impl<P> PredicateFileContentExt for P
-where
-    P: Predicate<[u8]>,
-{
-}
+impl<P> PredicateFileContentExt for P where P: Predicate<[u8]> {}

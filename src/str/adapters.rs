@@ -200,8 +200,4 @@ where
     }
 }
 
-impl<P> PredicateStrExt for P
-where
-    P: Predicate<str>,
-{
-}
+impl<P> PredicateStrExt for P where P: Predicate<str> {}

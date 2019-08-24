@@ -75,11 +75,7 @@ where
     }
 }
 
-impl<T> reflection::PredicateReflection for EqPredicate<T>
-where
-    T: fmt::Debug + PartialEq,
-{
-}
+impl<T> reflection::PredicateReflection for EqPredicate<T> where T: fmt::Debug + PartialEq {}
 
 impl<T> fmt::Display for EqPredicate<T>
 where
@@ -207,11 +203,7 @@ where
     }
 }
 
-impl<T> reflection::PredicateReflection for OrdPredicate<T>
-where
-    T: fmt::Debug + PartialOrd,
-{
-}
+impl<T> reflection::PredicateReflection for OrdPredicate<T> where T: fmt::Debug + PartialOrd {}
 
 impl<T> fmt::Display for OrdPredicate<T>
 where

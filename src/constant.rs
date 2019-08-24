@@ -60,9 +60,7 @@ impl fmt::Display for BooleanPredicate {
 /// // assert_eq!(true, predicate_fn.eval("hello"))
 /// ```
 pub fn always() -> BooleanPredicate {
-    BooleanPredicate {
-        retval: true,
-    }
+    BooleanPredicate { retval: true }
 }
 
 /// Creates a new `Predicate` that always returns `false`.
@@ -80,7 +78,5 @@ pub fn always() -> BooleanPredicate {
 /// // assert_eq!(false, predicate_fn.eval("hello"))
 /// ```
 pub fn never() -> BooleanPredicate {
-    BooleanPredicate {
-        retval: false,
-    }
+    BooleanPredicate { retval: false }
 }

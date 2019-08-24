@@ -27,7 +27,8 @@ impl FileType {
             path.metadata()
         } else {
             path.symlink_metadata()
-        }?.file_type();
+        }?
+        .file_type();
         if file_type.is_dir() {
             return Ok(FileType::Dir);
         }

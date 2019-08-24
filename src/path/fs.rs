@@ -109,10 +109,7 @@ impl fmt::Display for BinaryFilePredicate {
 pub fn eq_file<P: Into<path::PathBuf>>(path: P) -> BinaryFilePredicate {
     let path = path.into();
     let content = utils::DebugAdapter::new(read_file(&path).unwrap());
-    BinaryFilePredicate {
-        path,
-        content,
-    }
+    BinaryFilePredicate { path, content }
 }
 
 /// Predicate that compares string content of files

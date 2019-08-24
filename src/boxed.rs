@@ -114,8 +114,4 @@ where
     }
 }
 
-impl<P, Item> PredicateBoxExt<Item> for P
-where
-    P: Predicate<Item>,
-{
-}
+impl<P, Item> PredicateBoxExt<Item> for P where P: Predicate<Item> {}
