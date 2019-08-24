@@ -2,8 +2,7 @@
 
 > An implementation of **boolean-valued predicate functions** in Rust.
 
-[![Build Status](https://travis-ci.org/assert-rs/predicates-rs.svg?branch=master)](https://travis-ci.org/assert-rs/predicates-rs)
-[![Build status](https://ci.appveyor.com/api/projects/status/enru6k55xme867u6?svg=true)](https://ci.appveyor.com/project/epage/predicates-rs)
+[![Build Status](https://dev.azure.com/assert-rs/assert-rs/_apis/build/status/predicates-rs?branchName=master)](https://dev.azure.com/assert-rs/assert-rs/_build/latest?definitionId=1&branchName=master)
 [![Documentation](https://img.shields.io/badge/docs-master-blue.svg)](https://docs.rs/predicates)
 ![License](https://img.shields.io/crates/l/predicates.svg)
 [![Crates.io](https://img.shields.io/crates/v/predicates.svg?maxAge=2592000)](https://crates.io/crates/predicates)
