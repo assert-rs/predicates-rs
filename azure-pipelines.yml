@@ -10,7 +10,6 @@ stages:
   parameters:
     minrust: 1.33.0
     codecov_token: $(CODECOV_TOKEN_SECRET)
-    test_features: "cargo_metadata"
 - stage: committed
   displayName: Lint History
   dependsOn: []
