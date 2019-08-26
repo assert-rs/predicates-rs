@@ -14,5 +14,4 @@ An API for boolean-valued predicate functions.
 categories = ["data-structures", "rust-patterns"]
 
 [badges]
-travis-ci = { repository = "assert-rs/predicates-rs" }
-appveyor = { repository = "assert-rs/predicates-rs" }
+azure-devops = { project = "assert-rs", pipeline = "predicates-rs" }

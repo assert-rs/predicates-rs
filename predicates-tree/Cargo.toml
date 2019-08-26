@@ -14,8 +14,7 @@ Render boolean-valued predicate functions results as a tree.
 categories = ["data-structures", "rust-patterns"]
 
 [badges]
-travis-ci = { repository = "assert-rs/predicates-rs" }
-appveyor = { repository = "assert-rs/predicates-rs" }
+azure-devops = { project = "assert-rs", pipeline = "predicates-rs" }
 
 [dependencies]
 predicates-core = { version = "1.0", path = "../predicates-core" }
