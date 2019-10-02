@@ -83,7 +83,13 @@ impl IsClosePredicate {
 
 impl Predicate<f64> for IsClosePredicate {
     fn eval(&self, variable: &f64) -> bool {
-        variable.approx_eq(&self.target, self.epsilon, self.ulps)
+        variable.approx_eq(
+            self.target,
+            float_cmp::F64Margin {
+                epsilon: self.epsilon,
+                ulps: self.ulps,
+            },
+        )
     }
 
     fn find_case<'a>(&'a self, expected: bool, variable: &f64) -> Option<reflection::Case<'a>> {
