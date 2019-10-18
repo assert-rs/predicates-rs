@@ -11,8 +11,8 @@ use std::fs;
 use std::io;
 use std::path;
 
-use reflection;
-use Predicate;
+use crate::reflection;
+use crate::Predicate;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 enum FileType {
@@ -48,7 +48,7 @@ impl FileType {
 }
 
 impl fmt::Display for FileType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let t = match *self {
             FileType::File => "file",
             FileType::Dir => "dir",
@@ -127,14 +127,14 @@ impl Predicate<path::Path> for FileTypePredicate {
 }
 
 impl reflection::PredicateReflection for FileTypePredicate {
-    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+    fn parameters<'a>(&'a self) -> Box<dyn Iterator<Item = reflection::Parameter<'a>> + 'a> {
         let params = vec![reflection::Parameter::new("follow", &self.follow)];
         Box::new(params.into_iter())
     }
 }
 
 impl fmt::Display for FileTypePredicate {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "var is {}", self.ft)
     }
 }

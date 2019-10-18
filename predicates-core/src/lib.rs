@@ -21,5 +21,5 @@
 #![warn(missing_docs, missing_debug_implementations)]
 
 mod core;
-pub use core::*;
+pub use crate::core::*;
 pub mod reflection;

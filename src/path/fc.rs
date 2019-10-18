@@ -11,8 +11,8 @@ use std::fs;
 use std::io::{self, Read};
 use std::path;
 
-use reflection;
-use Predicate;
+use crate::reflection;
+use crate::Predicate;
 
 fn read_file(path: &path::Path) -> io::Result<Vec<u8>> {
     let mut buffer = Vec::new();
@@ -45,7 +45,7 @@ impl<P> reflection::PredicateReflection for FileContentPredicate<P>
 where
     P: Predicate<[u8]>,
 {
-    fn children<'a>(&'a self) -> Box<Iterator<Item = reflection::Child<'a>> + 'a> {
+    fn children<'a>(&'a self) -> Box<dyn Iterator<Item = reflection::Child<'a>> + 'a> {
         let params = vec![reflection::Child::new("predicate", &self.p)];
         Box::new(params.into_iter())
     }
@@ -55,7 +55,7 @@ impl<P> fmt::Display for FileContentPredicate<P>
 where
     P: Predicate<[u8]>,
 {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", self.p)
     }
 }

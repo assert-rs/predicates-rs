@@ -11,9 +11,9 @@
 use std::fmt;
 use std::marker::PhantomData;
 
-use reflection;
-use utils;
-use Predicate;
+use crate::reflection;
+use crate::utils;
+use crate::Predicate;
 
 /// Predicate that wraps a function over a reference that returns a `bool`.
 /// This type is returned by the `predicate::function` function.
@@ -81,7 +81,7 @@ where
     F: Fn(&T) -> bool,
     T: ?Sized,
 {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}(var)", self.name)
     }
 }

@@ -9,9 +9,9 @@
 use std::fmt;
 use std::path;
 
-use reflection;
-use utils;
-use Predicate;
+use crate::reflection;
+use crate::utils;
+use crate::Predicate;
 
 /// Predicate that checks if a file is present
 ///
@@ -38,7 +38,7 @@ impl Predicate<path::Path> for ExistencePredicate {
 impl reflection::PredicateReflection for ExistencePredicate {}
 
 impl fmt::Display for ExistencePredicate {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}(var)", if self.exists { "exists" } else { "missing" })
     }
 }

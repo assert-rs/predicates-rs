@@ -10,9 +10,9 @@
 
 use std::fmt;
 
-use reflection;
-use utils;
-use Predicate;
+use crate::reflection;
+use crate::utils;
+use crate::Predicate;
 
 /// Predicate that always returns a constant (boolean) result.
 ///
@@ -33,14 +33,14 @@ impl<Item> Predicate<Item> for BooleanPredicate {
 }
 
 impl reflection::PredicateReflection for BooleanPredicate {
-    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+    fn parameters<'a>(&'a self) -> Box<dyn Iterator<Item = reflection::Parameter<'a>> + 'a> {
         let params = vec![reflection::Parameter::new("value", &self.retval)];
         Box::new(params.into_iter())
     }
 }
 
 impl fmt::Display for BooleanPredicate {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", self.retval)
     }
 }

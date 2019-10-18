@@ -10,9 +10,9 @@
 
 use std::fmt;
 
-use reflection;
-use utils;
-use Predicate;
+use crate::reflection;
+use crate::utils;
+use crate::Predicate;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 enum EqOps {
@@ -21,7 +21,7 @@ enum EqOps {
 }
 
 impl fmt::Display for EqOps {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let op = match *self {
             EqOps::Equal => "==",
             EqOps::NotEqual => "!=",
@@ -81,7 +81,7 @@ impl<T> fmt::Display for EqPredicate<T>
 where
     T: fmt::Debug + PartialEq,
 {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "var {} {:?}", self.op, self.constant)
     }
 }
@@ -143,7 +143,7 @@ enum OrdOps {
 }
 
 impl fmt::Display for OrdOps {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let op = match *self {
             OrdOps::LessThan => "<",
             OrdOps::LessThanOrEqual => "<=",
@@ -209,7 +209,7 @@ impl<T> fmt::Display for OrdPredicate<T>
 where
     T: fmt::Debug + PartialOrd,
 {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "var {} {:?}", self.op, self.constant)
     }
 }

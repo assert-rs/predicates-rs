@@ -11,9 +11,9 @@ use std::fs;
 use std::io::{self, Read};
 use std::path;
 
-use reflection;
-use utils;
-use Predicate;
+use crate::reflection;
+use crate::utils;
+use crate::Predicate;
 
 fn read_file(path: &path::Path) -> io::Result<Vec<u8>> {
     let mut buffer = Vec::new();
@@ -81,14 +81,14 @@ impl Predicate<[u8]> for BinaryFilePredicate {
 }
 
 impl reflection::PredicateReflection for BinaryFilePredicate {
-    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+    fn parameters<'a>(&'a self) -> Box<dyn Iterator<Item = reflection::Parameter<'a>> + 'a> {
         let params = vec![reflection::Parameter::new("content", &self.content)];
         Box::new(params.into_iter())
     }
 }
 
 impl fmt::Display for BinaryFilePredicate {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "var is {}", self.path.display())
     }
 }
@@ -152,14 +152,14 @@ impl Predicate<str> for StrFilePredicate {
 }
 
 impl reflection::PredicateReflection for StrFilePredicate {
-    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+    fn parameters<'a>(&'a self) -> Box<dyn Iterator<Item = reflection::Parameter<'a>> + 'a> {
         let params = vec![reflection::Parameter::new("content", &self.content)];
         Box::new(params.into_iter())
     }
 }
 
 impl fmt::Display for StrFilePredicate {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "var is {}", self.path.display())
     }
 }

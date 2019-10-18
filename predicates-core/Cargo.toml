@@ -12,6 +12,7 @@ description = """
 An API for boolean-valued predicate functions.
 """
 categories = ["data-structures", "rust-patterns"]
+edition = "2018"
 
 [badges]
 azure-devops = { project = "assert-rs", pipeline = "predicates-rs" }
