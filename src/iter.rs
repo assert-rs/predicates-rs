@@ -13,9 +13,9 @@ use std::fmt;
 use std::hash::Hash;
 use std::iter::FromIterator;
 
-use reflection;
-use utils;
-use Predicate;
+use crate::reflection;
+use crate::utils;
+use crate::Predicate;
 
 /// Predicate that returns `true` if `variable` is a member of the pre-defined
 /// set, otherwise returns `false`.
@@ -100,7 +100,7 @@ impl<T> reflection::PredicateReflection for InPredicate<T>
 where
     T: PartialEq + fmt::Debug,
 {
-    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+    fn parameters<'a>(&'a self) -> Box<dyn Iterator<Item = reflection::Parameter<'a>> + 'a> {
         let params = vec![reflection::Parameter::new("values", &self.inner)];
         Box::new(params.into_iter())
     }
@@ -110,7 +110,7 @@ impl<T> fmt::Display for InPredicate<T>
 where
     T: PartialEq + fmt::Debug,
 {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "var in values")
     }
 }
@@ -201,7 +201,7 @@ impl<T> reflection::PredicateReflection for OrdInPredicate<T>
 where
     T: Ord + fmt::Debug,
 {
-    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+    fn parameters<'a>(&'a self) -> Box<dyn Iterator<Item = reflection::Parameter<'a>> + 'a> {
         let params = vec![reflection::Parameter::new("values", &self.inner)];
         Box::new(params.into_iter())
     }
@@ -211,7 +211,7 @@ impl<T> fmt::Display for OrdInPredicate<T>
 where
     T: Ord + fmt::Debug,
 {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "var in values")
     }
 }
@@ -263,7 +263,7 @@ impl<T> reflection::PredicateReflection for HashableInPredicate<T>
 where
     T: Hash + Eq + fmt::Debug,
 {
-    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+    fn parameters<'a>(&'a self) -> Box<dyn Iterator<Item = reflection::Parameter<'a>> + 'a> {
         let params = vec![reflection::Parameter::new("values", &self.inner)];
         Box::new(params.into_iter())
     }
@@ -273,7 +273,7 @@ impl<T> fmt::Display for HashableInPredicate<T>
 where
     T: Hash + Eq + fmt::Debug,
 {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "var in values")
     }
 }

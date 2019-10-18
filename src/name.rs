@@ -11,8 +11,8 @@
 use std::fmt;
 use std::marker::PhantomData;
 
-use reflection;
-use Predicate;
+use crate::reflection;
+use crate::Predicate;
 
 /// Augment an existing predicate with a name.
 ///
@@ -47,7 +47,7 @@ where
     M: Predicate<Item>,
     Item: ?Sized,
 {
-    fn children<'a>(&'a self) -> Box<Iterator<Item = reflection::Child<'a>> + 'a> {
+    fn children<'a>(&'a self) -> Box<dyn Iterator<Item = reflection::Child<'a>> + 'a> {
         let params = vec![reflection::Child::new(self.name, &self.inner)];
         Box::new(params.into_iter())
     }
@@ -58,7 +58,7 @@ where
     M: Predicate<Item>,
     Item: ?Sized,
 {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", self.name)
     }
 }

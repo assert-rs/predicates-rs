@@ -8,8 +8,8 @@
 
 use std::fmt;
 
-use reflection;
-use Predicate;
+use crate::reflection;
+use crate::Predicate;
 
 #[derive(Clone, PartialEq, Eq)]
 pub(crate) struct DebugAdapter<T>
@@ -32,7 +32,7 @@ impl<T> fmt::Display for DebugAdapter<T>
 where
     T: fmt::Debug,
 {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{:#?}", self.debug)
     }
 }
@@ -41,7 +41,7 @@ impl<T> fmt::Debug for DebugAdapter<T>
 where
     T: fmt::Debug,
 {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         self.debug.fmt(f)
     }
 }

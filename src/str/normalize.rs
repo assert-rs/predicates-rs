@@ -6,9 +6,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-use reflection;
+use crate::reflection;
 use std::fmt;
-use Predicate;
+use crate::Predicate;
 
 use normalize_line_endings::normalized;
 use std::iter::FromIterator;
@@ -28,7 +28,7 @@ impl<P> reflection::PredicateReflection for NormalizedPredicate<P>
 where
     P: Predicate<str>,
 {
-    fn children<'a>(&'a self) -> Box<Iterator<Item = reflection::Child<'a>> + 'a> {
+    fn children<'a>(&'a self) -> Box<dyn Iterator<Item = reflection::Child<'a>> + 'a> {
         let params = vec![reflection::Child::new("predicate", &self.p)];
         Box::new(params.into_iter())
     }
@@ -53,7 +53,7 @@ impl<P> fmt::Display for NormalizedPredicate<P>
 where
     P: Predicate<str>,
 {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", self.p)
     }
 }

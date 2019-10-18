@@ -11,8 +11,8 @@
 use std::fmt;
 use std::marker::PhantomData;
 
-use reflection;
-use Predicate;
+use crate::reflection;
+use crate::Predicate;
 
 /// Predicate that combines two `Predicate`s, returning the AND of the results.
 ///
@@ -81,7 +81,7 @@ where
     M2: Predicate<Item>,
     Item: ?Sized,
 {
-    fn children<'a>(&'a self) -> Box<Iterator<Item = reflection::Child<'a>> + 'a> {
+    fn children<'a>(&'a self) -> Box<dyn Iterator<Item = reflection::Child<'a>> + 'a> {
         let params = vec![
             reflection::Child::new("left", &self.a),
             reflection::Child::new("right", &self.b),
@@ -96,14 +96,14 @@ where
     M2: Predicate<Item>,
     Item: ?Sized,
 {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "({} && {})", self.a, self.b)
     }
 }
 
 #[cfg(test)]
 mod test_and {
-    use prelude::*;
+    use crate::prelude::*;
 
     #[test]
     fn find_case_true() {
@@ -237,7 +237,7 @@ where
     M2: Predicate<Item>,
     Item: ?Sized,
 {
-    fn children<'a>(&'a self) -> Box<Iterator<Item = reflection::Child<'a>> + 'a> {
+    fn children<'a>(&'a self) -> Box<dyn Iterator<Item = reflection::Child<'a>> + 'a> {
         let params = vec![
             reflection::Child::new("left", &self.a),
             reflection::Child::new("right", &self.b),
@@ -252,14 +252,14 @@ where
     M2: Predicate<Item>,
     Item: ?Sized,
 {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "({} || {})", self.a, self.b)
     }
 }
 
 #[cfg(test)]
 mod test_or {
-    use prelude::*;
+    use crate::prelude::*;
 
     #[test]
     fn find_case_true() {
@@ -374,7 +374,7 @@ where
     M: Predicate<Item>,
     Item: ?Sized,
 {
-    fn children<'a>(&'a self) -> Box<Iterator<Item = reflection::Child<'a>> + 'a> {
+    fn children<'a>(&'a self) -> Box<dyn Iterator<Item = reflection::Child<'a>> + 'a> {
         let params = vec![reflection::Child::new("predicate", &self.inner)];
         Box::new(params.into_iter())
     }
@@ -385,7 +385,7 @@ where
     M: Predicate<Item>,
     Item: ?Sized,
 {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "(! {})", self.inner)
     }
 }

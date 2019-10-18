@@ -12,6 +12,7 @@ description = """
 Render boolean-valued predicate functions results as a tree.
 """
 categories = ["data-structures", "rust-patterns"]
+edition = "2018"
 
 [badges]
 azure-devops = { project = "assert-rs", pipeline = "predicates-rs" }

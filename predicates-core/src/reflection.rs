@@ -15,13 +15,13 @@ use std::slice;
 /// Introspect the state of a `Predicate`.
 pub trait PredicateReflection: fmt::Display {
     /// Parameters of the current `Predicate`.
-    fn parameters<'a>(&'a self) -> Box<Iterator<Item = Parameter<'a>> + 'a> {
+    fn parameters<'a>(&'a self) -> Box<dyn Iterator<Item = Parameter<'a>> + 'a> {
         let params = vec![];
         Box::new(params.into_iter())
     }
 
     /// Nested `Predicate`s of the current `Predicate`.
-    fn children<'a>(&'a self) -> Box<Iterator<Item = Child<'a>> + 'a> {
+    fn children<'a>(&'a self) -> Box<dyn Iterator<Item = Child<'a>> + 'a> {
         let params = vec![];
         Box::new(params.into_iter())
     }
@@ -35,11 +35,11 @@ pub trait PredicateReflection: fmt::Display {
 /// let param = predicates_core::reflection::Parameter::new("key", &10);
 /// println!("{}", param);
 /// ```
-pub struct Parameter<'a>(&'a str, &'a fmt::Display);
+pub struct Parameter<'a>(&'a str, &'a dyn fmt::Display);
 
 impl<'a> Parameter<'a> {
     /// Create a new `Parameter`.
-    pub fn new(key: &'a str, value: &'a fmt::Display) -> Self {
+    pub fn new(key: &'a str, value: &'a dyn fmt::Display) -> Self {
         Self { 0: key, 1: value }
     }
 
@@ -49,29 +49,29 @@ impl<'a> Parameter<'a> {
     }
 
     /// Access the `Parameter` value.
-    pub fn value(&self) -> &fmt::Display {
+    pub fn value(&self) -> &dyn fmt::Display {
         self.1
     }
 }
 
 impl<'a> fmt::Display for Parameter<'a> {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}: {}", self.0, self.1)
     }
 }
 
 impl<'a> fmt::Debug for Parameter<'a> {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "({:?}, {})", self.0, self.1)
     }
 }
 
 /// A view of a `Predicate` child, provided by reflection.
-pub struct Child<'a>(&'a str, &'a PredicateReflection);
+pub struct Child<'a>(&'a str, &'a dyn PredicateReflection);
 
 impl<'a> Child<'a> {
     /// Create a new `Predicate` child.
-    pub fn new(key: &'a str, value: &'a PredicateReflection) -> Self {
+    pub fn new(key: &'a str, value: &'a dyn PredicateReflection) -> Self {
         Self { 0: key, 1: value }
     }
 
@@ -81,26 +81,26 @@ impl<'a> Child<'a> {
     }
 
     /// Access the `Child` `Predicate`.
-    pub fn value(&self) -> &PredicateReflection {
+    pub fn value(&self) -> &dyn PredicateReflection {
         self.1
     }
 }
 
 impl<'a> fmt::Display for Child<'a> {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}: {}", self.0, self.1)
     }
 }
 
 impl<'a> fmt::Debug for Child<'a> {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "({:?}, {})", self.0, self.1)
     }
 }
 
 /// A descriptive explanation for why a predicate failed.
 pub struct Case<'a> {
-    predicate: Option<&'a PredicateReflection>,
+    predicate: Option<&'a dyn PredicateReflection>,
     result: bool,
     products: Vec<Product>,
     children: Vec<Case<'a>>,
@@ -108,7 +108,7 @@ pub struct Case<'a> {
 
 impl<'a> Case<'a> {
     /// Create a new `Case` describing the result of a `Predicate`.
-    pub fn new(predicate: Option<&'a PredicateReflection>, result: bool) -> Self {
+    pub fn new(predicate: Option<&'a dyn PredicateReflection>, result: bool) -> Self {
         Self {
             predicate,
             result,
@@ -130,7 +130,7 @@ impl<'a> Case<'a> {
     }
 
     /// The `Predicate` that produced this case.
-    pub fn predicate(&self) -> Option<&PredicateReflection> {
+    pub fn predicate(&self) -> Option<&dyn PredicateReflection> {
         self.predicate
     }
 
@@ -140,14 +140,14 @@ impl<'a> Case<'a> {
     }
 
     /// Access the by-products from determining this case.
-    pub fn products(&self) -> CaseProducts {
+    pub fn products(&self) -> CaseProducts<'_> {
         CaseProducts {
             0: self.products.iter(),
         }
     }
 
     /// Access the sub-cases.
-    pub fn children(&self) -> CaseChildren {
+    pub fn children(&self) -> CaseChildren<'_> {
         CaseChildren {
             0: self.children.iter(),
         }
@@ -155,7 +155,7 @@ impl<'a> Case<'a> {
 }
 
 impl<'a> fmt::Debug for Case<'a> {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let predicate = if let Some(ref predicate) = self.predicate {
             format!("Some({})", predicate)
         } else {
@@ -220,7 +220,7 @@ impl<'a> Iterator for CaseChildren<'a> {
 /// let product = predicates_core::reflection::Product::new(format!("key-{}", 5), 30);
 /// println!("{}", product);
 /// ```
-pub struct Product(borrow::Cow<'static, str>, Box<fmt::Display>);
+pub struct Product(borrow::Cow<'static, str>, Box<dyn fmt::Display>);
 
 impl Product {
     /// Create a new `Product`.
@@ -241,19 +241,19 @@ impl Product {
     }
 
     /// Access the `Product` value.
-    pub fn value(&self) -> &fmt::Display {
+    pub fn value(&self) -> &dyn fmt::Display {
         &self.1
     }
 }
 
 impl<'a> fmt::Display for Product {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}: {}", self.0, self.1)
     }
 }
 
 impl<'a> fmt::Debug for Product {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "({:?}, {})", self.0, self.1)
     }
 }

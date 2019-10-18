@@ -203,22 +203,11 @@
 
 #![warn(missing_docs, missing_debug_implementations)]
 
-extern crate predicates_core;
-
-#[cfg(feature = "difference")]
-extern crate difference;
-#[cfg(feature = "float-cmp")]
-extern crate float_cmp;
-#[cfg(feature = "normalize-line-endings")]
-extern crate normalize_line_endings;
-#[cfg(feature = "regex")]
-extern crate regex;
-
 pub mod prelude;
 
 pub use predicates_core::*;
 mod boxed;
-pub use boxed::*;
+pub use crate::boxed::*;
 
 // core predicates
 pub mod constant;

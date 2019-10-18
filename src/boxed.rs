@@ -11,13 +11,13 @@
 
 use std::fmt;
 
-use reflection;
-use utils;
-use Predicate;
+use crate::reflection;
+use crate::utils;
+use crate::Predicate;
 
 /// `Predicate` that wraps another `Predicate` as a trait object, allowing
 /// sized storage of predicate types.
-pub struct BoxPredicate<Item: ?Sized>(Box<Predicate<Item> + Send + Sync>);
+pub struct BoxPredicate<Item: ?Sized>(Box<dyn Predicate<Item> + Send + Sync>);
 
 impl<Item> BoxPredicate<Item>
 where
@@ -37,7 +37,7 @@ impl<Item> fmt::Debug for BoxPredicate<Item>
 where
     Item: ?Sized,
 {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.debug_struct("BoxPredicate").finish()
     }
 }
@@ -46,11 +46,11 @@ impl<Item> reflection::PredicateReflection for BoxPredicate<Item>
 where
     Item: ?Sized,
 {
-    fn parameters<'a>(&'a self) -> Box<Iterator<Item = reflection::Parameter<'a>> + 'a> {
+    fn parameters<'a>(&'a self) -> Box<dyn Iterator<Item = reflection::Parameter<'a>> + 'a> {
         self.0.parameters()
     }
 
-    fn children<'a>(&'a self) -> Box<Iterator<Item = reflection::Child<'a>> + 'a> {
+    fn children<'a>(&'a self) -> Box<dyn Iterator<Item = reflection::Child<'a>> + 'a> {
         self.0.children()
     }
 }
@@ -59,7 +59,7 @@ impl<Item> fmt::Display for BoxPredicate<Item>
 where
     Item: ?Sized,
 {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", self.0)
     }
 }

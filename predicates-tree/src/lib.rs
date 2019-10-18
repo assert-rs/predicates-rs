@@ -8,10 +8,9 @@
 
 //! Render `Case` as a tree.
 
-extern crate predicates_core;
-extern crate treeline;
-
 use std::fmt;
+
+use treeline;
 
 use predicates_core::reflection;
 
@@ -27,20 +26,20 @@ impl<'a> CaseTreeExt for reflection::Case<'a> {
     }
 }
 
-type CaseTreeInner = treeline::Tree<Box<fmt::Display>>;
+type CaseTreeInner = treeline::Tree<Box<dyn fmt::Display>>;
 
 fn convert<'a>(case: &reflection::Case<'a>) -> CaseTreeInner {
     let mut leaves: Vec<CaseTreeInner> = vec![];
 
     leaves.extend(case.predicate().iter().flat_map(|pred| {
         pred.parameters().map(|item| {
-            let root: Box<fmt::Display> = Box::new(item.to_string());
+            let root: Box<dyn fmt::Display> = Box::new(item.to_string());
             treeline::Tree::new(root, vec![])
         })
     }));
 
     leaves.extend(case.products().map(|item| {
-        let root: Box<fmt::Display> = Box::new(item.to_string());
+        let root: Box<dyn fmt::Display> = Box::new(item.to_string());
         treeline::Tree::new(root, vec![])
     }));
 
@@ -55,7 +54,7 @@ fn convert<'a>(case: &reflection::Case<'a>) -> CaseTreeInner {
 pub struct CaseTree(CaseTreeInner);
 
 impl fmt::Display for CaseTree {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         self.0.fmt(f)
     }
 }

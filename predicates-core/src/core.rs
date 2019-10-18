@@ -6,7 +6,7 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-use reflection;
+use crate::reflection;
 
 /// Trait for generically evaluating a type against a dynamically created
 /// predicate function.

@@ -10,10 +10,10 @@ use std::ffi;
 use std::fmt;
 use std::str;
 
-use reflection;
+use crate::reflection;
 #[cfg(feature = "normalize-line-endings")]
-use str::normalize::NormalizedPredicate;
-use Predicate;
+use crate::str::normalize::NormalizedPredicate;
+use crate::Predicate;
 
 /// Predicate adaper that trims the variable being tested.
 ///
@@ -43,7 +43,7 @@ impl<P> reflection::PredicateReflection for TrimPredicate<P>
 where
     P: Predicate<str>,
 {
-    fn children<'a>(&'a self) -> Box<Iterator<Item = reflection::Child<'a>> + 'a> {
+    fn children<'a>(&'a self) -> Box<dyn Iterator<Item = reflection::Child<'a>> + 'a> {
         let params = vec![reflection::Child::new("predicate", &self.p)];
         Box::new(params.into_iter())
     }
@@ -53,7 +53,7 @@ impl<P> fmt::Display for TrimPredicate<P>
 where
     P: Predicate<str>,
 {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", self.p)
     }
 }
@@ -125,7 +125,7 @@ impl<P> reflection::PredicateReflection for Utf8Predicate<P>
 where
     P: Predicate<str>,
 {
-    fn children<'a>(&'a self) -> Box<Iterator<Item = reflection::Child<'a>> + 'a> {
+    fn children<'a>(&'a self) -> Box<dyn Iterator<Item = reflection::Child<'a>> + 'a> {
         let params = vec![reflection::Child::new("predicate", &self.p)];
         Box::new(params.into_iter())
     }
@@ -135,7 +135,7 @@ impl<P> fmt::Display for Utf8Predicate<P>
 where
     P: Predicate<str>,
 {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", self.p)
     }
 }

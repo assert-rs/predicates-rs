@@ -1,6 +1,3 @@
-extern crate predicates;
-extern crate predicates_tree;
-
 use predicates::prelude::*;
 use predicates_tree::CaseTreeExt;
 
