@@ -7,8 +7,8 @@
 // except according to those terms.
 
 use crate::reflection;
-use std::fmt;
 use crate::Predicate;
+use std::fmt;
 
 use normalize_line_endings::normalized;
 use std::iter::FromIterator;
