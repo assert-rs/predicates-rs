@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - Unreleased
+### Fixed
+- `BooleanPredicate` now implements `Predicate<T>` where `T: ?Sized`
+  ([#84](https://github.com/assert-rs/predicates-rs/pull/84))
 
 ## [1.0.1] - 2019-04-22
 ### Changed
