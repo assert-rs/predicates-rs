@@ -4,7 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] - Unreleased
+<!-- next-header -->
+## [Unreleased] - ReleaseDate
 ### Fixed
 - `BooleanPredicate` now implements `Predicate<T>` where `T: ?Sized`
   ([#84](https://github.com/assert-rs/predicates-rs/pull/84))
@@ -112,6 +113,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Continuous integration with Travis (Linux) and AppVeyor (Windows)
 - Basic README
 
+<!-- next-url -->
 [Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v1.0.1...HEAD
 [1.0.1]: https://github.com/assert-rs/predicates-rs/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/assert-rs/predicates-rs/compare/v0.9.1...v1.0.0
