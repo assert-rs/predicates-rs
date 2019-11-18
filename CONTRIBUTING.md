@@ -55,16 +55,10 @@ As a heads up, we'll be running your PR through the following gauntlet:
 
 ## Releasing
 
+
 When we're ready to release, a project owner should do the following
-- Determine what the next version is, according to semver
-- Bump version in a commit
-  - Update CHANGELOG.md
-  - Update the version in `Cargo.toml`
-  - Update the dependency version in `src/lib.rs`
-  - Update the dependency version in `README.md`
-- Tag the commit via `git tag -am "v<X>.<Y>.<Z>" v<X>.<Y>.<Z>`
-- `git push upstream master --tag v<X>.<Y>.<Z>`
-- Run `cargo publish` (run `cargo login` first if needed)
+- Run `cargo release --push-remote upstream --dry-run -vv patch` to verify changes
+- Run `cargo release --push-remote upstream patch` to apply changes
 
 [issues]: https://github.com/assert-rs/predicates-rs/issues
 [new issue]: https://github.com/assert-rs/predicates-rs/issues/new

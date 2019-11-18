@@ -3,6 +3,8 @@ no-dev-version = true
 tag-message = "{{prefix}}v{{version}}"
 tag-name = "{{prefix}}v{{version}}"
 pre-release-replacements = [
+  {file="README.md", search="predicates = .*", replace="predicates = \"{{version}}\""},
+  {file="src/lib.rs", search="predicates = .*", replace="predicates = \"{{version}}\""},
   {file="CHANGELOG.md", search="Unreleased", replace="{{version}}"},
   {file="CHANGELOG.md", search="\\.\\.\\.HEAD", replace="...{{tag_name}}"},
   {file="CHANGELOG.md", search="ReleaseDate", replace="{{date}}"},
