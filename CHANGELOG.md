@@ -5,7 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 <!-- next-header -->
+
 ## [Unreleased] - ReleaseDate
+
 ## [1.0.2] - 2019-11-18
 ### Fixed
 - `BooleanPredicate` now implements `Predicate<T>` where `T: ?Sized`
