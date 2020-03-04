@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 <!-- next-header -->
 ## [Unreleased] - ReleaseDate
+### Fixed
+
+- Upgrade normalize-line-endings
 
 ## [1.0.3] - 2020-02-25
 
