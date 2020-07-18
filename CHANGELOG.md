@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 <!-- next-header -->
 ## [Unreleased] - ReleaseDate
+
+### Fixed
+
+- Update float-cmp dependency
+
 ## [1.0.4] - 2020-03-04
 ### Fixed
 
