@@ -38,7 +38,9 @@ where
     }
 
     fn find_case<'a>(&'a self, expected: bool, variable: &Item) -> Option<reflection::Case<'a>> {
-        self.inner.find_case(expected, variable)
+        self.inner
+            .find_case(expected, variable)
+            .map(|child_case| reflection::Case::new(Some(self), expected).add_child(child_case))
     }
 }
 

@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 <!-- next-header -->
 ## [Unreleased] - ReleaseDate
+
+### Fixed
+- `NamePredicate` now adds itself to the `Case` returned by `find_case`.
+
 ## [1.0.5] - 2020-07-18
 
 ### Fixed
