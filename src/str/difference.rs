@@ -9,8 +9,6 @@
 use std::borrow;
 use std::fmt;
 
-use difference;
-
 use crate::reflection;
 use crate::Predicate;
 

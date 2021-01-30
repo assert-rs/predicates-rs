@@ -8,8 +8,6 @@
 
 use std::fmt;
 
-use regex;
-
 use crate::reflection;
 use crate::utils;
 use crate::Predicate;

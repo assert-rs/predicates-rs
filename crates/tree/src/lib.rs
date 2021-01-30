@@ -10,8 +10,6 @@
 
 use std::fmt;
 
-use treeline;
-
 use predicates_core::reflection;
 
 /// Render `Self` as a displayable tree.
@@ -28,7 +26,7 @@ impl<'a> CaseTreeExt for reflection::Case<'a> {
 
 type CaseTreeInner = treeline::Tree<Box<dyn fmt::Display>>;
 
-fn convert<'a>(case: &reflection::Case<'a>) -> CaseTreeInner {
+fn convert(case: &reflection::Case<'_>) -> CaseTreeInner {
     let mut leaves: Vec<CaseTreeInner> = vec![];
 
     leaves.extend(case.predicate().iter().flat_map(|pred| {
