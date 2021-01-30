@@ -18,5 +18,5 @@ edition = "2018"
 azure-devops = { project = "assert-rs", pipeline = "predicates-rs" }
 
 [dependencies]
-predicates-core = { version = "1.0", path = "../predicates-core" }
+predicates-core = { version = "1.0", path = "../core" }
 treeline = "0.1"
