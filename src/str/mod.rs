@@ -19,6 +19,12 @@ pub use self::adapters::*;
 mod difference;
 #[cfg(feature = "difference")]
 pub use self::difference::{diff, similar, DifferencePredicate};
+
+#[cfg(feature = "dissimilar")]
+mod dissimilar;
+#[cfg(feature = "dissimilar")]
+pub use self::dissimilar::{diff2, similar2, DissimilarPredicate};
+
 #[cfg(feature = "normalize-line-endings")]
 mod normalize;
 #[cfg(feature = "normalize-line-endings")]
