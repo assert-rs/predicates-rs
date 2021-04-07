@@ -56,6 +56,20 @@ impl DissimilarPredicate {
         self.distance = distance;
         self
     }
+
+    fn diff(&self, chunks: &Vec<dissimilar::Chunk<'_>>) -> String {
+        use std::fmt::Write;
+        let mut f = String::with_capacity(chunks.len());
+        for c in chunks {
+            match *c {
+                dissimilar::Chunk::Equal(ref s) => write!(f, "{}", s),
+                dissimilar::Chunk::Delete(ref s) => write!(f, "\x1b[92m{}\x1b[0m", s),
+                dissimilar::Chunk::Insert(ref s) => write!(f, "\x1b[91m{}\x1b[0m", s),
+            }
+            .expect("write to String")
+        }
+        f
+    }
 }
 
 fn distance(chunks: &Vec<dissimilar::Chunk>) -> i32 {
@@ -80,50 +94,11 @@ impl Predicate<str> for DissimilarPredicate {
             Some(
                 reflection::Case::new(Some(self), result)
                     .add_product(reflection::Product::new("distance", distance))
-                    .add_product(reflection::Product::new(
-                        "chunks",
-                        DissimilarChanges::from(&chunks),
-                    )),
+                    .add_product(reflection::Product::new("diff", self.diff(&chunks))),
             )
         } else {
             None
         }
-    }
-}
-
-enum DissimilarOwnedChunk {
-    Equal(String),
-    Delete(String),
-    Insert(String),
-}
-struct DissimilarChanges {
-    chunks: Vec<DissimilarOwnedChunk>,
-}
-impl From<&Vec<dissimilar::Chunk<'_>>> for DissimilarChanges {
-    fn from(v: &Vec<dissimilar::Chunk<'_>>) -> Self {
-        let chunks = v
-            .iter()
-            .map(|c| match c {
-                dissimilar::Chunk::Equal(s) => DissimilarOwnedChunk::Equal(s.to_string()),
-                dissimilar::Chunk::Delete(s) => DissimilarOwnedChunk::Delete(s.to_string()),
-                dissimilar::Chunk::Insert(s) => DissimilarOwnedChunk::Insert(s.to_string()),
-            })
-            .collect();
-        Self { chunks }
-    }
-}
-
-impl fmt::Display for DissimilarChanges {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        use DissimilarOwnedChunk::*;
-        for d in &self.chunks {
-            match *d {
-                Equal(ref x) => write!(f, "{}", x)?,
-                Delete(ref x) => write!(f, "\x1b[92m{}\x1b[0m", x)?,
-                Insert(ref x) => write!(f, "\x1b[91m{}\x1b[0m", x)?,
-            }
-        }
-        Ok(())
     }
 }
 
