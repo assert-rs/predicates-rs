@@ -36,6 +36,9 @@ pub mod predicate {
         #[cfg(feature = "dissimilar")]
         pub use crate::str::{diff2, similar2};
 
+        #[cfg(feature = "similar")]
+        pub use crate::str::{diff3, similar3};
+
         #[cfg(feature = "regex")]
         pub use crate::str::is_match;
     }

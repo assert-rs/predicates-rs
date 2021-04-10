@@ -25,6 +25,11 @@ mod dissimilar;
 #[cfg(feature = "dissimilar")]
 pub use self::dissimilar::{diff2, similar2, DissimilarPredicate};
 
+#[cfg(feature = "similar")]
+mod similar;
+#[cfg(feature = "similar")]
+pub use self::similar::{diff3, similar3, SimilarPredicate};
+
 #[cfg(feature = "normalize-line-endings")]
 mod normalize;
 #[cfg(feature = "normalize-line-endings")]
