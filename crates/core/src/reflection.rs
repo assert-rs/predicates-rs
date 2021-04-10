@@ -146,6 +146,14 @@ impl<'a> Case<'a> {
         }
     }
 
+    /// Get the Stringified value of the first by-product with that name.
+    pub fn product_value(&self, name: &str) -> Option<String> {
+        self.products
+            .iter()
+            .find(|p| p.name() == name)
+            .map(|p| format!("{}", p.value()))
+    }
+
     /// Access the sub-cases.
     pub fn children(&self) -> CaseChildren<'_> {
         CaseChildren {
