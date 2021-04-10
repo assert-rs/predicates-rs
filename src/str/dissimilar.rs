@@ -125,7 +125,7 @@ impl fmt::Display for DissimilarPredicate {
 /// ```
 /// use predicates::prelude::*;
 ///
-/// let predicate_fn = predicate::str::diff("Hello World");
+/// let predicate_fn = predicate::str::diff2("Hello World");
 /// assert_eq!(false, predicate_fn.eval("Hello World"));
 /// assert_eq!(true, predicate_fn.eval("Goodbye World"));
 /// ```
@@ -147,7 +147,7 @@ where
 /// ```
 /// use predicates::prelude::*;
 ///
-/// let predicate_fn = predicate::str::similar("Hello World");
+/// let predicate_fn = predicate::str::similar2("Hello World");
 /// assert_eq!(true, predicate_fn.eval("Hello World"));
 /// assert_eq!(false, predicate_fn.eval("Goodbye World"));
 /// ```
