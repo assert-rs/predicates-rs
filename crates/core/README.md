@@ -7,7 +7,7 @@
 ![License](https://img.shields.io/crates/l/predicates-core.svg)
 [![Crates.io](https://img.shields.io/crates/v/predicates-core.svg?maxAge=2592000)](https://crates.io/crates/predicates-core)
 
-[Changelog](https://github.com/assert-rs/predicates-rs/blob/master/predicates-core/CHANGELOG.md)
+[Changelog](https://github.com/assert-rs/predicates-rs/blob/master/crates/core/CHANGELOG.md)
 
 
 ## License
