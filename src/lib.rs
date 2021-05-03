@@ -131,7 +131,7 @@
 //! Combinators
 //! - [`pred_a.and(pred_b)`]: Both predicates must succeed.
 //! - [`pred_a.or(pred_b)`]: One or both predicates must succeed.
-//! - [`pred_a.not())`]: The predicate must fail.
+//! - [`pred_a.not()`]: The predicate must fail.
 //!
 //! `String` predicates
 //! - [`predicate::str::is_empty`]: Specified string must be empty
