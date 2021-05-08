@@ -29,7 +29,7 @@ impl DistanceOp {
 
 /// Predicate that diffs two strings.
 ///
-/// This is created by the `predicate::str::similar`.
+/// This is created by [predicate::str::similar2] or [predicate::str::diff2].
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct DissimilarPredicate {
     orig: borrow::Cow<'static, str>,
@@ -38,6 +38,19 @@ pub struct DissimilarPredicate {
 }
 
 impl DissimilarPredicate {
+    /// The split used when identifying changes.
+    ///
+    /// # Deprecated
+    ///
+    /// No longer has any effect. The diff algorithm should find the best split automatically.
+    #[deprecated(since="1.1.0" note="No longer needed, diff algorithm should find the best split")]
+    pub fn split<S>(mut self, split: S) -> Self
+    where
+        S: Into<borrow::Cow<'static, str>>,
+    {
+        self
+    }
+
     /// The maximum allowed edit distance.
     ///
     /// Default: `0`
