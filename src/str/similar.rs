@@ -67,13 +67,20 @@ impl SimilarPredicate {
 
     fn diff(&self, chunks: &Vec<similar::DiffOp>) -> String {
         use std::fmt::Write;
+
         let mut f = String::with_capacity(chunks.len());
         for c in chunks {
             match *c {
-                similar::DiffOp::Equal{old_index, ..} => write!(f, "{}", old_index),
-                similar::DiffOp::Delete{old_index, ..} => write!(f, "\x1b[92m{}\x1b[0m", old_index),
-                similar::DiffOp::Insert{old_index, ..} => write!(f, "\x1b[91m{}\x1b[0m", old_index),
-                similar::DiffOp::Replace{old_index, ..} => write!(f, "\x1b[91m{}\x1b[0m", old_index),
+                Equal { old_index, len, .. } => write!(f, "{}", &old[old_index..old_index + len]),
+                Delete {
+                    old_index, old_len, ..
+                } => write!(f, "\x1b[92m{}\x1b[0m", &old[old_index..old_index + old_len]),
+                Insert {
+                    new_index, new_len, ..
+                } => write!(f, "\x1b[91m{}\x1b[0m", &new[new_index..new_index + new_len]),
+                Replace {
+                    new_index, new_len, ..
+                } => write!(f, "\x1b[95m{}\x1b[0m", &new[new_index..new_index + new_len]),
             }
             .expect("write to String")
         }
@@ -105,7 +112,10 @@ impl Predicate<str> for SimilarPredicate {
             Some(
                 reflection::Case::new(Some(self), result)
                     .add_product(reflection::Product::new("distance", distance))
-                    .add_product(reflection::Product::new("diff", self.diff(&chunks))),
+                    .add_product(reflection::Product::new(
+                        "diff",
+                        self.diff(&self.old, new, &chunks),
+                    )),
             )
         } else {
             None
@@ -135,10 +145,14 @@ impl fmt::Display for SimilarPredicate {
 ///
 /// ```
 /// use predicates::prelude::*;
+/// use predicates::str::diff3;
 ///
-/// let predicate_fn = predicate::str::diff3("Hello World");
-/// assert_eq!(false, predicate_fn.eval("Hello World"));
-/// assert_eq!(true, predicate_fn.eval("Goodbye World"));
+/// let predicate = diff3("Hello World");
+/// assert_eq!(false, predicate.eval("Hello World"));
+/// assert_eq!(true, predicate.eval("Goodbye World"));
+///
+/// let diff = predicate.find_case(true, "Goodbye World!").unwrap().product_value("diff").unwrap();
+/// assert_eq!("\x1b[95mGo\x1b[0mo\x1b[91mdbye\x1b[0m World\x1b[91m!\x1b[0m", &diff);
 /// ```
 pub fn diff3<S>(old: S) -> SimilarPredicate
 where
@@ -153,10 +167,14 @@ where
 ///
 /// ```
 /// use predicates::prelude::*;
+/// use predicates::str::similar3;
 ///
-/// let predicate_fn = predicate::str::similar3("Hello World");
-/// assert_eq!(true, predicate_fn.eval("Hello World"));
-/// assert_eq!(false, predicate_fn.eval("Goodbye World"));
+/// let predicate = predicate::str::similar3("Hello World");
+/// assert_eq!(true, predicate.eval("Hello World"));
+/// assert_eq!(false, predicate.eval("Goodbye World"));
+///
+/// let diff = predicate.find_case(false, "Goodbye World!").unwrap().product_value("diff").unwrap();
+/// assert_eq!("\x1b[95mGo\x1b[0mo\x1b[91mdbye\x1b[0m World\x1b[91m!\x1b[0m", &diff);
 /// ```
 pub fn similar3<S>(old: S) -> SimilarPredicate
 where
