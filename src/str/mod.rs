@@ -15,10 +15,10 @@ pub use self::basics::*;
 mod adapters;
 pub use self::adapters::*;
 
-#[cfg(feature = "difference")]
+#[cfg(feature = "diff")]
 mod difference;
-#[cfg(feature = "difference")]
-pub use self::difference::{diff, similar, DifferencePredicate};
+#[cfg(feature = "diff")]
+pub use self::difference::{diff, DifferencePredicate};
 #[cfg(feature = "normalize-line-endings")]
 mod normalize;
 #[cfg(feature = "normalize-line-endings")]

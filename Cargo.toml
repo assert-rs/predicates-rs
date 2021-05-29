@@ -22,14 +22,16 @@ azure-devops = { project = "assert-rs", pipeline = "predicates-rs" }
 
 [dependencies]
 predicates-core = { version = "1.0", path = "crates/core" }
-difference = { version = "2.0", optional = true }
+difflib = { version = "0.4", optional = true }
 normalize-line-endings = { version = "0.3.0", optional = true }
 regex = { version="1.0", optional = true }
 float-cmp = { version="0.8", optional = true }
+itertools = "0.10"
 
 [dev-dependencies]
 predicates-tree = { version = "1.0", path = "crates/tree" }
 
 [features]
-default = ["difference", "regex", "float-cmp", "normalize-line-endings"]
+default = ["diff", "regex", "float-cmp", "normalize-line-endings"]
+diff = ["difflib"]
 unstable = []
