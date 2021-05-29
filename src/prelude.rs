@@ -30,8 +30,8 @@ pub mod predicate {
         pub use crate::str::is_empty;
         pub use crate::str::{contains, ends_with, starts_with};
 
-        #[cfg(feature = "difference")]
-        pub use crate::str::{diff, similar};
+        #[cfg(feature = "diff")]
+        pub use crate::str::diff;
 
         #[cfg(feature = "regex")]
         pub use crate::str::is_match;

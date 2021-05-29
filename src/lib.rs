@@ -137,9 +137,8 @@
 //! - [`predicate::str::is_empty`]: Specified string must be empty
 //! - [`str_pred = predicate::path::eq_file(...).utf8`]: Specified string must equal the contents
 //!   of the given file.
-//! - [`predicate::str::similar`]: Same as `eq` except report a diff.  See [`DifferencePredicate`]
+//! - [`predicate::str::diff`]: Same as `eq` except report a diff.  See [`DifferencePredicate`]
 //!   for more features.
-//! - [`predicate::str::diff`]: Same as `ne`.  See [`DifferencePredicate`] for more features.
 //! - [`predicate::str::starts_with`]: Specified string must start with the given needle.
 //! - [`predicate::str::ends_with`]: Specified string must end with the given needle.
 //! - [`predicate::str::contains`]: Specified string must contain the given needle.
@@ -194,7 +193,6 @@
 //! [`predicate::str::is_empty`]: prelude::predicate::str::is_empty()
 //! [`predicate::str::is_match(...).count`]: str::RegexPredicate::count()
 //! [`predicate::str::is_match`]: prelude::predicate::str::is_match()
-//! [`predicate::str::similar`]: prelude::predicate::str::similar()
 //! [`predicate::str::starts_with`]: prelude::predicate::str::starts_with()
 //! [`str_pred = predicate::path::eq_file(...).utf8`]: path::BinaryFilePredicate::utf8()
 //! [`str_pred.normalize`]: prelude::PredicateStrExt::normalize()
