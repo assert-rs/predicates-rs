@@ -6,7 +6,3 @@ updates:
     interval: monthly
     time: "07:00"
   open-pull-requests-limit: 10
-  ignore:
-  - dependency-name: normalize-line-endings
-    versions:
-    - "< 0.4, >= 0.3.a"
