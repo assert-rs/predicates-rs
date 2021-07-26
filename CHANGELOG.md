@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- next-header -->
 ## [Unreleased] - ReleaseDate
 
+## [2.0.1] - 2021-07-26
+
 ### Changed
 
 - Upgraded `float-cmp`
@@ -156,7 +158,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Basic README
 
 <!-- next-url -->
-[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v2.0.1...HEAD
+[2.0.1]: https://github.com/assert-rs/predicates-rs/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/assert-rs/predicates-rs/compare/v1.0.8...v2.0.0
 [1.0.8]: https://github.com/assert-rs/predicates-rs/compare/v1.0.7...v1.0.8
 [1.0.7]: https://github.com/assert-rs/predicates-rs/compare/v1.0.6...v1.0.7
