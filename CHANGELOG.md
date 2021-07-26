@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- next-header -->
 ## [Unreleased] - ReleaseDate
 
+### Changed
+
+- Upgraded `float-cmp`
+
 ## [2.0.0] - 2021-07-03
 
 #### Breaking Changes
