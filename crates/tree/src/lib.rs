@@ -24,20 +24,20 @@ impl<'a> CaseTreeExt for reflection::Case<'a> {
     }
 }
 
-type CaseTreeInner = treeline::Tree<Box<dyn fmt::Display>>;
+type CaseTreeInner = treeline::Tree<Box<dyn fmt::Display + Send + Sync>>;
 
 fn convert(case: &reflection::Case<'_>) -> CaseTreeInner {
     let mut leaves: Vec<CaseTreeInner> = vec![];
 
     leaves.extend(case.predicate().iter().flat_map(|pred| {
         pred.parameters().map(|item| {
-            let root: Box<dyn fmt::Display> = Box::new(item.to_string());
+            let root: Box<dyn fmt::Display + Send + Sync> = Box::new(item.to_string());
             treeline::Tree::new(root, vec![])
         })
     }));
 
     leaves.extend(case.products().map(|item| {
-        let root: Box<dyn fmt::Display> = Box::new(item.to_string());
+        let root: Box<dyn fmt::Display + Send + Sync> = Box::new(item.to_string());
         treeline::Tree::new(root, vec![])
     }));
 
