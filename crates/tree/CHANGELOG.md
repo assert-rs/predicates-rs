@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased] - Unreleased
 
+### Fixes
+
+- Make `CaseTree` be `Send+Sync`
+
 ## [0.9.0] - 2018-07-30
 ### Added
 - Support for rendering a predicate as a tree.
