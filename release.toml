@@ -1,7 +1,9 @@
-pre-release-commit-message = "chore({{crate_name}}): Release {{version}}"
+pre-release-commit-message = "chore: Release"
 no-dev-version = true
 tag-message = "{{tag_name}}"
 tag-name = "{{prefix}}v{{version}}"
+consolidate-commits = true
+consolidate-pushes = true
 pre-release-replacements = [
   {file="src/lib.rs", search="predicates = \".*\"", replace="predicates = \"{{version}}\"", exactly=1},
   {file="README.md", search="predicates = \".*\"", replace="predicates = \"{{version}}\"", exactly=1},
