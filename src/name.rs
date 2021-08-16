@@ -28,6 +28,20 @@ where
     _phantom: PhantomData<Item>,
 }
 
+unsafe impl<M, Item> Send for NamePredicate<M, Item>
+where
+    M: Predicate<Item> + Send,
+    Item: ?Sized,
+{
+}
+
+unsafe impl<M, Item> Sync for NamePredicate<M, Item>
+where
+    M: Predicate<Item> + Sync,
+    Item: ?Sized,
+{
+}
+
 impl<M, Item> Predicate<Item> for NamePredicate<M, Item>
 where
     M: Predicate<Item>,

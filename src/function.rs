@@ -28,6 +28,20 @@ where
     _phantom: PhantomData<T>,
 }
 
+unsafe impl<F, T> Send for FnPredicate<F, T>
+where
+    F: Send + Fn(&T) -> bool,
+    T: ?Sized,
+{
+}
+
+unsafe impl<F, T> Sync for FnPredicate<F, T>
+where
+    F: Sync + Fn(&T) -> bool,
+    T: ?Sized,
+{
+}
+
 impl<F, T> FnPredicate<F, T>
 where
     F: Fn(&T) -> bool,

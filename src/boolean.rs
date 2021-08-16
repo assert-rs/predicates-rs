@@ -29,6 +29,22 @@ where
     _phantom: PhantomData<Item>,
 }
 
+unsafe impl<M1, M2, Item> Send for AndPredicate<M1, M2, Item>
+where
+    M1: Predicate<Item> + Send,
+    M2: Predicate<Item> + Send,
+    Item: ?Sized,
+{
+}
+
+unsafe impl<M1, M2, Item> Sync for AndPredicate<M1, M2, Item>
+where
+    M1: Predicate<Item> + Sync,
+    M2: Predicate<Item> + Sync,
+    Item: ?Sized,
+{
+}
+
 impl<M1, M2, Item> AndPredicate<M1, M2, Item>
 where
     M1: Predicate<Item>,
@@ -185,6 +201,22 @@ where
     _phantom: PhantomData<Item>,
 }
 
+unsafe impl<M1, M2, Item> Send for OrPredicate<M1, M2, Item>
+where
+    M1: Predicate<Item> + Send,
+    M2: Predicate<Item> + Send,
+    Item: ?Sized,
+{
+}
+
+unsafe impl<M1, M2, Item> Sync for OrPredicate<M1, M2, Item>
+where
+    M1: Predicate<Item> + Sync,
+    M2: Predicate<Item> + Sync,
+    Item: ?Sized,
+{
+}
+
 impl<M1, M2, Item> OrPredicate<M1, M2, Item>
 where
     M1: Predicate<Item>,
@@ -337,6 +369,20 @@ where
 {
     inner: M,
     _phantom: PhantomData<Item>,
+}
+
+unsafe impl<M, Item> Send for NotPredicate<M, Item>
+where
+    M: Predicate<Item> + Send,
+    Item: ?Sized,
+{
+}
+
+unsafe impl<M, Item> Sync for NotPredicate<M, Item>
+where
+    M: Predicate<Item> + Sync,
+    Item: ?Sized,
+{
 }
 
 impl<M, Item> NotPredicate<M, Item>
