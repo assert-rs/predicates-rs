@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- next-header -->
 ## [Unreleased] - ReleaseDate
 
+### Added
+
+- All predicates now implement `Send` and `Sync` when it's appropriate
+
 ## [2.0.1] - 2021-07-26
 
 ### Changed
