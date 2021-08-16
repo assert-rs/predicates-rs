@@ -4,21 +4,27 @@ members = ["crates/core", "crates/tree"]
 [package]
 name = "predicates"
 version = "2.0.2"
+description = "An implementation of boolean-valued predicate functions."
 authors = ["Nick Stevens <nick@bitcurry.com>"]
-license = "MIT/Apache-2.0"
-readme = "README.md"
-keywords = ["predicate", "boolean", "combinatorial", "match", "logic"]
+license = "MIT OR Apache-2.0"
 repository = "https://github.com/assert-rs/predicates-rs"
 homepage = "https://github.com/assert-rs/predicates-rs"
 documentation = "https://docs.rs/predicates"
-description = """
-An implementation of boolean-valued predicate functions.
-"""
+readme = "README.md"
 categories = ["data-structures", "rust-patterns"]
+keywords = ["predicate", "boolean", "combinatorial", "match", "logic"]
 edition = "2018"
 
-[badges]
-azure-devops = { project = "assert-rs", pipeline = "predicates-rs" }
+[package.metadata.release]
+pre-release-replacements = [
+  {file="src/lib.rs", search="predicates = \".*\"", replace="predicates = \"{{version}}\"", exactly=1},
+  {file="README.md", search="predicates = \".*\"", replace="predicates = \"{{version}}\"", exactly=1},
+  {file="CHANGELOG.md", search="Unreleased", replace="{{version}}", min=1},
+  {file="CHANGELOG.md", search="\\.\\.\\.HEAD", replace="...{{tag_name}}", exactly=1},
+  {file="CHANGELOG.md", search="ReleaseDate", replace="{{date}}", min=1},
+  {file="CHANGELOG.md", search="<!-- next-header -->", replace="<!-- next-header -->\n## [Unreleased] - ReleaseDate\n", exactly=1},
+  {file="CHANGELOG.md", search="<!-- next-url -->", replace="<!-- next-url -->\n[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/{{tag_name}}...HEAD", exactly=1},
+]
 
 [dependencies]
 predicates-core = { version = "1.0", path = "crates/core" }

@@ -2,20 +2,15 @@
 name = "predicates-tree"
 version = "1.0.3"
 authors = ["Nick Stevens <nick@bitcurry.com>"]
-license = "MIT/Apache-2.0"
+description = "Render boolean-valued predicate functions results as a tree."
+license = "MIT OR Apache-2.0"
 readme = "README.md"
-keywords = ["predicate", "boolean", "combinatorial", "match", "logic"]
 repository = "https://github.com/assert-rs/predicates-rs/tree/master/predicates-tree"
 homepage = "https://github.com/assert-rs/predicates-rs/tree/master/predicates-tree"
 documentation = "https://docs.rs/predicates-tree"
-description = """
-Render boolean-valued predicate functions results as a tree.
-"""
 categories = ["data-structures", "rust-patterns"]
+keywords = ["predicate", "boolean", "combinatorial", "match", "logic"]
 edition = "2018"
-
-[badges]
-azure-devops = { project = "assert-rs", pipeline = "predicates-rs" }
 
 [dependencies]
 predicates-core = { version = "1.0", path = "../core" }
