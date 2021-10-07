@@ -82,7 +82,14 @@ where
     T: fmt::Debug + PartialEq,
 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "var {} {:?}", self.op, self.constant)
+        let palette = crate::Palette::current();
+        write!(
+            f,
+            "{} {} {:?}",
+            palette.var.paint("var"),
+            palette.description.paint(self.op),
+            self.constant
+        )
     }
 }
 
@@ -210,7 +217,14 @@ where
     T: fmt::Debug + PartialOrd,
 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "var {} {:?}", self.op, self.constant)
+        let palette = crate::Palette::current();
+        write!(
+            f,
+            "{} {} {:?}",
+            palette.var.paint("var"),
+            palette.description.paint(self.op),
+            self.constant
+        )
     }
 }
 

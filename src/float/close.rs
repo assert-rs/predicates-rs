@@ -124,7 +124,14 @@ impl reflection::PredicateReflection for IsClosePredicate {
 
 impl fmt::Display for IsClosePredicate {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "var ~= {}", self.target)
+        let palette = crate::Palette::current();
+        write!(
+            f,
+            "{} {} {}",
+            palette.var.paint("var"),
+            palette.description.paint("!="),
+            palette.expected.paint(self.target),
+        )
     }
 }
 

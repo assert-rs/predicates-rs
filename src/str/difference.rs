@@ -30,10 +30,19 @@ impl Predicate<str> for DifferencePredicate {
         if result == expected {
             None
         } else {
+            let palette = crate::Palette::current();
             let orig: Vec<_> = self.orig.lines().map(|l| format!("{}\n", l)).collect();
             let variable: Vec<_> = variable.lines().map(|l| format!("{}\n", l)).collect();
-            let mut diff =
-                difflib::unified_diff(&orig, &variable, "value", "value", "expected", "actual", 0);
+            let diff = difflib::unified_diff(
+                &orig,
+                &variable,
+                "",
+                "",
+                &palette.expected.paint("orig").to_string(),
+                &palette.var.paint("var").to_string(),
+                0,
+            );
+            let mut diff = colorize_diff(diff, palette);
             diff.insert(0, "\n".to_owned());
 
             Some(
@@ -55,7 +64,14 @@ impl reflection::PredicateReflection for DifferencePredicate {
 
 impl fmt::Display for DifferencePredicate {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "diff var original")
+        let palette = crate::Palette::current();
+        write!(
+            f,
+            "{} {} {}",
+            palette.description.paint("diff"),
+            palette.expected.paint("original"),
+            palette.var.paint("var"),
+        )
     }
 }
 
@@ -77,4 +93,40 @@ where
     S: Into<borrow::Cow<'static, str>>,
 {
     DifferencePredicate { orig: orig.into() }
+}
+
+#[cfg(feature = "color")]
+fn colorize_diff(mut lines: Vec<String>, palette: crate::Palette) -> Vec<String> {
+    for (i, line) in lines.iter_mut().enumerate() {
+        match (i, line.as_bytes().get(0)) {
+            (0, _) => {
+                if let Some((prefix, body)) = line.split_once(' ') {
+                    *line = format!("{} {}", palette.expected.paint(prefix), body);
+                }
+            }
+            (1, _) => {
+                if let Some((prefix, body)) = line.split_once(' ') {
+                    *line = format!("{} {}", palette.var.paint(prefix), body);
+                }
+            }
+            (_, Some(b'-')) => {
+                let (prefix, body) = line.split_at(1);
+                *line = format!("{}{}", palette.expected.paint(prefix), body);
+            }
+            (_, Some(b'+')) => {
+                let (prefix, body) = line.split_at(1);
+                *line = format!("{}{}", palette.var.paint(prefix), body);
+            }
+            (_, Some(b'@')) => {
+                *line = format!("{}", palette.description.paint(&line));
+            }
+            _ => (),
+        }
+    }
+    lines
+}
+
+#[cfg(not(feature = "color"))]
+fn colorize_diff(lines: Vec<String>, _palette: crate::Palette) -> Vec<String> {
+    lines
 }
