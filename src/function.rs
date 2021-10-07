@@ -137,6 +137,6 @@ where
 #[test]
 fn str_function() {
     let f = function(|x: &str| x == "hello");
-    assert!(f.eval(&"hello"));
-    assert!(!f.eval(&"goodbye"));
+    assert!(f.eval("hello"));
+    assert!(!f.eval("goodbye"));
 }

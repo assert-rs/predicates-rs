@@ -24,7 +24,7 @@ impl<'a> CaseTreeExt for reflection::Case<'a> {
     }
 }
 
-type CaseTreeInner = treeline::Tree<Box<dyn fmt::Display + Send + Sync>>;
+type CaseTreeInner = termtree::Tree<Box<dyn fmt::Display + Send + Sync>>;
 
 fn convert(case: &reflection::Case<'_>) -> CaseTreeInner {
     let mut leaves: Vec<CaseTreeInner> = vec![];
@@ -32,13 +32,13 @@ fn convert(case: &reflection::Case<'_>) -> CaseTreeInner {
     leaves.extend(case.predicate().iter().flat_map(|pred| {
         pred.parameters().map(|item| {
             let root: Box<dyn fmt::Display + Send + Sync> = Box::new(item.to_string());
-            treeline::Tree::new(root, vec![])
+            termtree::Tree::new(root, vec![]).with_multiline(true)
         })
     }));
 
     leaves.extend(case.products().map(|item| {
         let root: Box<dyn fmt::Display + Send + Sync> = Box::new(item.to_string());
-        treeline::Tree::new(root, vec![])
+        termtree::Tree::new(root, vec![]).with_multiline(true)
     }));
 
     leaves.extend(case.children().map(|item| convert(item)));
