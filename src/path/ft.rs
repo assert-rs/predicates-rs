@@ -135,7 +135,14 @@ impl reflection::PredicateReflection for FileTypePredicate {
 
 impl fmt::Display for FileTypePredicate {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "var is {}", self.ft)
+        let palette = crate::Palette::current();
+        write!(
+            f,
+            "{} {} {}",
+            palette.var.paint("var"),
+            palette.description.paint("is"),
+            palette.expected.paint(self.ft)
+        )
     }
 }
 

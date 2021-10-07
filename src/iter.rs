@@ -111,7 +111,14 @@ where
     T: PartialEq + fmt::Debug,
 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "var in values")
+        let palette = crate::Palette::current();
+        write!(
+            f,
+            "{} {} {}",
+            palette.var.paint("var"),
+            palette.description.paint("in"),
+            palette.expected.paint("values")
+        )
     }
 }
 
@@ -212,7 +219,14 @@ where
     T: Ord + fmt::Debug,
 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "var in values")
+        let palette = crate::Palette::current();
+        write!(
+            f,
+            "{} {} {}",
+            palette.var.paint("var"),
+            palette.description.paint("in"),
+            palette.expected.paint("values")
+        )
     }
 }
 
@@ -274,7 +288,14 @@ where
     T: Hash + Eq + fmt::Debug,
 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "var in values")
+        let palette = crate::Palette::current();
+        write!(
+            f,
+            "{} {} {}",
+            palette.var.paint("var"),
+            palette.description.paint("in"),
+            palette.expected.paint("values")
+        )
     }
 }
 

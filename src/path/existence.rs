@@ -39,7 +39,15 @@ impl reflection::PredicateReflection for ExistencePredicate {}
 
 impl fmt::Display for ExistencePredicate {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}(var)", if self.exists { "exists" } else { "missing" })
+        let palette = crate::Palette::current();
+        write!(
+            f,
+            "{}({})",
+            palette
+                .description
+                .paint(if self.exists { "exists" } else { "missing" }),
+            palette.var.paint("var")
+        )
     }
 }
 

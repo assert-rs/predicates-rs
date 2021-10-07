@@ -89,7 +89,14 @@ impl reflection::PredicateReflection for BinaryFilePredicate {
 
 impl fmt::Display for BinaryFilePredicate {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "var is {}", self.path.display())
+        let palette = crate::Palette::current();
+        write!(
+            f,
+            "{} {} {}",
+            palette.var.paint("var"),
+            palette.description.paint("is"),
+            palette.expected.paint(self.path.display())
+        )
     }
 }
 
@@ -160,6 +167,13 @@ impl reflection::PredicateReflection for StrFilePredicate {
 
 impl fmt::Display for StrFilePredicate {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "var is {}", self.path.display())
+        let palette = crate::Palette::current();
+        write!(
+            f,
+            "{} {} {}",
+            palette.var.paint("var"),
+            palette.description.paint("is"),
+            palette.expected.paint(self.path.display())
+        )
     }
 }

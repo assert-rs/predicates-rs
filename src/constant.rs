@@ -41,7 +41,8 @@ impl reflection::PredicateReflection for BooleanPredicate {
 
 impl fmt::Display for BooleanPredicate {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.retval)
+        let palette = crate::Palette::current();
+        write!(f, "{}", palette.expected.paint(self.retval))
     }
 }
 

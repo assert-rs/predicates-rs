@@ -221,4 +221,6 @@ pub mod float;
 pub mod path;
 pub mod str;
 
+mod color;
+use color::Palette;
 mod utils;

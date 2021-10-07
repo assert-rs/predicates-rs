@@ -56,7 +56,7 @@ where
     P: Predicate<[u8]>,
 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.p)
+        self.p.fmt(f)
     }
 }
 

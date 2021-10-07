@@ -17,4 +17,4 @@ predicates-core = { version = "1.0", path = "../core" }
 termtree = "0.2"
 
 [dev-dependencies]
-predicates = { version = "2.0", path = "../.." }
+predicates = { version = "2.0", path = "../..", features = ["color-auto"] }
