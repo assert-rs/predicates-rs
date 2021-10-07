@@ -1,6 +1,6 @@
 [package]
 name = "predicates-tree"
-version = "1.0.3"
+version = "1.0.4"
 authors = ["Nick Stevens <nick@bitcurry.com>"]
 description = "Render boolean-valued predicate functions results as a tree."
 license = "MIT OR Apache-2.0"
