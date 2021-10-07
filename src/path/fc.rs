@@ -106,6 +106,7 @@ where
     /// assert_eq!(true, predicate_fn.eval(Path::new("./tests/hello_world")));
     /// assert_eq!(false, predicate_fn.eval(Path::new("./tests/empty_file")));
     /// ```
+    #[allow(clippy::wrong_self_convention)]
     fn from_file_path(self) -> FileContentPredicate<Self> {
         FileContentPredicate { p: self }
     }

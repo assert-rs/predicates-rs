@@ -41,7 +41,7 @@ Moon!
 
 Goodbye!";
     let pred = predicates::str::diff(expected);
-    if let Some(case) = pred.find_case(false, &actual) {
+    if let Some(case) = pred.find_case(false, actual) {
         let tree = case.tree();
         println!("{}", tree);
     }
