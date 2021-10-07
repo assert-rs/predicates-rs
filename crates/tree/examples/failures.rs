@@ -12,7 +12,7 @@ fn main() {
 
     let expected = [1, 2, 3];
     let actual = 15;
-    let pred = predicates::iter::in_iter(expected);
+    let pred = predicates::iter::in_iter(IntoIterator::into_iter(expected));
     if let Some(case) = pred.find_case(false, &actual) {
         let tree = case.tree();
         println!("{}", tree);

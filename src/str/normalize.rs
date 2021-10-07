@@ -11,7 +11,6 @@ use crate::Predicate;
 use std::fmt;
 
 use normalize_line_endings::normalized;
-use std::iter::FromIterator;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 /// Predicate adapter that normalizes the newlines contained in the variable being tested.
@@ -39,12 +38,12 @@ where
     P: Predicate<str>,
 {
     fn eval(&self, variable: &str) -> bool {
-        self.p
-            .eval(&String::from_iter(normalized(variable.chars())))
+        let variable = normalized(variable.chars()).collect::<String>();
+        self.p.eval(&variable)
     }
 
     fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
-        let variable = String::from_iter(normalized(variable.chars()));
+        let variable = normalized(variable.chars()).collect::<String>();
         self.p.find_case(expected, &variable)
     }
 }
