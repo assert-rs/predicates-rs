@@ -11,6 +11,13 @@ documentation = "https://docs.rs/predicates-tree"
 categories = ["data-structures", "rust-patterns"]
 keywords = ["predicate", "boolean", "combinatorial", "match", "logic"]
 edition = "2018"
+include = [
+  "src/**/*",
+  "Cargo.toml",
+  "LICENSE*",
+  "README.md",
+  "examples/**/*"
+]
 
 [dependencies]
 predicates-core = { version = "1.0", path = "../core" }
