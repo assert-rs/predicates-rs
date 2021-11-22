@@ -47,6 +47,7 @@ impl Predicate<str> for RegexPredicate {
 
     fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
         utils::default_find_case(self, expected, variable)
+            .map(|case| case.add_product(reflection::Product::new("var", variable.to_owned())))
     }
 }
 
@@ -85,6 +86,7 @@ impl Predicate<str> for RegexMatchesPredicate {
         if result == expected {
             Some(
                 reflection::Case::new(Some(self), result)
+                    .add_product(reflection::Product::new("var", variable.to_owned()))
                     .add_product(reflection::Product::new("actual count", actual_count)),
             )
         } else {

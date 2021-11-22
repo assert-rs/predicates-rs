@@ -75,13 +75,19 @@ where
     ) -> Option<reflection::Case<'a>> {
         let buffer = read_file(variable);
         match (expected, buffer) {
-            (_, Ok(buffer)) => self
-                .p
-                .find_case(expected, &buffer)
-                .map(|child| reflection::Case::new(Some(self), expected).add_child(child)),
+            (_, Ok(buffer)) => self.p.find_case(expected, &buffer).map(|case| {
+                case.add_product(reflection::Product::new(
+                    "var",
+                    variable.display().to_string(),
+                ))
+            }),
             (true, Err(_)) => None,
             (false, Err(err)) => Some(
                 reflection::Case::new(Some(self), false)
+                    .add_product(reflection::Product::new(
+                        "var",
+                        variable.display().to_string(),
+                    ))
                     .add_product(reflection::Product::new("error", err)),
             ),
         }
