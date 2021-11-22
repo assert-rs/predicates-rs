@@ -85,10 +85,12 @@ where
         let palette = crate::Palette::current();
         write!(
             f,
-            "{} {} {:?}",
+            "{} {} {}",
             palette.var.paint("var"),
             palette.description.paint(self.op),
-            self.constant
+            palette
+                .expected
+                .paint(utils::DebugAdapter::new(&self.constant)),
         )
     }
 }
@@ -220,10 +222,12 @@ where
         let palette = crate::Palette::current();
         write!(
             f,
-            "{} {} {:?}",
+            "{} {} {}",
             palette.var.paint("var"),
             palette.description.paint(self.op),
-            self.constant
+            palette
+                .expected
+                .paint(utils::DebugAdapter::new(&self.constant)),
         )
     }
 }
