@@ -31,7 +31,12 @@ impl Predicate<path::Path> for ExistencePredicate {
         expected: bool,
         variable: &path::Path,
     ) -> Option<reflection::Case<'a>> {
-        utils::default_find_case(self, expected, variable)
+        utils::default_find_case(self, expected, variable).map(|case| {
+            case.add_product(reflection::Product::new(
+                "var",
+                variable.display().to_string(),
+            ))
+        })
     }
 }
 
