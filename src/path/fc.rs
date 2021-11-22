@@ -75,10 +75,7 @@ where
     ) -> Option<reflection::Case<'a>> {
         let buffer = read_file(variable);
         match (expected, buffer) {
-            (_, Ok(buffer)) => self
-                .p
-                .find_case(expected, &buffer)
-                .map(|child| reflection::Case::new(Some(self), expected).add_child(child)),
+            (_, Ok(buffer)) => self.p.find_case(expected, &buffer),
             (true, Err(_)) => None,
             (false, Err(err)) => Some(
                 reflection::Case::new(Some(self), false)
