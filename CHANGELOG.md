@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- next-header -->
 ## [Unreleased] - ReleaseDate
 
+### Fixed
+
+- Report user's value (the actual)
+  - Having the caller own this means you won't get intermediates like file paths
+  - We already show it for the `diff` predicate
+  - Now we show it in each leaf predicate (like Eq) and when adapting it (like taking a path and loading its file)
+- Remove redundant result with `eq_file` assertions
+- Clarify that the constant in Eq and Ord predicates is the expected value
+
 ## [2.0.3] - 2021-10-07
 
 ## [2.0.2] - 2021-08-16
