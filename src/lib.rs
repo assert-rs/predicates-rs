@@ -165,7 +165,7 @@
 //! [`path_pred = bytes_pred.from_file_path`]: prelude::PredicateFileContentExt::from_file_path()
 //! [`path_pred = predicate::path::eq_file`]: prelude::predicate::path::eq_file()
 //! [`pred_a.and(pred_b)`]: boolean::PredicateBooleanExt::and()
-//! [`pred_a.not())`]: boolean::PredicateBooleanExt::not()
+//! [`pred_a.not()`]: boolean::PredicateBooleanExt::not()
 //! [`pred_a.or(pred_b)`]: boolean::PredicateBooleanExt::or()
 //! [`predicate::always`]: constant::always()
 //! [`predicate::eq`]: ord::eq()
