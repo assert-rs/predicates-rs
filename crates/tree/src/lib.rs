@@ -32,19 +32,19 @@ fn convert(case: &reflection::Case<'_>) -> CaseTreeInner {
     leaves.extend(case.predicate().iter().flat_map(|pred| {
         pred.parameters().map(|item| {
             let root: Box<dyn fmt::Display + Send + Sync> = Box::new(item.to_string());
-            termtree::Tree::new(root, vec![]).with_multiline(true)
+            termtree::Tree::new(root).with_multiline(true)
         })
     }));
 
     leaves.extend(case.products().map(|item| {
         let root: Box<dyn fmt::Display + Send + Sync> = Box::new(item.to_string());
-        termtree::Tree::new(root, vec![]).with_multiline(true)
+        termtree::Tree::new(root).with_multiline(true)
     }));
 
     leaves.extend(case.children().map(|item| convert(item)));
 
     let root = Box::new(case.predicate().map(|p| p.to_string()).unwrap_or_default());
-    CaseTreeInner::new(root, leaves)
+    CaseTreeInner::new(root).with_leaves(leaves)
 }
 
 /// A `Case` rendered as a tree for display.
