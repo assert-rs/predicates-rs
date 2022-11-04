@@ -13,7 +13,8 @@ documentation = "https://docs.rs/predicates"
 readme = "README.md"
 categories = ["data-structures", "rust-patterns"]
 keywords = ["predicate", "boolean", "combinatorial", "match", "logic"]
-edition = "2018"
+edition = "2021"
+rust-version = "1.60.0"  # MSRV
 include = [
   "src/**/*",
   "Cargo.toml",

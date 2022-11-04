@@ -10,7 +10,8 @@ homepage = "https://github.com/assert-rs/predicates-rs/tree/master/predicates-co
 documentation = "https://docs.rs/predicates-core"
 categories = ["data-structures", "rust-patterns"]
 keywords = ["predicate", "boolean", "combinatorial", "match", "logic"]
-edition = "2018"
+edition = "2021"
+rust-version = "1.60.0"  # MSRV
 include = [
   "src/**/*",
   "Cargo.toml",
