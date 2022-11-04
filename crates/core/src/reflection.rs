@@ -40,7 +40,7 @@ pub struct Parameter<'a>(&'a str, &'a dyn fmt::Display);
 impl<'a> Parameter<'a> {
     /// Create a new `Parameter`.
     pub fn new(key: &'a str, value: &'a dyn fmt::Display) -> Self {
-        Self { 0: key, 1: value }
+        Self(key, value)
     }
 
     /// Access the `Parameter` name.
@@ -72,7 +72,7 @@ pub struct Child<'a>(&'a str, &'a dyn PredicateReflection);
 impl<'a> Child<'a> {
     /// Create a new `Predicate` child.
     pub fn new(key: &'a str, value: &'a dyn PredicateReflection) -> Self {
-        Self { 0: key, 1: value }
+        Self(key, value)
     }
 
     /// Access the `Child`'s name.
@@ -141,16 +141,12 @@ impl<'a> Case<'a> {
 
     /// Access the by-products from determining this case.
     pub fn products(&self) -> CaseProducts<'_> {
-        CaseProducts {
-            0: self.products.iter(),
-        }
+        CaseProducts(self.products.iter())
     }
 
     /// Access the sub-cases.
     pub fn children(&self) -> CaseChildren<'_> {
-        CaseChildren {
-            0: self.children.iter(),
-        }
+        CaseChildren(self.children.iter())
     }
 }
 
@@ -229,10 +225,7 @@ impl Product {
         S: Into<borrow::Cow<'static, str>>,
         D: fmt::Display + 'static,
     {
-        Self {
-            0: key.into(),
-            1: Box::new(value),
-        }
+        Self(key.into(), Box::new(value))
     }
 
     /// Access the `Product` name.
@@ -246,13 +239,13 @@ impl Product {
     }
 }
 
-impl<'a> fmt::Display for Product {
+impl fmt::Display for Product {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}: {}", self.0, self.1)
     }
 }
 
-impl<'a> fmt::Debug for Product {
+impl fmt::Debug for Product {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "({:?}, {})", self.0, self.1)
     }
