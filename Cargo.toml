@@ -49,7 +49,7 @@ predicates-tree = { version = "1.0", path = "crates/tree" }
 
 [features]
 default = ["diff", "regex", "float-cmp", "normalize-line-endings"]
-diff = ["difflib"]
+diff = ["dep:difflib"]
 unstable = []
-color = ["yansi", "concolor/std"]
-color-auto = ["color", "concolor/auto"]
+color = ["dep:yansi", "dep:concolor", "concolor?/std"]
+color-auto = ["color", "concolor?/auto"]
