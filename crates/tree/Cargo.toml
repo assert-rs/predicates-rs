@@ -1,6 +1,6 @@
 [package]
 name = "predicates-tree"
-version = "1.0.5"
+version = "1.0.6"
 authors = ["Nick Stevens <nick@bitcurry.com>"]
 description = "Render boolean-valued predicate functions results as a tree."
 license = "MIT OR Apache-2.0"
@@ -25,4 +25,4 @@ predicates-core = { version = "1.0", path = "../core" }
 termtree = "0.4"
 
 [dev-dependencies]
-predicates = { version = "2.0", path = "../..", features = ["color-auto"] }
+predicates = { version = "2.1", path = "../..", features = ["color-auto"] }
