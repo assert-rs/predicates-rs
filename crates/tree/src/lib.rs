@@ -41,7 +41,7 @@ fn convert(case: &reflection::Case<'_>) -> CaseTreeInner {
         termtree::Tree::new(root).with_multiline(true)
     }));
 
-    leaves.extend(case.children().map(|item| convert(item)));
+    leaves.extend(case.children().map(convert));
 
     let root = Box::new(case.predicate().map(|p| p.to_string()).unwrap_or_default());
     CaseTreeInner::new(root).with_leaves(leaves)
