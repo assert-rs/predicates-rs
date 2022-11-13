@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- next-header -->
 ## [Unreleased] - ReleaseDate
 
+## [2.1.3] - 2022-11-13
+
 ## [2.1.2] - 2022-11-05
 
 ### Compatibility
@@ -189,7 +191,8 @@ Update MSRV to 1.60
 - Basic README
 
 <!-- next-url -->
-[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v2.1.2...HEAD
+[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v2.1.3...HEAD
+[2.1.3]: https://github.com/assert-rs/predicates-rs/compare/v2.1.2...v2.1.3
 [2.1.2]: https://github.com/assert-rs/predicates-rs/compare/v2.1.1...v2.1.2
 [2.1.1]: https://github.com/assert-rs/predicates-rs/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/assert-rs/predicates-rs/compare/v2.0.3...v2.1.0
