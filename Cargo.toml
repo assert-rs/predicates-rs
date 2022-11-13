@@ -1,5 +1,5 @@
 [workspace]
-members = ["crates/core", "crates/tree"]
+members = ["crates/*"]
 
 [package]
 name = "predicates"
