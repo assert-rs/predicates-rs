@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- next-header -->
 ## [Unreleased] - ReleaseDate
 
+## [2.1.5] - 2022-12-29
+
 ### Gixes
 
 - Further generalized borrowing of predicates with `Borrow` trait
@@ -197,7 +199,8 @@ Update MSRV to 1.60
 - Basic README
 
 <!-- next-url -->
-[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v2.1.4...HEAD
+[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v2.1.5...HEAD
+[2.1.5]: https://github.com/assert-rs/predicates-rs/compare/v2.1.4...v2.1.5
 [2.1.4]: https://github.com/assert-rs/predicates-rs/compare/v2.1.3...v2.1.4
 [2.1.3]: https://github.com/assert-rs/predicates-rs/compare/v2.1.2...v2.1.3
 [2.1.2]: https://github.com/assert-rs/predicates-rs/compare/v2.1.1...v2.1.2

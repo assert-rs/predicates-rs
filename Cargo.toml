@@ -3,7 +3,7 @@ members = ["crates/*"]
 
 [package]
 name = "predicates"
-version = "2.1.4"
+version = "2.1.5"
 description = "An implementation of boolean-valued predicate functions."
 authors = ["Nick Stevens <nick@bitcurry.com>"]
 license = "MIT OR Apache-2.0"
