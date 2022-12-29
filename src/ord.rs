@@ -1,4 +1,4 @@
-// Copyright (c) 2018 The predicates-rs Project Developers.
+// Copyright (c) 2018, 2022 The predicates-rs Project Developers.
 //
 // Licensed under the Apache License, Version 2.0 <LICENSE-APACHE or
 // http://www.apache.org/license/LICENSE-2.0> or the MIT license
@@ -35,26 +35,24 @@ impl fmt::Display for EqOps {
 ///
 /// This is created by the `predicate::{eq, ne}` functions.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct EqPredicate<T>
-where
-    T: fmt::Debug + PartialEq,
-{
+pub struct EqPredicate<T> {
     constant: T,
     op: EqOps,
 }
 
-impl<T> Predicate<T> for EqPredicate<T>
+impl<P, T> Predicate<P> for EqPredicate<T>
 where
-    T: fmt::Debug + PartialEq,
+    T: std::borrow::Borrow<P> + fmt::Debug,
+    P: fmt::Debug + PartialEq + ?Sized,
 {
-    fn eval(&self, variable: &T) -> bool {
+    fn eval(&self, variable: &P) -> bool {
         match self.op {
-            EqOps::Equal => variable.eq(&self.constant),
-            EqOps::NotEqual => variable.ne(&self.constant),
+            EqOps::Equal => variable.eq(self.constant.borrow()),
+            EqOps::NotEqual => variable.ne(self.constant.borrow()),
         }
     }
 
-    fn find_case<'a>(&'a self, expected: bool, variable: &T) -> Option<reflection::Case<'a>> {
+    fn find_case<'a>(&'a self, expected: bool, variable: &P) -> Option<reflection::Case<'a>> {
         utils::default_find_case(self, expected, variable).map(|case| {
             case.add_product(reflection::Product::new(
                 "var",
@@ -64,32 +62,11 @@ where
     }
 }
 
-impl<'a, T> Predicate<T> for EqPredicate<&'a T>
-where
-    T: fmt::Debug + PartialEq + ?Sized,
-{
-    fn eval(&self, variable: &T) -> bool {
-        match self.op {
-            EqOps::Equal => variable.eq(self.constant),
-            EqOps::NotEqual => variable.ne(self.constant),
-        }
-    }
-
-    fn find_case<'b>(&'b self, expected: bool, variable: &T) -> Option<reflection::Case<'b>> {
-        utils::default_find_case(self, expected, variable).map(|case| {
-            case.add_product(reflection::Product::new(
-                "var",
-                utils::DebugAdapter::new(variable).to_string(),
-            ))
-        })
-    }
-}
-
-impl<T> reflection::PredicateReflection for EqPredicate<T> where T: fmt::Debug + PartialEq {}
+impl<T> reflection::PredicateReflection for EqPredicate<T> where T: fmt::Debug {}
 
 impl<T> fmt::Display for EqPredicate<T>
 where
-    T: fmt::Debug + PartialEq,
+    T: fmt::Debug,
 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let palette = crate::Palette::current();
@@ -118,6 +95,10 @@ where
 /// assert_eq!(false, predicate_fn.eval(&10));
 ///
 /// let predicate_fn = predicate::eq("Hello");
+/// assert_eq!(true, predicate_fn.eval("Hello"));
+/// assert_eq!(false, predicate_fn.eval("Goodbye"));
+///
+/// let predicate_fn = predicate::eq(String::from("Hello"));
 /// assert_eq!(true, predicate_fn.eval("Hello"));
 /// assert_eq!(false, predicate_fn.eval("Goodbye"));
 /// ```
@@ -178,28 +159,26 @@ impl fmt::Display for OrdOps {
 ///
 /// This is created by the `predicate::{gt, ge, lt, le}` functions.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct OrdPredicate<T>
-where
-    T: fmt::Debug + PartialOrd,
-{
+pub struct OrdPredicate<T> {
     constant: T,
     op: OrdOps,
 }
 
-impl<T> Predicate<T> for OrdPredicate<T>
+impl<P, T> Predicate<P> for OrdPredicate<T>
 where
-    T: fmt::Debug + PartialOrd,
+    T: std::borrow::Borrow<P> + fmt::Debug,
+    P: fmt::Debug + PartialOrd + ?Sized,
 {
-    fn eval(&self, variable: &T) -> bool {
+    fn eval(&self, variable: &P) -> bool {
         match self.op {
-            OrdOps::LessThan => variable.lt(&self.constant),
-            OrdOps::LessThanOrEqual => variable.le(&self.constant),
-            OrdOps::GreaterThanOrEqual => variable.ge(&self.constant),
-            OrdOps::GreaterThan => variable.gt(&self.constant),
+            OrdOps::LessThan => variable.lt(self.constant.borrow()),
+            OrdOps::LessThanOrEqual => variable.le(self.constant.borrow()),
+            OrdOps::GreaterThanOrEqual => variable.ge(self.constant.borrow()),
+            OrdOps::GreaterThan => variable.gt(self.constant.borrow()),
         }
     }
 
-    fn find_case<'a>(&'a self, expected: bool, variable: &T) -> Option<reflection::Case<'a>> {
+    fn find_case<'a>(&'a self, expected: bool, variable: &P) -> Option<reflection::Case<'a>> {
         utils::default_find_case(self, expected, variable).map(|case| {
             case.add_product(reflection::Product::new(
                 "var",
@@ -209,34 +188,11 @@ where
     }
 }
 
-impl<'a, T> Predicate<T> for OrdPredicate<&'a T>
-where
-    T: fmt::Debug + PartialOrd + ?Sized,
-{
-    fn eval(&self, variable: &T) -> bool {
-        match self.op {
-            OrdOps::LessThan => variable.lt(self.constant),
-            OrdOps::LessThanOrEqual => variable.le(self.constant),
-            OrdOps::GreaterThanOrEqual => variable.ge(self.constant),
-            OrdOps::GreaterThan => variable.gt(self.constant),
-        }
-    }
-
-    fn find_case<'b>(&'b self, expected: bool, variable: &T) -> Option<reflection::Case<'b>> {
-        utils::default_find_case(self, expected, variable).map(|case| {
-            case.add_product(reflection::Product::new(
-                "var",
-                utils::DebugAdapter::new(variable).to_string(),
-            ))
-        })
-    }
-}
-
-impl<T> reflection::PredicateReflection for OrdPredicate<T> where T: fmt::Debug + PartialOrd {}
+impl<T> reflection::PredicateReflection for OrdPredicate<T> where T: fmt::Debug {}
 
 impl<T> fmt::Display for OrdPredicate<T>
 where
-    T: fmt::Debug + PartialOrd,
+    T: fmt::Debug,
 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let palette = crate::Palette::current();
@@ -265,6 +221,10 @@ where
 /// assert_eq!(false, predicate_fn.eval(&6));
 ///
 /// let predicate_fn = predicate::lt("b");
+/// assert_eq!(true, predicate_fn.eval("a"));
+/// assert_eq!(false, predicate_fn.eval("c"));
+///
+/// let predicate_fn = predicate::lt(String::from("b"));
 /// assert_eq!(true, predicate_fn.eval("a"));
 /// assert_eq!(false, predicate_fn.eval("c"));
 /// ```
