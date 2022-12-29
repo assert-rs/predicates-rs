@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- next-header -->
 ## [Unreleased] - ReleaseDate
 
+### Gixes
+
+- Further generalized borrowing of predicates with `Borrow` trait
+
 ## [2.1.4] - 2022-12-02
 
 ## [2.1.3] - 2022-11-13
