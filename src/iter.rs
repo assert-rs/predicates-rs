@@ -60,6 +60,11 @@ where
     /// assert_eq!(true, predicate_fn.eval("a"));
     /// assert_eq!(false, predicate_fn.eval("b"));
     /// assert_eq!(true, predicate_fn.eval("c"));
+    ///
+    /// let predicate_fn = predicate::in_iter(vec![String::from("a"), String::from("c"), String::from("e")]).sort();
+    /// assert_eq!(true, predicate_fn.eval("a"));
+    /// assert_eq!(false, predicate_fn.eval("b"));
+    /// assert_eq!(true, predicate_fn.eval("c"));
     /// ```
     pub fn sort(self) -> OrdInPredicate<T> {
         let mut items = self.inner.debug;
@@ -70,33 +75,16 @@ where
     }
 }
 
-impl<T> Predicate<T> for InPredicate<T>
+impl<P, T> Predicate<P> for InPredicate<T>
 where
-    T: PartialEq + fmt::Debug,
+    T: std::borrow::Borrow<P> + PartialEq + fmt::Debug,
+    P: PartialEq + fmt::Debug + ?Sized,
 {
-    fn eval(&self, variable: &T) -> bool {
-        self.inner.debug.contains(variable)
+    fn eval(&self, variable: &P) -> bool {
+        self.inner.debug.iter().any(|x| x.borrow() == variable)
     }
 
-    fn find_case<'a>(&'a self, expected: bool, variable: &T) -> Option<reflection::Case<'a>> {
-        utils::default_find_case(self, expected, variable).map(|case| {
-            case.add_product(reflection::Product::new(
-                "var",
-                utils::DebugAdapter::new(variable).to_string(),
-            ))
-        })
-    }
-}
-
-impl<'a, T> Predicate<T> for InPredicate<&'a T>
-where
-    T: PartialEq + fmt::Debug + ?Sized,
-{
-    fn eval(&self, variable: &T) -> bool {
-        self.inner.debug.contains(&variable)
-    }
-
-    fn find_case<'b>(&'b self, expected: bool, variable: &T) -> Option<reflection::Case<'b>> {
+    fn find_case<'a>(&'a self, expected: bool, variable: &P) -> Option<reflection::Case<'a>> {
         utils::default_find_case(self, expected, variable).map(|case| {
             case.add_product(reflection::Product::new(
                 "var",
@@ -160,6 +148,11 @@ where
 /// assert_eq!(true, predicate_fn.eval("a"));
 /// assert_eq!(false, predicate_fn.eval("b"));
 /// assert_eq!(true, predicate_fn.eval("c"));
+///
+/// let predicate_fn = predicate::in_iter(vec![String::from("a"), String::from("c"), String::from("e")]);
+/// assert_eq!(true, predicate_fn.eval("a"));
+/// assert_eq!(false, predicate_fn.eval("b"));
+/// assert_eq!(true, predicate_fn.eval("c"));
 /// ```
 pub fn in_iter<I, T>(iter: I) -> InPredicate<T>
 where
@@ -188,33 +181,19 @@ where
     inner: utils::DebugAdapter<Vec<T>>,
 }
 
-impl<T> Predicate<T> for OrdInPredicate<T>
+impl<P, T> Predicate<P> for OrdInPredicate<T>
 where
-    T: Ord + fmt::Debug,
+    T: std::borrow::Borrow<P> + Ord + fmt::Debug,
+    P: Ord + fmt::Debug + ?Sized,
 {
-    fn eval(&self, variable: &T) -> bool {
-        self.inner.debug.binary_search(variable).is_ok()
+    fn eval(&self, variable: &P) -> bool {
+        self.inner
+            .debug
+            .binary_search_by(|x| x.borrow().cmp(variable))
+            .is_ok()
     }
 
-    fn find_case<'a>(&'a self, expected: bool, variable: &T) -> Option<reflection::Case<'a>> {
-        utils::default_find_case(self, expected, variable).map(|case| {
-            case.add_product(reflection::Product::new(
-                "var",
-                utils::DebugAdapter::new(variable).to_string(),
-            ))
-        })
-    }
-}
-
-impl<'a, T> Predicate<T> for OrdInPredicate<&'a T>
-where
-    T: Ord + fmt::Debug + ?Sized,
-{
-    fn eval(&self, variable: &T) -> bool {
-        self.inner.debug.binary_search(&variable).is_ok()
-    }
-
-    fn find_case<'b>(&'b self, expected: bool, variable: &T) -> Option<reflection::Case<'b>> {
+    fn find_case<'a>(&'a self, expected: bool, variable: &P) -> Option<reflection::Case<'a>> {
         utils::default_find_case(self, expected, variable).map(|case| {
             case.add_product(reflection::Product::new(
                 "var",
@@ -267,33 +246,16 @@ where
     inner: utils::DebugAdapter<HashSet<T>>,
 }
 
-impl<T> Predicate<T> for HashableInPredicate<T>
+impl<P, T> Predicate<P> for HashableInPredicate<T>
 where
-    T: Hash + Eq + fmt::Debug,
+    T: std::borrow::Borrow<P> + Hash + Eq + fmt::Debug,
+    P: Hash + Eq + fmt::Debug + ?Sized,
 {
-    fn eval(&self, variable: &T) -> bool {
+    fn eval(&self, variable: &P) -> bool {
         self.inner.debug.contains(variable)
     }
 
-    fn find_case<'a>(&'a self, expected: bool, variable: &T) -> Option<reflection::Case<'a>> {
-        utils::default_find_case(self, expected, variable).map(|case| {
-            case.add_product(reflection::Product::new(
-                "var",
-                utils::DebugAdapter::new(variable).to_string(),
-            ))
-        })
-    }
-}
-
-impl<'a, T> Predicate<T> for HashableInPredicate<&'a T>
-where
-    T: Hash + Eq + fmt::Debug + ?Sized,
-{
-    fn eval(&self, variable: &T) -> bool {
-        self.inner.debug.contains(&variable)
-    }
-
-    fn find_case<'b>(&'b self, expected: bool, variable: &T) -> Option<reflection::Case<'b>> {
+    fn find_case<'a>(&'a self, expected: bool, variable: &P) -> Option<reflection::Case<'a>> {
         utils::default_find_case(self, expected, variable).map(|case| {
             case.add_product(reflection::Product::new(
                 "var",
@@ -348,6 +310,11 @@ where
 /// assert_eq!(true, predicate_fn.eval(&3));
 ///
 /// let predicate_fn = predicate::in_hash(vec!["a", "c", "e"]);
+/// assert_eq!(true, predicate_fn.eval("a"));
+/// assert_eq!(false, predicate_fn.eval("b"));
+/// assert_eq!(true, predicate_fn.eval("c"));
+///
+/// let predicate_fn = predicate::in_hash(vec![String::from("a"), String::from("c"), String::from("e")]);
 /// assert_eq!(true, predicate_fn.eval("a"));
 /// assert_eq!(false, predicate_fn.eval("b"));
 /// assert_eq!(true, predicate_fn.eval("c"));
