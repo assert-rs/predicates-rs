@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- next-header -->
 ## [Unreleased] - ReleaseDate
 
+## [1.0.6] - 2023-03-14
+
 ### Compatibility
 
 - Update MSRV to 1.64.0
@@ -29,5 +31,6 @@ Update MSRV to 1.60
 - Predicates must also implement `PredicateReflection`
 
 <!-- next-url -->
-[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v0.9.0...HEAD
+[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/predicates-core-v1.0.6...HEAD
+[1.0.6]: https://github.com/assert-rs/predicates-rs/compare/v0.9.0...predicates-core-v1.0.6
 [0.9.0]: https://github.com/assert-rs/predicates-rs/compare/v0.5.2...v0.9.0
