@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- next-header -->
 ## [Unreleased] - ReleaseDate
 
+### Fixes
+
+- Pass `f.alternate()` down
+
 ## [1.0.8] - 2023-03-14
 
 ### Compatibility
