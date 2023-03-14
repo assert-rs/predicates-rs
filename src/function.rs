@@ -17,6 +17,7 @@ use crate::Predicate;
 
 /// Predicate that wraps a function over a reference that returns a `bool`.
 /// This type is returned by the `predicate::function` function.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct FnPredicate<F, T>
 where

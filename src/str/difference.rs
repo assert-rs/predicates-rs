@@ -98,7 +98,7 @@ where
 #[cfg(feature = "color")]
 fn colorize_diff(mut lines: Vec<String>, palette: crate::Palette) -> Vec<String> {
     for (i, line) in lines.iter_mut().enumerate() {
-        match (i, line.as_bytes().get(0)) {
+        match (i, line.as_bytes().first()) {
             (0, _) => {
                 if let Some((prefix, body)) = line.split_once(' ') {
                     *line = format!("{:#} {}", palette.expected(prefix), body);
