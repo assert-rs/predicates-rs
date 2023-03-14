@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- next-header -->
 ## [Unreleased] - ReleaseDate
 
+### Compatibility
+
+- `color` feature no longer conditionally applies color.  Instead color will be applied when formatting as `{:#}`
+- `color-auto` feature was removed
+- Update MSRV to 1.64.0
+
 ## [2.1.5] - 2022-12-29
 
 ### Gixes

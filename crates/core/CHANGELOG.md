@@ -4,7 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased] - Unreleased
+<!-- next-header -->
+## [Unreleased] - ReleaseDate
+
+### Compatibility
+
+- Update MSRV to 1.64.0
+
+## [1.0.5]
 
 ### Compatibility
 
@@ -21,5 +28,6 @@ Update MSRV to 1.60
 ### Changed
 - Predicates must also implement `PredicateReflection`
 
+<!-- next-url -->
 [Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v0.9.0...HEAD
 [0.9.0]: https://github.com/assert-rs/predicates-rs/compare/v0.5.2...v0.9.0
