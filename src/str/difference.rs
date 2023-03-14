@@ -67,7 +67,7 @@ impl fmt::Display for DifferencePredicate {
         let palette = crate::Palette::new(f.alternate());
         write!(
             f,
-            "{} {} {}",
+            "{:#} {:#} {:#}",
             palette.description("diff"),
             palette.expected("original"),
             palette.var("var"),
