@@ -3,19 +3,13 @@ name = "predicates-core"
 version = "1.0.5"
 description = "An API for boolean-valued predicate functions."
 authors = ["Nick Stevens <nick@bitcurry.com>"]
-license = "MIT OR Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/assert-rs/predicates-rs/tree/master/crates/core"
 homepage = "https://github.com/assert-rs/predicates-rs/tree/master/crates/core"
 documentation = "https://docs.rs/predicates-core"
 categories = ["data-structures", "rust-patterns"]
 keywords = ["predicate", "boolean", "combinatorial", "match", "logic"]
-edition = "2021"
-rust-version = "1.60.0"  # MSRV
-include = [
-  "src/**/*",
-  "Cargo.toml",
-  "LICENSE*",
-  "README.md",
-  "examples/**/*"
-]
+license.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+include.workspace = true

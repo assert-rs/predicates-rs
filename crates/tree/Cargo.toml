@@ -3,22 +3,16 @@ name = "predicates-tree"
 version = "1.0.7"
 authors = ["Nick Stevens <nick@bitcurry.com>"]
 description = "Render boolean-valued predicate functions results as a tree."
-license = "MIT OR Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/assert-rs/predicates-rs/tree/master/crates/tree"
 homepage = "https://github.com/assert-rs/predicates-rs/tree/master/crates/tree"
 documentation = "https://docs.rs/predicates-tree"
 categories = ["data-structures", "rust-patterns"]
 keywords = ["predicate", "boolean", "combinatorial", "match", "logic"]
-edition = "2021"
-rust-version = "1.60.0"  # MSRV
-include = [
-  "src/**/*",
-  "Cargo.toml",
-  "LICENSE*",
-  "README.md",
-  "examples/**/*"
-]
+license.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+include.workspace = true
 
 [dependencies]
 predicates-core = { version = "1.0", path = "../core" }

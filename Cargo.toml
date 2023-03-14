@@ -1,27 +1,36 @@
 [workspace]
 members = ["crates/*"]
+resolver = "2"
+
+[workspace.package]
+license = "MIT OR Apache-2.0"
+edition = "2021"
+rust-version = "1.64.0"  # MSRV
+include = [
+  "build.rs",
+  "src/**/*",
+  "Cargo.toml",
+  "LICENSE*",
+  "README.md",
+  "benches/**/*",
+  "examples/**/*"
+]
 
 [package]
 name = "predicates"
 version = "2.1.5"
 description = "An implementation of boolean-valued predicate functions."
 authors = ["Nick Stevens <nick@bitcurry.com>"]
-license = "MIT OR Apache-2.0"
 repository = "https://github.com/assert-rs/predicates-rs"
 homepage = "https://github.com/assert-rs/predicates-rs"
 documentation = "https://docs.rs/predicates"
 readme = "README.md"
 categories = ["data-structures", "rust-patterns"]
 keywords = ["predicate", "boolean", "combinatorial", "match", "logic"]
-edition = "2021"
-rust-version = "1.60.0"  # MSRV
-include = [
-  "src/**/*",
-  "Cargo.toml",
-  "LICENSE*",
-  "README.md",
-  "examples/**/*"
-]
+license.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+include.workspace = true
 
 [package.metadata.release]
 pre-release-replacements = [
