@@ -9,8 +9,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Compatibility
 
-- Updated to predicates v3
 - Update MSRV to 1.64.0
+
+### Fixes
+
+- Ensured `alternate` gets passed down which is needed by `predicates` v3
 
 ## [1.0.7]
 
