@@ -44,14 +44,12 @@ impl reflection::PredicateReflection for ExistencePredicate {}
 
 impl fmt::Display for ExistencePredicate {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let palette = crate::Palette::current();
+        let palette = crate::Palette::new(f.alternate());
         write!(
             f,
             "{}({})",
-            palette
-                .description
-                .paint(if self.exists { "exists" } else { "missing" }),
-            palette.var.paint("var")
+            palette.description(if self.exists { "exists" } else { "missing" }),
+            palette.var("var")
         )
     }
 }

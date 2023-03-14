@@ -1,50 +1,69 @@
 #[derive(Copy, Clone, Debug, Default)]
 pub(crate) struct Palette {
-    pub(crate) description: styled::Style,
-    pub(crate) var: styled::Style,
-    pub(crate) expected: styled::Style,
+    description: anstyle::Style,
+    var: anstyle::Style,
+    expected: anstyle::Style,
 }
 
 impl Palette {
-    #[cfg(feature = "color")]
-    pub(crate) fn current() -> Self {
-        if concolor::get(concolor::Stream::Either).ansi_color() {
+    pub(crate) fn new(alternate: bool) -> Self {
+        if alternate && cfg!(feature = "color") {
             Self {
-                description: styled::Style(yansi::Style::new(yansi::Color::Blue).bold()),
-                var: styled::Style(yansi::Style::new(yansi::Color::Red).bold()),
-                expected: styled::Style(yansi::Style::new(yansi::Color::Green).bold()),
+                description: anstyle::AnsiColor::Blue | anstyle::Effects::BOLD,
+                var: anstyle::AnsiColor::Red | anstyle::Effects::BOLD,
+                expected: anstyle::AnsiColor::Green | anstyle::Effects::BOLD,
             }
         } else {
-            Self::default()
+            Self::plain()
         }
     }
 
-    #[cfg(not(feature = "color"))]
-    pub(crate) fn current() -> Self {
-        Self::default()
-    }
-}
-
-#[cfg(feature = "color")]
-mod styled {
-    #[derive(Copy, Clone, Debug, Default)]
-    pub(crate) struct Style(pub(crate) yansi::Style);
-
-    impl Style {
-        pub(crate) fn paint<T: std::fmt::Display>(self, item: T) -> impl std::fmt::Display {
-            self.0.paint(item)
+    pub(crate) fn plain() -> Self {
+        Self {
+            description: Default::default(),
+            var: Default::default(),
+            expected: Default::default(),
         }
     }
+
+    pub(crate) fn description<D: std::fmt::Display>(self, display: D) -> Styled<D> {
+        Styled::new(display, self.description)
+    }
+
+    pub(crate) fn var<D: std::fmt::Display>(self, display: D) -> Styled<D> {
+        Styled::new(display, self.var)
+    }
+
+    pub(crate) fn expected<D: std::fmt::Display>(self, display: D) -> Styled<D> {
+        Styled::new(display, self.expected)
+    }
 }
 
-#[cfg(not(feature = "color"))]
-mod styled {
-    #[derive(Copy, Clone, Debug, Default)]
-    pub(crate) struct Style;
+#[derive(Debug)]
+pub(crate) struct Styled<D> {
+    display: D,
+    style: anstyle::Style,
+}
 
-    impl Style {
-        pub(crate) fn paint<T: std::fmt::Display>(self, item: T) -> impl std::fmt::Display {
-            item
+impl<D: std::fmt::Display> Styled<D> {
+    pub(crate) fn new(display: D, style: anstyle::Style) -> Self {
+        Self { display, style }
+    }
+}
+
+impl<D: std::fmt::Display> std::fmt::Display for Styled<D> {
+    #[inline]
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        if f.alternate() {
+            write!(
+                f,
+                "{}{}{}",
+                self.style.render(),
+                self.display,
+                self.style.render_reset()
+            )
+        } else {
+            self.display.fmt(f)
         }
     }
 }

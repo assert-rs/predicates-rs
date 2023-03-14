@@ -69,15 +69,13 @@ where
     T: fmt::Debug,
 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let palette = crate::Palette::current();
+        let palette = crate::Palette::new(f.alternate());
         write!(
             f,
             "{} {} {}",
-            palette.var.paint("var"),
-            palette.description.paint(self.op),
-            palette
-                .expected
-                .paint(utils::DebugAdapter::new(&self.constant)),
+            palette.var("var"),
+            palette.description(self.op),
+            palette.expected(utils::DebugAdapter::new(&self.constant)),
         )
     }
 }
@@ -195,15 +193,13 @@ where
     T: fmt::Debug,
 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let palette = crate::Palette::current();
+        let palette = crate::Palette::new(f.alternate());
         write!(
             f,
             "{} {} {}",
-            palette.var.paint("var"),
-            palette.description.paint(self.op),
-            palette
-                .expected
-                .paint(utils::DebugAdapter::new(&self.constant)),
+            palette.var("var"),
+            palette.description(self.op),
+            palette.expected(utils::DebugAdapter::new(&self.constant)),
         )
     }
 }

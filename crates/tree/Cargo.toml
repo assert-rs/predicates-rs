@@ -16,7 +16,7 @@ include.workspace = true
 
 [dependencies]
 predicates-core = { version = "1.0", path = "../core" }
-termtree = "0.4"
+termtree = "0.4.1"
 
 [dev-dependencies]
-predicates = { version = "2.1", path = "../..", features = ["color-auto"] }
+predicates = { version = "2.1", path = "../..", features = ["color"] }

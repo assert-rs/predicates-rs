@@ -50,8 +50,7 @@ normalize-line-endings = { version = "0.3.0", optional = true }
 regex = { version="1.0", optional = true }
 float-cmp = { version="0.9", optional = true }
 itertools = "0.10"
-yansi = { version = "0.5.1", optional = true }
-concolor = { version = "0.0.12", optional = true }
+anstyle = "0.3.0"
 
 [dev-dependencies]
 predicates-tree = { version = "1.0", path = "crates/tree" }
@@ -60,5 +59,4 @@ predicates-tree = { version = "1.0", path = "crates/tree" }
 default = ["diff", "regex", "float-cmp", "normalize-line-endings"]
 diff = ["dep:difflib"]
 unstable = []
-color = ["dep:yansi", "dep:concolor", "concolor?/std"]
-color-auto = ["color", "concolor?/auto"]
+color = []

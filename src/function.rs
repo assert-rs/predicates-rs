@@ -96,12 +96,12 @@ where
     T: ?Sized,
 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let palette = crate::Palette::current();
+        let palette = crate::Palette::new(f.alternate());
         write!(
             f,
             "{}({})",
-            palette.description.paint(self.name),
-            palette.var.paint("var"),
+            palette.description(self.name),
+            palette.var("var"),
         )
     }
 }

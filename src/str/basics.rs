@@ -33,12 +33,12 @@ impl reflection::PredicateReflection for IsEmptyPredicate {}
 
 impl fmt::Display for IsEmptyPredicate {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let palette = crate::Palette::current();
+        let palette = crate::Palette::new(f.alternate());
         write!(
             f,
             "{}.{}()",
-            palette.var.paint("var"),
-            palette.description.paint("is_empty"),
+            palette.var("var"),
+            palette.description("is_empty"),
         )
     }
 }
@@ -81,12 +81,12 @@ impl reflection::PredicateReflection for StartsWithPredicate {}
 
 impl fmt::Display for StartsWithPredicate {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let palette = crate::Palette::current();
+        let palette = crate::Palette::new(f.alternate());
         write!(
             f,
             "{}.{}({:?})",
-            palette.var.paint("var"),
-            palette.description.paint("starts_with"),
+            palette.var("var"),
+            palette.description("starts_with"),
             self.pattern
         )
     }
@@ -135,12 +135,12 @@ impl reflection::PredicateReflection for EndsWithPredicate {}
 
 impl fmt::Display for EndsWithPredicate {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let palette = crate::Palette::current();
+        let palette = crate::Palette::new(f.alternate());
         write!(
             f,
             "{}.{}({:?})",
-            palette.var.paint("var"),
-            palette.description.paint("ends_with"),
+            palette.var("var"),
+            palette.description("ends_with"),
             self.pattern
         )
     }
@@ -209,13 +209,13 @@ impl reflection::PredicateReflection for ContainsPredicate {}
 
 impl fmt::Display for ContainsPredicate {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let palette = crate::Palette::current();
+        let palette = crate::Palette::new(f.alternate());
         write!(
             f,
             "{}.{}({})",
-            palette.var.paint("var"),
-            palette.description.paint("contains"),
-            palette.expected.paint(&self.pattern),
+            palette.var("var"),
+            palette.description("contains"),
+            palette.expected(&self.pattern),
         )
     }
 }
@@ -258,13 +258,13 @@ impl reflection::PredicateReflection for MatchesPredicate {
 
 impl fmt::Display for MatchesPredicate {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let palette = crate::Palette::current();
+        let palette = crate::Palette::new(f.alternate());
         write!(
             f,
             "{}.{}({})",
-            palette.var.paint("var"),
-            palette.description.paint("contains"),
-            palette.expected.paint(&self.pattern),
+            palette.var("var"),
+            palette.description("contains"),
+            palette.expected(&self.pattern),
         )
     }
 }
