@@ -56,7 +56,7 @@ anstyle = "0.3.0"
 predicates-tree = { version = "1.0", path = "crates/tree" }
 
 [features]
-default = ["diff", "regex", "float-cmp", "normalize-line-endings"]
+default = ["diff", "regex", "float-cmp", "normalize-line-endings", "color"]
 diff = ["dep:difflib"]
 unstable = []
 color = []
