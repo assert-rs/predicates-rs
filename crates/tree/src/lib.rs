@@ -24,26 +24,29 @@ impl<'a> CaseTreeExt for reflection::Case<'a> {
     }
 }
 
-type CaseTreeInner = termtree::Tree<Box<dyn fmt::Display + Send + Sync>>;
+type CaseTreeInner = termtree::Tree<Displayable>;
 
 fn convert(case: &reflection::Case<'_>) -> CaseTreeInner {
     let mut leaves: Vec<CaseTreeInner> = vec![];
 
     leaves.extend(case.predicate().iter().flat_map(|pred| {
         pred.parameters().map(|item| {
-            let root: Box<dyn fmt::Display + Send + Sync> = Box::new(item.to_string());
+            let root = Displayable::new(&item);
             termtree::Tree::new(root).with_multiline(true)
         })
     }));
 
     leaves.extend(case.products().map(|item| {
-        let root: Box<dyn fmt::Display + Send + Sync> = Box::new(item.to_string());
+        let root = Displayable::new(item);
         termtree::Tree::new(root).with_multiline(true)
     }));
 
     leaves.extend(case.children().map(convert));
 
-    let root = Box::new(case.predicate().map(|p| p.to_string()).unwrap_or_default());
+    let root = case
+        .predicate()
+        .map(|p| Displayable::new(&p))
+        .unwrap_or_default();
     CaseTreeInner::new(root).with_leaves(leaves)
 }
 
@@ -54,5 +57,29 @@ pub struct CaseTree(CaseTreeInner);
 impl fmt::Display for CaseTree {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         self.0.fmt(f)
+    }
+}
+
+#[derive(Default)]
+struct Displayable {
+    primary: String,
+    alternate: String,
+}
+
+impl Displayable {
+    fn new(display: &dyn std::fmt::Display) -> Self {
+        let primary = format!("{}", display);
+        let alternate = format!("{:#}", display);
+        Self { primary, alternate }
+    }
+}
+
+impl fmt::Display for Displayable {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        if f.alternate() {
+            self.alternate.fmt(f)
+        } else {
+            self.primary.fmt(f)
+        }
     }
 }
