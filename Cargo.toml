@@ -1,27 +1,36 @@
 [workspace]
 members = ["crates/*"]
+resolver = "2"
+
+[workspace.package]
+license = "MIT OR Apache-2.0"
+edition = "2021"
+rust-version = "1.64.0"  # MSRV
+include = [
+  "build.rs",
+  "src/**/*",
+  "Cargo.toml",
+  "LICENSE*",
+  "README.md",
+  "benches/**/*",
+  "examples/**/*"
+]
 
 [package]
 name = "predicates"
 version = "2.1.5"
 description = "An implementation of boolean-valued predicate functions."
 authors = ["Nick Stevens <nick@bitcurry.com>"]
-license = "MIT OR Apache-2.0"
 repository = "https://github.com/assert-rs/predicates-rs"
 homepage = "https://github.com/assert-rs/predicates-rs"
 documentation = "https://docs.rs/predicates"
 readme = "README.md"
 categories = ["data-structures", "rust-patterns"]
 keywords = ["predicate", "boolean", "combinatorial", "match", "logic"]
-edition = "2021"
-rust-version = "1.60.0"  # MSRV
-include = [
-  "src/**/*",
-  "Cargo.toml",
-  "LICENSE*",
-  "README.md",
-  "examples/**/*"
-]
+license.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+include.workspace = true
 
 [package.metadata.release]
 pre-release-replacements = [
@@ -41,15 +50,13 @@ normalize-line-endings = { version = "0.3.0", optional = true }
 regex = { version="1.0", optional = true }
 float-cmp = { version="0.9", optional = true }
 itertools = "0.10"
-yansi = { version = "0.5.1", optional = true }
-concolor = { version = "0.0.12", optional = true }
+anstyle = "0.3.0"
 
 [dev-dependencies]
 predicates-tree = { version = "1.0", path = "crates/tree" }
 
 [features]
-default = ["diff", "regex", "float-cmp", "normalize-line-endings"]
+default = ["diff", "regex", "float-cmp", "normalize-line-endings", "color"]
 diff = ["dep:difflib"]
 unstable = []
-color = ["dep:yansi", "dep:concolor", "concolor?/std"]
-color-auto = ["color", "concolor?/auto"]
+color = []

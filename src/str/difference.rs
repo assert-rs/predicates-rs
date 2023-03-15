@@ -30,7 +30,7 @@ impl Predicate<str> for DifferencePredicate {
         if result == expected {
             None
         } else {
-            let palette = crate::Palette::current();
+            let palette = crate::Palette::new(true);
             let orig: Vec<_> = self.orig.lines().map(|l| format!("{}\n", l)).collect();
             let variable: Vec<_> = variable.lines().map(|l| format!("{}\n", l)).collect();
             let diff = difflib::unified_diff(
@@ -38,8 +38,8 @@ impl Predicate<str> for DifferencePredicate {
                 &variable,
                 "",
                 "",
-                &palette.expected.paint("orig").to_string(),
-                &palette.var.paint("var").to_string(),
+                &palette.expected("orig").to_string(),
+                &palette.var("var").to_string(),
                 0,
             );
             let mut diff = colorize_diff(diff, palette);
@@ -64,13 +64,13 @@ impl reflection::PredicateReflection for DifferencePredicate {
 
 impl fmt::Display for DifferencePredicate {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let palette = crate::Palette::current();
+        let palette = crate::Palette::new(f.alternate());
         write!(
             f,
             "{} {} {}",
-            palette.description.paint("diff"),
-            palette.expected.paint("original"),
-            palette.var.paint("var"),
+            palette.description("diff"),
+            palette.expected("original"),
+            palette.var("var"),
         )
     }
 }
@@ -98,27 +98,27 @@ where
 #[cfg(feature = "color")]
 fn colorize_diff(mut lines: Vec<String>, palette: crate::Palette) -> Vec<String> {
     for (i, line) in lines.iter_mut().enumerate() {
-        match (i, line.as_bytes().get(0)) {
+        match (i, line.as_bytes().first()) {
             (0, _) => {
                 if let Some((prefix, body)) = line.split_once(' ') {
-                    *line = format!("{} {}", palette.expected.paint(prefix), body);
+                    *line = format!("{:#} {}", palette.expected(prefix), body);
                 }
             }
             (1, _) => {
                 if let Some((prefix, body)) = line.split_once(' ') {
-                    *line = format!("{} {}", palette.var.paint(prefix), body);
+                    *line = format!("{:#} {}", palette.var(prefix), body);
                 }
             }
             (_, Some(b'-')) => {
                 let (prefix, body) = line.split_at(1);
-                *line = format!("{}{}", palette.expected.paint(prefix), body);
+                *line = format!("{:#}{}", palette.expected(prefix), body);
             }
             (_, Some(b'+')) => {
                 let (prefix, body) = line.split_at(1);
-                *line = format!("{}{}", palette.var.paint(prefix), body);
+                *line = format!("{:#}{}", palette.var(prefix), body);
             }
             (_, Some(b'@')) => {
-                *line = format!("{}", palette.description.paint(&line));
+                *line = format!("{:#}", palette.description(&line));
             }
             _ => (),
         }

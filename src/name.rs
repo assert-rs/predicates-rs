@@ -75,8 +75,8 @@ where
     Item: ?Sized,
 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let palette = crate::Palette::current();
-        write!(f, "{}", palette.description.paint(self.name))
+        let palette = crate::Palette::new(f.alternate());
+        write!(f, "{}", palette.description(self.name))
     }
 }
 

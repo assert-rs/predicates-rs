@@ -55,13 +55,13 @@ impl reflection::PredicateReflection for RegexPredicate {}
 
 impl fmt::Display for RegexPredicate {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let palette = crate::Palette::current();
+        let palette = crate::Palette::new(f.alternate());
         write!(
             f,
             "{}.{}({})",
-            palette.var.paint("var"),
-            palette.description.paint("is_match"),
-            palette.expected.paint(&self.re),
+            palette.var("var"),
+            palette.description("is_match"),
+            palette.expected(&self.re),
         )
     }
 }
@@ -104,13 +104,13 @@ impl reflection::PredicateReflection for RegexMatchesPredicate {
 
 impl fmt::Display for RegexMatchesPredicate {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let palette = crate::Palette::current();
+        let palette = crate::Palette::new(f.alternate());
         write!(
             f,
             "{}.{}({})",
-            palette.var.paint("var"),
-            palette.description.paint("is_match"),
-            palette.expected.paint(&self.re),
+            palette.var("var"),
+            palette.description("is_match"),
+            palette.expected(&self.re),
         )
     }
 }
