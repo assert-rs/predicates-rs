@@ -32,7 +32,7 @@ impl FileType {
         if file_type.is_dir() {
             return Ok(FileType::Dir);
         }
-        if path.is_file() {
+        if file_type.is_file() {
             return Ok(FileType::File);
         }
         Ok(FileType::Symlink)
