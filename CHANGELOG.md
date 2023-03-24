@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- next-header -->
 ## [Unreleased] - ReleaseDate
 
+### Fixes
+
+- Respect `follow_links` when checking whether a path is backed by a file
+
 ## [3.0.1] - 2023-03-14
 
 ### Fixes
