@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- next-header -->
 ## [Unreleased] - ReleaseDate
 
+## [3.0.2] - 2023-03-24
+
 ### Fixes
 
 - Respect `follow_links` when checking whether a path is backed by a file
@@ -217,7 +219,8 @@ Update MSRV to 1.60
 - Basic README
 
 <!-- next-url -->
-[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v3.0.1...HEAD
+[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v3.0.2...HEAD
+[3.0.2]: https://github.com/assert-rs/predicates-rs/compare/v3.0.1...v3.0.2
 [3.0.1]: https://github.com/assert-rs/predicates-rs/compare/v3.0.0...v3.0.1
 [3.0.0]: https://github.com/assert-rs/predicates-rs/compare/v2.1.5...v3.0.0
 [2.1.5]: https://github.com/assert-rs/predicates-rs/compare/v2.1.4...v2.1.5

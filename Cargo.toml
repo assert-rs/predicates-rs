@@ -18,7 +18,7 @@ include = [
 
 [package]
 name = "predicates"
-version = "3.0.1"
+version = "3.0.2"
 description = "An implementation of boolean-valued predicate functions."
 authors = ["Nick Stevens <nick@bitcurry.com>"]
 repository = "https://github.com/assert-rs/predicates-rs"
