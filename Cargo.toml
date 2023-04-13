@@ -50,7 +50,7 @@ normalize-line-endings = { version = "0.3.0", optional = true }
 regex = { version="1.0", optional = true }
 float-cmp = { version="0.9", optional = true }
 itertools = "0.10"
-anstyle = "0.3.0"
+anstyle = "1.0.0"
 
 [dev-dependencies]
 predicates-tree = { version = "1.0", path = "crates/tree" }

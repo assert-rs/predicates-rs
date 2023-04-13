@@ -9,9 +9,9 @@ impl Palette {
     pub(crate) fn new(alternate: bool) -> Self {
         if alternate && cfg!(feature = "color") {
             Self {
-                description: anstyle::AnsiColor::Blue | anstyle::Effects::BOLD,
-                var: anstyle::AnsiColor::Red | anstyle::Effects::BOLD,
-                expected: anstyle::AnsiColor::Green | anstyle::Effects::BOLD,
+                description: anstyle::AnsiColor::Blue.on_default() | anstyle::Effects::BOLD,
+                var: anstyle::AnsiColor::Red.on_default() | anstyle::Effects::BOLD,
+                expected: anstyle::AnsiColor::Green.on_default() | anstyle::Effects::BOLD,
             }
         } else {
             Self::plain()
