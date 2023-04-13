@@ -24,7 +24,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! predicates = "3.0.2"
+//! predicates = "3.0.3"
 //! ```
 //!
 //! A [prelude] is available to bring in all extension traits as well as providing
