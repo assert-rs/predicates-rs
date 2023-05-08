@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- next-header -->
 ## [Unreleased] - ReleaseDate
 
+#### Breaking Changes
+
+- Enabling the `regex` feature does not enable the default features of the `regex` crate (except `std`) anymore.
+
 ## [3.0.3] - 2023-04-13
 
 ### Internal
