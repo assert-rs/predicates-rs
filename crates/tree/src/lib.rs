@@ -8,6 +8,8 @@
 
 //! Render `Case` as a tree.
 
+#![cfg_attr(docsrs, feature(doc_auto_cfg))]
+
 use std::fmt;
 
 use predicates_core::reflection;
