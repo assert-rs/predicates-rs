@@ -143,6 +143,7 @@
 //! - [`predicate::str::ends_with`]: Specified string must end with the given needle.
 //! - [`predicate::str::contains`]: Specified string must contain the given needle.
 //!   - [`predicate::str::contains(...).count`]: Required number of times the needle must show up.
+//! - [`predicate::str::contains_all`]: Specified string must contain all given needles.
 //! - [`predicate::str::is_match`]: Specified string must match the given regex.
 //!   - [`predicate::str::is_match(...).count`]: Required number of times the match must show up.
 //! - [`str_pred.trim`]: Trim whitespace before passing it to `str_pred`.
@@ -188,6 +189,7 @@
 //! [`predicate::path::missing`]: prelude::predicate::path::missing()
 //! [`predicate::str::contains(...).count`]: str::ContainsPredicate::count()
 //! [`predicate::str::contains`]: prelude::predicate::str::contains()
+//! [`predicate::str::contains_all`]: prelude::predicate::str::contains_all()
 //! [`predicate::str::diff`]: prelude::predicate::str::diff()
 //! [`predicate::str::ends_with`]: prelude::predicate::str::ends_with()
 //! [`predicate::str::is_empty`]: prelude::predicate::str::is_empty()

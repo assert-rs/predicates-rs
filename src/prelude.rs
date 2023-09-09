@@ -28,7 +28,7 @@ pub mod predicate {
     /// This module contains predicates specific to string handling.
     pub mod str {
         pub use crate::str::is_empty;
-        pub use crate::str::{contains, ends_with, starts_with};
+        pub use crate::str::{contains, contains_all, ends_with, starts_with};
 
         #[cfg(feature = "diff")]
         pub use crate::str::diff;
