@@ -288,3 +288,63 @@ where
         pattern: pattern.into(),
     }
 }
+
+/// Predicate that checks for all patterns.
+///
+/// This is created by `predicates::str:contains_all`.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ContainsAllPredicate {
+    patterns: Vec<String>,
+}
+
+impl Predicate<str> for ContainsAllPredicate {
+    fn eval(&self, variable: &str) -> bool {
+        for pattern in &self.patterns {
+            if !variable.contains(pattern) {
+                return false;
+            }
+        }
+
+        true
+    }
+}
+
+impl reflection::PredicateReflection for ContainsAllPredicate {}
+
+impl fmt::Display for ContainsAllPredicate {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let palette = crate::Palette::new(f.alternate());
+        write!(
+            f,
+            "{}.{}({})",
+            palette.var("var"),
+            palette.description("contains_all"),
+            palette.expected(format!("{:?}", &self.patterns)),
+        )
+    }
+}
+
+/// Creates a new `Predicate` that ensures a str contains `pattern`
+///
+/// # Examples
+///
+/// ```
+/// use predicates::prelude::*;
+///
+/// let predicate_fn = predicate::str::contains_all(vec!["One", "Two", "Three"]);
+/// assert_eq!(true, predicate_fn.eval("One Two Three"));
+/// assert_eq!(false, predicate_fn.eval("One Two Four"));
+/// assert_eq!(false, predicate_fn.eval("Four Five Six"));
+/// ```
+pub fn contains_all<P, T>(patterns: P) -> ContainsAllPredicate
+where
+    P: IntoIterator<Item = T>,
+    T: AsRef<str>,
+{
+    let patterns: Vec<_> = patterns
+        .into_iter()
+        .map(|p| p.as_ref().to_string())
+        .collect();
+
+    ContainsAllPredicate { patterns }
+}

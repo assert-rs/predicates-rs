@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- next-header -->
 ## [Unreleased] - ReleaseDate
 
+### Added
+
+- Add `str::contains_all` function
+
 ## [3.0.3] - 2023-04-13
 
 ### Internal
