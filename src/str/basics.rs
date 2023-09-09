@@ -307,6 +307,24 @@ impl Predicate<str> for ContainsAllPredicate {
 
         true
     }
+
+    fn find_case<'a>(&'a self, expected: bool, variable: &str) -> Option<reflection::Case<'a>> {
+        let mut missing = None;
+
+        for pattern in &self.patterns {
+            if !variable.contains(pattern) && !expected {
+                missing = Some(pattern)
+            }
+        }
+
+        match missing {
+            Some(m) => Some(
+                reflection::Case::new(Some(self), false)
+                    .add_product(reflection::Product::new("missing", m.to_owned())),
+            ),
+            None => None,
+        }
+    }
 }
 
 impl reflection::PredicateReflection for ContainsAllPredicate {}
