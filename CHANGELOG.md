@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- next-header -->
 ## [Unreleased] - ReleaseDate
 
+### Compatibility
+
+- Update MSRV to 1.69.0
+
+### Internal
+
+- Update `itertools` to 0.11
+
 ## [3.0.3] - 2023-04-13
 
 ### Internal
