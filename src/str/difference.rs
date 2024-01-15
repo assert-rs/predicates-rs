@@ -46,10 +46,8 @@ impl Predicate<str> for DifferencePredicate {
             diff.insert(0, "\n".to_owned());
 
             Some(
-                reflection::Case::new(Some(self), result).add_product(reflection::Product::new(
-                    "diff",
-                    itertools::join(diff.iter(), ""),
-                )),
+                reflection::Case::new(Some(self), result)
+                    .add_product(reflection::Product::new("diff", diff.join(""))),
             )
         }
     }
