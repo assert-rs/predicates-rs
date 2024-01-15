@@ -32,4 +32,4 @@ predicates-core = { version = "1.0", path = "../core" }
 termtree = "0.4.1"
 
 [dev-dependencies]
-predicates = { version = "3.0", path = "../..", features = ["color"] }
+predicates = { version = "3.1", path = "../..", features = ["color"] }
