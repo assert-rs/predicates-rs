@@ -23,7 +23,7 @@ impl<T> DebugAdapter<T>
 where
     T: fmt::Debug,
 {
-    pub fn new(debug: T) -> Self {
+    pub(crate) fn new(debug: T) -> Self {
         Self { debug }
     }
 }
