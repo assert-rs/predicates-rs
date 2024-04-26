@@ -84,7 +84,7 @@ where
 {
     /// Returns a `BoxPredicate` wrapper around this `Predicate` type.
     ///
-    /// Returns a `BoxPredicate` wrapper around this `Predicate type. The
+    /// Returns a `BoxPredicate` wrapper around this `Predicate` type. The
     /// `BoxPredicate` type has a number of useful properties:
     ///
     ///   - It stores the inner predicate as a trait object, so the type of
