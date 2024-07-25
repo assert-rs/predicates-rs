@@ -88,7 +88,7 @@ zero_sized_map_values = "warn"
 
 [package]
 name = "predicates"
-version = "3.1.0"
+version = "3.1.1"
 description = "An implementation of boolean-valued predicate functions."
 authors = ["Nick Stevens <nick@bitcurry.com>"]
 repository = "https://github.com/assert-rs/predicates-rs"

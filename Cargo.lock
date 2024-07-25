@@ -61,7 +61,7 @@ dependencies = [
 
 [[package]]
 name = "predicates"
-version = "3.1.0"
+version = "3.1.1"
 dependencies = [
  "anstyle",
  "difflib",
@@ -74,11 +74,11 @@ dependencies = [
 
 [[package]]
 name = "predicates-core"
-version = "1.0.6"
+version = "1.0.7"
 
 [[package]]
 name = "predicates-tree"
-version = "1.0.9"
+version = "1.0.10"
 dependencies = [
  "predicates",
  "predicates-core",
