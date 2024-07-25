@@ -1,6 +1,6 @@
 [package]
 name = "predicates-core"
-version = "1.0.7"
+version = "1.0.8"
 description = "An API for boolean-valued predicate functions."
 authors = ["Nick Stevens <nick@bitcurry.com>"]
 readme = "README.md"
