@@ -15,7 +15,7 @@ use crate::reflection;
 use crate::str::normalize::NormalizedPredicate;
 use crate::Predicate;
 
-/// Predicate adaper that trims the variable being tested.
+/// Predicate adapter that trims the variable being tested.
 ///
 /// This is created by `pred.trim()`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -58,7 +58,7 @@ where
     }
 }
 
-/// Predicate adaper that converts a `str` predicate to byte predicate.
+/// Predicate adapter that converts a `str` predicate to byte predicate.
 ///
 /// This is created by `pred.from_utf8()`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
