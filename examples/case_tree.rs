@@ -7,7 +7,7 @@ fn main() {
     let var = 5;
     let case = pred.find_case(true, &var);
     if let Some(case) = case {
-        println!("var is {}", var);
+        println!("var is {var}");
         println!("{}", case.tree());
     }
 }

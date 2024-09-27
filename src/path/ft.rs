@@ -54,7 +54,7 @@ impl fmt::Display for FileType {
             FileType::Dir => "dir",
             FileType::Symlink => "symlink",
         };
-        write!(f, "{}", t)
+        write!(f, "{t}")
     }
 }
 

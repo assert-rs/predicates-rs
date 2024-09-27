@@ -26,7 +26,7 @@ impl fmt::Display for EqOps {
             EqOps::Equal => "==",
             EqOps::NotEqual => "!=",
         };
-        write!(f, "{}", op)
+        write!(f, "{op}")
     }
 }
 
@@ -148,7 +148,7 @@ impl fmt::Display for OrdOps {
             OrdOps::GreaterThanOrEqual => ">=",
             OrdOps::GreaterThan => ">",
         };
-        write!(f, "{}", op)
+        write!(f, "{op}")
     }
 }
 
