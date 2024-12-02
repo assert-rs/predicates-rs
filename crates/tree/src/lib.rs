@@ -20,7 +20,7 @@ pub trait CaseTreeExt {
     fn tree(&self) -> CaseTree;
 }
 
-impl<'a> CaseTreeExt for reflection::Case<'a> {
+impl CaseTreeExt for reflection::Case<'_> {
     fn tree(&self) -> CaseTree {
         CaseTree(convert(self))
     }

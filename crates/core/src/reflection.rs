@@ -54,13 +54,13 @@ impl<'a> Parameter<'a> {
     }
 }
 
-impl<'a> fmt::Display for Parameter<'a> {
+impl fmt::Display for Parameter<'_> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}: {}", self.0, self.1)
     }
 }
 
-impl<'a> fmt::Debug for Parameter<'a> {
+impl fmt::Debug for Parameter<'_> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "({:?}, {})", self.0, self.1)
     }
@@ -86,13 +86,13 @@ impl<'a> Child<'a> {
     }
 }
 
-impl<'a> fmt::Display for Child<'a> {
+impl fmt::Display for Child<'_> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}: {}", self.0, self.1)
     }
 }
 
-impl<'a> fmt::Debug for Child<'a> {
+impl fmt::Debug for Child<'_> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "({:?}, {})", self.0, self.1)
     }
@@ -150,7 +150,7 @@ impl<'a> Case<'a> {
     }
 }
 
-impl<'a> fmt::Debug for Case<'a> {
+impl fmt::Debug for Case<'_> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let predicate = if let Some(ref predicate) = self.predicate {
             format!("Some({})", predicate)
