@@ -114,4 +114,15 @@ where
     }
 }
 
-impl<P, Item> PredicateBoxExt<Item> for P where P: Predicate<Item> {}
+impl<P, Item: ?Sized> PredicateBoxExt<Item> for P where P: Predicate<Item> {}
+
+#[cfg(test)]
+mod test {
+    use crate::prelude::*;
+
+    #[test]
+    fn unsized_boxed() {
+        let p = predicate::always().boxed();
+        p.eval("4");
+    }
+}
