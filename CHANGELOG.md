@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- next-header -->
 ## [Unreleased] - ReleaseDate
 
+## [3.1.3] - 2024-12-19
+
 ### Features
 
 - The `boxed` function is now available for predicates with an `Item` type that
@@ -258,7 +260,8 @@ Update MSRV to 1.60
 - Basic README
 
 <!-- next-url -->
-[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v3.1.2...HEAD
+[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v3.1.3...HEAD
+[3.1.3]: https://github.com/assert-rs/predicates-rs/compare/v3.1.2...v3.1.3
 [3.1.2]: https://github.com/assert-rs/predicates-rs/compare/v3.1.1...v3.1.2
 [3.1.1]: https://github.com/assert-rs/predicates-rs/compare/v3.1.0...v3.1.1
 [3.1.0]: https://github.com/assert-rs/predicates-rs/compare/v3.0.4...v3.1.0

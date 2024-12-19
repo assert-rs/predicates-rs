@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- next-header -->
 ## [Unreleased] - ReleaseDate
 
+## [1.0.12] - 2024-12-19
+
 ## [1.0.11] - 2024-07-25
 
 ## [1.0.10] - 2024-07-25
@@ -43,7 +45,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Support for rendering a predicate as a tree.
 
 <!-- next-url -->
-[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/predicates-tree-v1.0.11...HEAD
+[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/predicates-tree-v1.0.12...HEAD
+[1.0.12]: https://github.com/assert-rs/predicates-rs/compare/predicates-tree-v1.0.11...predicates-tree-v1.0.12
 [1.0.11]: https://github.com/assert-rs/predicates-rs/compare/predicates-tree-v1.0.10...predicates-tree-v1.0.11
 [1.0.10]: https://github.com/assert-rs/predicates-rs/compare/predicates-tree-v1.0.9...predicates-tree-v1.0.10
 [1.0.9]: https://github.com/assert-rs/predicates-rs/compare/predicates-tree-v1.0.8...predicates-tree-v1.0.9
