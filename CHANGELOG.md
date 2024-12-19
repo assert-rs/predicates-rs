@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- next-header -->
 ## [Unreleased] - ReleaseDate
 
+### Added
+
+- The `boxed` function is now available for predicates with an `Item` type that
+  is not `Sized`.
+
 ## [3.1.2] - 2024-07-25
 
 ## [3.1.1] - 2024-07-25
