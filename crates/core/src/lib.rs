@@ -24,3 +24,7 @@
 mod core;
 pub use crate::core::*;
 pub mod reflection;
+
+#[doc = include_str!("../README.md")]
+#[cfg(doctest)]
+pub struct ReadmeDoctests;

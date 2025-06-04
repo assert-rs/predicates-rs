@@ -1,14 +1,10 @@
 [package]
 name = "predicates-tree"
 version = "1.0.12"
-authors = ["Nick Stevens <nick@bitcurry.com>"]
 description = "Render boolean-valued predicate functions results as a tree."
-readme = "README.md"
-repository = "https://github.com/assert-rs/predicates-rs/tree/master/crates/tree"
-homepage = "https://github.com/assert-rs/predicates-rs/tree/master/crates/tree"
-documentation = "https://docs.rs/predicates-tree"
 categories = ["data-structures", "rust-patterns"]
 keywords = ["predicate", "boolean", "combinatorial", "match", "logic"]
+repository.workspace = true
 license.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -16,7 +12,7 @@ include.workspace = true
 
 [package.metadata.docs.rs]
 all-features = true
-rustdoc-args = ["--cfg", "docsrs"]
+rustdoc-args = ["--cfg", "docsrs", "--generate-link-to-definition"]
 
 [package.metadata.release]
 pre-release-replacements = [
