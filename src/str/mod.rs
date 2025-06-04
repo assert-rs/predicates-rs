@@ -27,4 +27,4 @@ pub use self::normalize::NormalizedPredicate;
 #[cfg(feature = "regex")]
 mod regex;
 #[cfg(feature = "regex")]
-pub use self::regex::{is_match, RegexError, RegexPredicate};
+pub use self::regex::{is_match, RegexError, RegexMatchesPredicate, RegexPredicate};

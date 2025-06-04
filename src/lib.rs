@@ -227,3 +227,7 @@ pub mod str;
 mod color;
 use color::Palette;
 mod utils;
+
+#[doc = include_str!("../README.md")]
+#[cfg(doctest)]
+pub struct ReadmeDoctests;

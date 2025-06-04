@@ -85,3 +85,7 @@ impl fmt::Display for Displayable {
         }
     }
 }
+
+#[doc = include_str!("../README.md")]
+#[cfg(doctest)]
+pub struct ReadmeDoctests;
