@@ -153,7 +153,7 @@ impl<'a> Case<'a> {
 impl fmt::Debug for Case<'_> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let predicate = if let Some(ref predicate) = self.predicate {
-            format!("Some({})", predicate)
+            format!("Some({predicate})")
         } else {
             "None".to_owned()
         };

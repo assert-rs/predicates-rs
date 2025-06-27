@@ -7,7 +7,7 @@ fn main() {
     let pred = predicates::ord::eq(expected);
     if let Some(case) = pred.find_case(false, &actual) {
         let tree = case.tree();
-        println!("{}", tree);
+        println!("{tree}");
     }
 
     let expected = [1, 2, 3];
@@ -15,7 +15,7 @@ fn main() {
     let pred = predicates::iter::in_iter(IntoIterator::into_iter(expected));
     if let Some(case) = pred.find_case(false, &actual) {
         let tree = case.tree();
-        println!("{}", tree);
+        println!("{tree}");
     }
 
     let expected = "Hello
@@ -29,7 +29,7 @@ Goodbye!";
     let pred = predicates::ord::eq(expected);
     if let Some(case) = pred.find_case(false, &actual) {
         let tree = case.tree();
-        println!("{}", tree);
+        println!("{tree}");
     }
 
     let expected = "Hello
@@ -43,6 +43,6 @@ Goodbye!";
     let pred = predicates::str::diff(expected);
     if let Some(case) = pred.find_case(false, actual) {
         let tree = case.tree();
-        println!("{}", tree);
+        println!("{tree}");
     }
 }
