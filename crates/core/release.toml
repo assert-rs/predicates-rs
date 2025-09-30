@@ -1,1 +1,2 @@
-pre-release-replacements = []
+dependent-version = "fix"
+allow-branch = ["master"]

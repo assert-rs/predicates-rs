@@ -18,8 +18,9 @@
 //! actual filtering without the filtering code knowing anything about user
 //! configuration. See the examples for how this can work.
 
-#![warn(missing_docs, missing_debug_implementations)]
-#![cfg_attr(docsrs, feature(doc_auto_cfg))]
+#![cfg_attr(docsrs, feature(doc_cfg))]
+#![warn(missing_docs)]
+#![warn(missing_debug_implementations)]
 
 mod core;
 pub use crate::core::*;
