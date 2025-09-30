@@ -198,7 +198,7 @@
 //! [`str_pred.normalize`]: prelude::PredicateStrExt::normalize()
 //! [`str_pred.trim`]: prelude::PredicateStrExt::trim()
 
-#![cfg_attr(docsrs, feature(doc_auto_cfg))]
+#![cfg_attr(docsrs, feature(doc_cfg))]
 #![warn(missing_docs)]
 #![warn(clippy::print_stderr)]
 #![warn(clippy::print_stdout)]
