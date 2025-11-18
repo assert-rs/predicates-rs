@@ -111,7 +111,6 @@ impl fmt::Display for BinaryFilePredicate {
 /// let predicate_file = predicate::path::eq_file(Path::new("Cargo.toml"));
 /// assert_eq!(true, predicate_file.eval(Path::new("Cargo.toml")));
 /// assert_eq!(false, predicate_file.eval(Path::new("src")));
-/// assert_eq!(false, predicate_file.eval(Path::new("src")));
 /// ```
 pub fn eq_file<P: Into<path::PathBuf>>(path: P) -> BinaryFilePredicate {
     let path = path.into();

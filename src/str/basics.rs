@@ -168,7 +168,7 @@ where
 
 /// Predicate that checks for patterns.
 ///
-/// This is created by `predicates::str:contains`.
+/// This is created by `predicates::str::contains`.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct ContainsPredicate {
     pattern: String,

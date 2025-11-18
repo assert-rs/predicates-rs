@@ -22,7 +22,7 @@ fn read_file(path: &path::Path) -> io::Result<Vec<u8>> {
 
 /// Predicate adapter that converts a `path` predicate to a byte predicate on its content.
 ///
-/// This is created by `pred.from_path()`.
+/// This is created by `pred.from_file_path()`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct FileContentPredicate<P>
 where
