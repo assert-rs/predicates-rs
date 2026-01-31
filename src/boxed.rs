@@ -12,7 +12,6 @@
 use std::fmt;
 
 use crate::reflection;
-use crate::utils;
 use crate::Predicate;
 
 /// `Predicate` that wraps another `Predicate` as a trait object, allowing
@@ -73,7 +72,7 @@ where
     }
 
     fn find_case<'a>(&'a self, expected: bool, variable: &Item) -> Option<reflection::Case<'a>> {
-        utils::default_find_case(self, expected, variable)
+        self.0.find_case(expected, variable)
     }
 }
 
@@ -132,7 +131,7 @@ mod test {
         let p2 = p1.boxed();
         match (p1.find_case(false, &4), p2.find_case(false, &4)) {
             (Some(c1), Some(c2)) => {
-                assert_ne!(format!("{c1:?}"), format!("{c2:?}"));
+                assert_eq!(format!("{c1:?}"), format!("{c2:?}"));
             }
             _ => {
                 panic!();
