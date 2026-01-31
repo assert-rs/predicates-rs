@@ -125,4 +125,18 @@ mod test {
         let p = predicate::always().boxed();
         p.eval("4");
     }
+
+    #[test]
+    fn boxed_find_case() {
+        let p1 = predicate::gt(5);
+        let p2 = p1.boxed();
+        match (p1.find_case(false, &4), p2.find_case(false, &4)) {
+            (Some(c1), Some(c2)) => {
+                assert_ne!(format!("{c1:?}"), format!("{c2:?}"));
+            }
+            _ => {
+                panic!();
+            }
+        }
+    }
 }
