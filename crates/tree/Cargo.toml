@@ -1,6 +1,6 @@
 [package]
 name = "predicates-tree"
-version = "1.0.12"
+version = "1.0.13"
 description = "Render boolean-valued predicate functions results as a tree."
 categories = ["data-structures", "rust-patterns"]
 keywords = ["predicate", "boolean", "combinatorial", "match", "logic"]

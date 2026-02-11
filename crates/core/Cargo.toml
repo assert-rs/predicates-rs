@@ -1,6 +1,6 @@
 [package]
 name = "predicates-core"
-version = "1.0.9"
+version = "1.0.10"
 description = "An API for boolean-valued predicate functions."
 categories = ["data-structures", "rust-patterns"]
 keywords = ["predicate", "boolean", "combinatorial", "match", "logic"]

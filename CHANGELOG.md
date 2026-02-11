@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 <!-- next-header -->
 ## [Unreleased] - ReleaseDate
 
+## [3.1.4] - 2026-02-11
+
 - Make `BoxPredicate::find_case` use the inner `find_case` implementation
 
 ## [3.1.3] - 2024-12-19
@@ -262,7 +264,8 @@ Update MSRV to 1.60
 - Basic README
 
 <!-- next-url -->
-[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v3.1.3...HEAD
+[Unreleased]: https://github.com/assert-rs/predicates-rs/compare/v3.1.4...HEAD
+[3.1.4]: https://github.com/assert-rs/predicates-rs/compare/v3.1.3...v3.1.4
 [3.1.3]: https://github.com/assert-rs/predicates-rs/compare/v3.1.2...v3.1.3
 [3.1.2]: https://github.com/assert-rs/predicates-rs/compare/v3.1.1...v3.1.2
 [3.1.1]: https://github.com/assert-rs/predicates-rs/compare/v3.1.0...v3.1.1
