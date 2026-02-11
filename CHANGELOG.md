@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 <!-- next-header -->
 ## [Unreleased] - ReleaseDate
 
+- Make `BoxPredicate::find_case` use the inner `find_case` implementation
+
 ## [3.1.3] - 2024-12-19
 
 ### Features
