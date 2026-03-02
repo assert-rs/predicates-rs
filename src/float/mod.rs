@@ -13,4 +13,4 @@
 #[cfg(feature = "float-cmp")]
 mod close;
 #[cfg(feature = "float-cmp")]
-pub use self::close::{is_close, IsClosePredicate};
+pub use self::close::{IsClosePredicate, is_close};

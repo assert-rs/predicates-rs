@@ -11,8 +11,8 @@
 use std::fmt;
 use std::marker::PhantomData;
 
-use crate::reflection;
 use crate::Predicate;
+use crate::reflection;
 
 /// Predicate that combines two `Predicate`s, returning the AND of the results.
 ///
@@ -123,66 +123,82 @@ mod test_and {
 
     #[test]
     fn find_case_true() {
-        assert!(predicate::always()
-            .and(predicate::always())
-            .find_case(true, &5)
-            .is_some());
+        assert!(
+            predicate::always()
+                .and(predicate::always())
+                .find_case(true, &5)
+                .is_some()
+        );
     }
 
     #[test]
     fn find_case_true_left_fail() {
-        assert!(predicate::never()
-            .and(predicate::always())
-            .find_case(true, &5)
-            .is_none());
+        assert!(
+            predicate::never()
+                .and(predicate::always())
+                .find_case(true, &5)
+                .is_none()
+        );
     }
 
     #[test]
     fn find_case_true_right_fail() {
-        assert!(predicate::always()
-            .and(predicate::never())
-            .find_case(true, &5)
-            .is_none());
+        assert!(
+            predicate::always()
+                .and(predicate::never())
+                .find_case(true, &5)
+                .is_none()
+        );
     }
 
     #[test]
     fn find_case_true_fails() {
-        assert!(predicate::never()
-            .and(predicate::never())
-            .find_case(true, &5)
-            .is_none());
+        assert!(
+            predicate::never()
+                .and(predicate::never())
+                .find_case(true, &5)
+                .is_none()
+        );
     }
 
     #[test]
     fn find_case_false() {
-        assert!(predicate::never()
-            .and(predicate::never())
-            .find_case(false, &5)
-            .is_some());
+        assert!(
+            predicate::never()
+                .and(predicate::never())
+                .find_case(false, &5)
+                .is_some()
+        );
     }
 
     #[test]
     fn find_case_false_fails() {
-        assert!(predicate::always()
-            .and(predicate::always())
-            .find_case(false, &5)
-            .is_none());
+        assert!(
+            predicate::always()
+                .and(predicate::always())
+                .find_case(false, &5)
+                .is_none()
+        );
     }
 
     #[test]
     fn find_case_false_left_fail() {
-        assert!(predicate::never()
-            .and(predicate::always())
-            .find_case(false, &5)
-            .is_some());
+        assert!(
+            predicate::never()
+                .and(predicate::always())
+                .find_case(false, &5)
+                .is_some()
+        );
     }
 
     #[test]
     fn find_case_false_right_fail() {
-        assert!(predicate::always()
-            .and(predicate::never())
-            .find_case(false, &5)
-            .is_some());
+        assert!(
+            predicate::always()
+                .and(predicate::never())
+                .find_case(false, &5)
+                .is_some()
+        );
     }
 }
 
@@ -295,66 +311,82 @@ mod test_or {
 
     #[test]
     fn find_case_true() {
-        assert!(predicate::always()
-            .or(predicate::always())
-            .find_case(true, &5)
-            .is_some());
+        assert!(
+            predicate::always()
+                .or(predicate::always())
+                .find_case(true, &5)
+                .is_some()
+        );
     }
 
     #[test]
     fn find_case_true_left_fail() {
-        assert!(predicate::never()
-            .or(predicate::always())
-            .find_case(true, &5)
-            .is_some());
+        assert!(
+            predicate::never()
+                .or(predicate::always())
+                .find_case(true, &5)
+                .is_some()
+        );
     }
 
     #[test]
     fn find_case_true_right_fail() {
-        assert!(predicate::always()
-            .or(predicate::never())
-            .find_case(true, &5)
-            .is_some());
+        assert!(
+            predicate::always()
+                .or(predicate::never())
+                .find_case(true, &5)
+                .is_some()
+        );
     }
 
     #[test]
     fn find_case_true_fails() {
-        assert!(predicate::never()
-            .or(predicate::never())
-            .find_case(true, &5)
-            .is_none());
+        assert!(
+            predicate::never()
+                .or(predicate::never())
+                .find_case(true, &5)
+                .is_none()
+        );
     }
 
     #[test]
     fn find_case_false() {
-        assert!(predicate::never()
-            .or(predicate::never())
-            .find_case(false, &5)
-            .is_some());
+        assert!(
+            predicate::never()
+                .or(predicate::never())
+                .find_case(false, &5)
+                .is_some()
+        );
     }
 
     #[test]
     fn find_case_false_fails() {
-        assert!(predicate::always()
-            .or(predicate::always())
-            .find_case(false, &5)
-            .is_none());
+        assert!(
+            predicate::always()
+                .or(predicate::always())
+                .find_case(false, &5)
+                .is_none()
+        );
     }
 
     #[test]
     fn find_case_false_left_fail() {
-        assert!(predicate::never()
-            .or(predicate::always())
-            .find_case(false, &5)
-            .is_none());
+        assert!(
+            predicate::never()
+                .or(predicate::always())
+                .find_case(false, &5)
+                .is_none()
+        );
     }
 
     #[test]
     fn find_case_false_right_fail() {
-        assert!(predicate::always()
-            .or(predicate::never())
-            .find_case(false, &5)
-            .is_none());
+        assert!(
+            predicate::always()
+                .or(predicate::never())
+                .find_case(false, &5)
+                .is_none()
+        );
     }
 }
 

@@ -6,8 +6,8 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-use crate::reflection;
 use crate::Predicate;
+use crate::reflection;
 use std::fmt;
 
 use normalize_line_endings::normalized;

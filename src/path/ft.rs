@@ -11,8 +11,8 @@ use std::fs;
 use std::io;
 use std::path;
 
-use crate::reflection;
 use crate::Predicate;
+use crate::reflection;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 enum FileType {

@@ -8,9 +8,9 @@
 
 use std::fmt;
 
+use crate::Predicate;
 use crate::reflection;
 use crate::utils;
-use crate::Predicate;
 
 /// An error that occurred during parsing or compiling a regular expression.
 pub type RegexError = regex::Error;

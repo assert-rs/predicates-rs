@@ -10,9 +10,9 @@
 
 use std::fmt;
 
+use crate::Predicate;
 use crate::reflection;
 use crate::utils;
-use crate::Predicate;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 enum EqOps {

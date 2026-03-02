@@ -11,8 +11,8 @@ use std::fmt;
 use float_cmp::ApproxEq;
 use float_cmp::Ulps;
 
-use crate::reflection;
 use crate::Predicate;
+use crate::reflection;
 
 /// Predicate that ensures two numbers are "close" enough, understanding that rounding errors
 /// occur.

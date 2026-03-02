@@ -8,12 +8,12 @@
 
 //! Module that contains the essentials for working with predicates.
 
+pub use crate::Predicate;
 pub use crate::boolean::PredicateBooleanExt;
 pub use crate::boxed::PredicateBoxExt;
 pub use crate::name::PredicateNameExt;
 pub use crate::path::PredicateFileContentExt;
 pub use crate::str::PredicateStrExt;
-pub use crate::Predicate;
 
 /// Predicate factories
 pub mod predicate {

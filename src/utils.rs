@@ -8,8 +8,8 @@
 
 use std::fmt;
 
-use crate::reflection;
 use crate::Predicate;
+use crate::reflection;
 
 #[derive(Clone, PartialEq, Eq)]
 pub(crate) struct DebugAdapter<T>

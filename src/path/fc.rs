@@ -11,8 +11,8 @@ use std::fs;
 use std::io::{self, Read};
 use std::path;
 
-use crate::reflection;
 use crate::Predicate;
+use crate::reflection;
 
 fn read_file(path: &path::Path) -> io::Result<Vec<u8>> {
     let mut buffer = Vec::new();
