@@ -11,10 +11,10 @@
 //! This module contains predicates specific to the file system.
 
 mod existence;
-pub use self::existence::{exists, missing, ExistencePredicate};
+pub use self::existence::{ExistencePredicate, exists, missing};
 mod ft;
-pub use self::ft::{is_dir, is_file, is_symlink, FileTypePredicate};
+pub use self::ft::{FileTypePredicate, is_dir, is_file, is_symlink};
 mod fc;
 pub use self::fc::{FileContentPredicate, PredicateFileContentExt};
 mod fs;
-pub use self::fs::{eq_file, BinaryFilePredicate, StrFilePredicate};
+pub use self::fs::{BinaryFilePredicate, StrFilePredicate, eq_file};

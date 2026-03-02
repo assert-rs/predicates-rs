@@ -10,10 +10,10 @@ use std::ffi;
 use std::fmt;
 use std::str;
 
+use crate::Predicate;
 use crate::reflection;
 #[cfg(feature = "normalize-line-endings")]
 use crate::str::normalize::NormalizedPredicate;
-use crate::Predicate;
 
 /// Predicate adapter that trims the variable being tested.
 ///

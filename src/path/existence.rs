@@ -9,9 +9,9 @@
 use std::fmt;
 use std::path;
 
+use crate::Predicate;
 use crate::reflection;
 use crate::utils;
-use crate::Predicate;
 
 /// Predicate that checks if a file is present
 ///

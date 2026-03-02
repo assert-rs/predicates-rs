@@ -8,9 +8,9 @@
 
 use std::fmt;
 
+use crate::Predicate;
 use crate::reflection;
 use crate::utils;
-use crate::Predicate;
 
 /// Predicate that checks for empty strings.
 ///

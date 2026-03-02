@@ -13,9 +13,9 @@ use std::fmt;
 use std::hash::Hash;
 use std::iter::FromIterator;
 
+use crate::Predicate;
 use crate::reflection;
 use crate::utils;
-use crate::Predicate;
 
 /// Predicate that returns `true` if `variable` is a member of the pre-defined
 /// set, otherwise returns `false`.

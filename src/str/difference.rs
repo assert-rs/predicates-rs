@@ -9,8 +9,8 @@
 use std::borrow;
 use std::fmt;
 
-use crate::reflection;
 use crate::Predicate;
+use crate::reflection;
 
 /// Predicate that diffs two strings.
 ///

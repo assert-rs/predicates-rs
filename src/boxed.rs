@@ -11,8 +11,8 @@
 
 use std::fmt;
 
-use crate::reflection;
 use crate::Predicate;
+use crate::reflection;
 
 /// `Predicate` that wraps another `Predicate` as a trait object, allowing
 /// sized storage of predicate types.

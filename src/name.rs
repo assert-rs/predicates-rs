@@ -11,8 +11,8 @@
 use std::fmt;
 use std::marker::PhantomData;
 
-use crate::reflection;
 use crate::Predicate;
+use crate::reflection;
 
 /// Augment an existing predicate with a name.
 ///
