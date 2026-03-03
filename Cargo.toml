@@ -136,9 +136,9 @@ color = []
 predicates-core = { version = "1.0", path = "crates/core" }
 difflib = { version = "0.4", optional = true }
 normalize-line-endings = { version = "0.3.0", optional = true }
-regex = { version="1.0", optional = true }
+regex = { version="1.12", optional = true }
 float-cmp = { version="0.10", optional = true }
-anstyle = "1.0.0"
+anstyle = "1.0.13"
 
 [dev-dependencies]
 predicates-tree = { version = "1.0", path = "crates/tree" }

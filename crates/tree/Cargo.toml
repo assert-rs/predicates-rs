@@ -25,7 +25,7 @@ pre-release-replacements = [
 
 [dependencies]
 predicates-core = { version = "1.0", path = "../core" }
-termtree = "0.5.0"
+termtree = "0.5.1"
 
 [dev-dependencies]
 predicates = { version = "3.1", path = "../..", features = ["color"] }
