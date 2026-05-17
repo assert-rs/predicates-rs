@@ -23,7 +23,12 @@ pub struct ExistencePredicate {
 
 impl Predicate<path::Path> for ExistencePredicate {
     fn eval(&self, path: &path::Path) -> bool {
-        path.exists() == self.exists
+        if self.exists {
+            path.exists()
+        } else {
+            // A broken symlink is still present on disk and should not count as missing.
+            path.symlink_metadata().is_err()
+        }
     }
 
     fn find_case<'a>(
@@ -71,6 +76,9 @@ pub fn exists() -> ExistencePredicate {
 
 /// Creates a new `Predicate` that ensures the path doesn't exist.
 ///
+/// Broken symlinks are treated as present (not missing) because the symlink
+/// inode exists even when its target does not.
+///
 /// # Examples
 ///
 /// ```
@@ -82,4 +90,34 @@ pub fn exists() -> ExistencePredicate {
 /// ```
 pub fn missing() -> ExistencePredicate {
     ExistencePredicate { exists: false }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::Predicate;
+
+    #[test]
+    fn missing_regular_file() {
+        let predicate_fn = missing();
+        assert!(predicate_fn.eval(path::Path::new("definitely-not-a-real-file-118")));
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn missing_broken_symlink_is_not_missing() {
+        use std::fs;
+        use std::os::unix;
+
+        let dir = std::env::temp_dir().join("predicates-missing-symlink-118");
+        let _ = fs::remove_dir_all(&dir);
+        fs::create_dir_all(&dir).unwrap();
+        let link = dir.join("broken-link");
+        unix::fs::symlink("non-existent-target-118", &link).unwrap();
+
+        let predicate_fn = missing();
+        assert!(!predicate_fn.eval(&link));
+
+        let _ = fs::remove_dir_all(&dir);
+    }
 }
