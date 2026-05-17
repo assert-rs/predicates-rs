@@ -11,6 +11,7 @@
 pub use crate::Predicate;
 pub use crate::boolean::PredicateBooleanExt;
 pub use crate::boxed::PredicateBoxExt;
+pub use crate::map::PredicateMapExt;
 pub use crate::name::PredicateNameExt;
 pub use crate::path::PredicateFileContentExt;
 pub use crate::str::PredicateStrExt;

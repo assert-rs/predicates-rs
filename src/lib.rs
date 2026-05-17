@@ -213,6 +213,7 @@ pub use crate::boxed::*;
 pub mod constant;
 pub mod function;
 pub mod iter;
+pub mod map;
 pub mod name;
 pub mod ord;
 
