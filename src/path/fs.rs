@@ -100,7 +100,10 @@ impl fmt::Display for BinaryFilePredicate {
     }
 }
 
-/// Creates a new `Predicate` that ensures complete equality
+/// Creates a new `Predicate` that ensures complete equality of file contents as bytes.
+///
+/// For text files, prefer [`BinaryFilePredicate::utf8`] to compare UTF-8 strings and get
+/// clearer mismatch output instead of raw byte lists.
 ///
 /// # Examples
 ///
