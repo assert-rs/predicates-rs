@@ -22,7 +22,7 @@ enum FileType {
 }
 
 impl FileType {
-    fn from_path(path: &path::Path, follow: bool) -> io::Result<FileType> {
+    fn from_path(path: &path::Path, follow: bool) -> io::Result<Self> {
         let file_type = if follow {
             path.metadata()
         } else {
@@ -30,19 +30,19 @@ impl FileType {
         }?
         .file_type();
         if file_type.is_dir() {
-            return Ok(FileType::Dir);
+            return Ok(Self::Dir);
         }
         if file_type.is_file() {
-            return Ok(FileType::File);
+            return Ok(Self::File);
         }
-        Ok(FileType::Symlink)
+        Ok(Self::Symlink)
     }
 
     fn eval(self, ft: fs::FileType) -> bool {
         match self {
-            FileType::File => ft.is_file(),
-            FileType::Dir => ft.is_dir(),
-            FileType::Symlink => ft.is_symlink(),
+            Self::File => ft.is_file(),
+            Self::Dir => ft.is_dir(),
+            Self::Symlink => ft.is_symlink(),
         }
     }
 }
@@ -50,9 +50,9 @@ impl FileType {
 impl fmt::Display for FileType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let t = match *self {
-            FileType::File => "file",
-            FileType::Dir => "dir",
-            FileType::Symlink => "symlink",
+            Self::File => "file",
+            Self::Dir => "dir",
+            Self::Symlink => "symlink",
         };
         write!(f, "{t}")
     }
@@ -79,8 +79,8 @@ impl FileTypePredicate {
     }
 
     /// Allow to create an `FileTypePredicate` from a `path`
-    pub fn from_path(path: &path::Path) -> io::Result<FileTypePredicate> {
-        Ok(FileTypePredicate {
+    pub fn from_path(path: &path::Path) -> io::Result<Self> {
+        Ok(Self {
             ft: FileType::from_path(path, true)?,
             follow: true,
         })

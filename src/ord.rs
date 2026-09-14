@@ -23,8 +23,8 @@ enum EqOps {
 impl fmt::Display for EqOps {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let op = match *self {
-            EqOps::Equal => "==",
-            EqOps::NotEqual => "!=",
+            Self::Equal => "==",
+            Self::NotEqual => "!=",
         };
         write!(f, "{op}")
     }
@@ -143,10 +143,10 @@ enum OrdOps {
 impl fmt::Display for OrdOps {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let op = match *self {
-            OrdOps::LessThan => "<",
-            OrdOps::LessThanOrEqual => "<=",
-            OrdOps::GreaterThanOrEqual => ">=",
-            OrdOps::GreaterThan => ">",
+            Self::LessThan => "<",
+            Self::LessThanOrEqual => "<=",
+            Self::GreaterThanOrEqual => ">=",
+            Self::GreaterThan => ">",
         };
         write!(f, "{op}")
     }
