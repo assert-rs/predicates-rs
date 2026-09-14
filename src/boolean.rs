@@ -52,8 +52,8 @@ where
     Item: ?Sized,
 {
     /// Create a new `AndPredicate` over predicates `a` and `b`.
-    pub fn new(a: M1, b: M2) -> AndPredicate<M1, M2, Item> {
-        AndPredicate {
+    pub fn new(a: M1, b: M2) -> Self {
+        Self {
             a,
             b,
             _phantom: PhantomData,
@@ -240,8 +240,8 @@ where
     Item: ?Sized,
 {
     /// Create a new `OrPredicate` over predicates `a` and `b`.
-    pub fn new(a: M1, b: M2) -> OrPredicate<M1, M2, Item> {
-        OrPredicate {
+    pub fn new(a: M1, b: M2) -> Self {
+        Self {
             a,
             b,
             _phantom: PhantomData,
@@ -423,8 +423,8 @@ where
     Item: ?Sized,
 {
     /// Create a new `NotPredicate` over predicate `inner`.
-    pub fn new(inner: M) -> NotPredicate<M, Item> {
-        NotPredicate {
+    pub fn new(inner: M) -> Self {
+        Self {
             inner,
             _phantom: PhantomData,
         }
