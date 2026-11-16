@@ -69,7 +69,7 @@ struct Displayable {
 }
 
 impl Displayable {
-    fn new(display: &dyn std::fmt::Display) -> Self {
+    fn new(display: &dyn fmt::Display) -> Self {
         let primary = format!("{display}");
         let alternate = format!("{display:#}");
         Self { primary, alternate }

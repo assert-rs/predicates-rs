@@ -119,7 +119,6 @@ name = "predicates"
 version = "3.1.4"
 description = "An implementation of boolean-valued predicate functions."
 authors = ["Nick Stevens <nick@bitcurry.com>"]
-homepage = "https://github.com/assert-rs/predicates-rs"
 documentation = "https://docs.rs/predicates"
 readme = "README.md"
 categories = ["data-structures", "rust-patterns"]

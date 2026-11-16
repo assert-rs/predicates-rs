@@ -29,3 +29,6 @@ termtree = "1.0.0"
 
 [dev-dependencies]
 predicates = { version = "3.1", path = "../..", features = ["color"] }
+
+[lints]
+workspace = true

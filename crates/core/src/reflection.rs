@@ -103,7 +103,7 @@ pub struct Case<'a> {
     predicate: Option<&'a dyn PredicateReflection>,
     result: bool,
     products: Vec<Product>,
-    children: Vec<Case<'a>>,
+    children: Vec<Self>,
 }
 
 impl<'a> Case<'a> {
@@ -124,7 +124,7 @@ impl<'a> Case<'a> {
     }
 
     /// Add an additional by product to a `Case`.
-    pub fn add_child(mut self, child: Case<'a>) -> Self {
+    pub fn add_child(mut self, child: Self) -> Self {
         self.children.push(child);
         self
     }
